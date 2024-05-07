@@ -1,0 +1,17 @@
+[tool.poetry]
+name = "optimum-docs"
+version = "0.1.0"
+description = "Optimum DA Technical Documentation"
+authors = ["Santiago Paiva <paiva.santiago@gmail.com>"]
+readme = "README.md"
+packages = [{include = "optimum_docs"}]
+
+[tool.poetry.dependencies]
+python = "^3.8"
+mkdocs-material = "^9.5.21"
+mkdocs-material-extensions = "^1.3.1"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
