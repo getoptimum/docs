@@ -1,17 +1,16 @@
-# Welcome to MkDocs
+# Welcome to Optimum Docs
 
-For full documentation visit [mkdocs.org](https://www.mkdocs.org).
+This site uses [mkdocs.org](https://www.mkdocs.org) template, and it is inteded for **internal**  use only (do not make it public). 
 
-## Commands
+## How to update the site?
 
-* `mkdocs new [dir-name]` - Create a new project.
-* `mkdocs serve` - Start the live-reloading docs server.
-* `mkdocs build` - Build the documentation site.
-* `mkdocs -h` - Print help message and exit.
+* Make sure you install the basic requirements to run a mkdocs site (check poetry requirements)
+* Add a new markdown page `whatever.md` under the `docs` folder
+* To test it, simply run the `./test.sh` command and check localhost:8000
 
 ## Project layout
 
-    mkdocs.yml    # The configuration file.
+    mkdocs.yml         # The configuration file.
     docs/
-        index.md  # The documentation homepage.
-        ...       # Other markdown pages, images and other files.
+        index.md       # This page homepage
+        aws_testnet.md # AWS Testnet documentation 
