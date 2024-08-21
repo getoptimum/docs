@@ -1,4 +1,4 @@
-# AWS Optimum Devnet - Tansaction Test
+# AWS Optimum Devnet - Transaction Test
 
 This document outlines how to test a traction on AWS based on Hamster's devnet infrastructure
 
