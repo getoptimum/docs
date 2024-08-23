@@ -3,7 +3,6 @@ repo_url: https://github.com/optimumda/optimum-docs
 repo_name: optimumda/optimum-docs
 theme:
   name: material
-  custom_dir: overrides
   palette:
     # Palette toggle for light mode
     - scheme: default
