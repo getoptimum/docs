@@ -1,6 +1,6 @@
 site_name: Optimum Documentation Hub
-repo_url: https://github.com/optimumda/optimum-docs
-repo_name: optimumda/optimum-docs
+repo_url: https://github.com/getoptimum/optimum-docs
+repo_name: getoptimum/optimum-docs
 theme:
   name: material
   palette:
@@ -21,10 +21,8 @@ theme:
     - navigation.sections
   plugins:
     - optimize
-extra_css:
-  - stylesheets/extra.css
 markdown_extensions:
   - attr_list
-copyright: Copyright &copy; 2024 Spice Solutions Inc.
+copyright: Copyright &copy; 2024 Optimum Engineering Team.
 extra:
   generator: false
