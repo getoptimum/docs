@@ -1,2 +1,4 @@
 .DS_Store
 venv/
+.vitepress/.vitepress/dist
+.vitepress/.vitepress/cache
