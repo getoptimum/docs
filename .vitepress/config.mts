@@ -75,14 +75,6 @@ export default defineConfig({
     ["meta", { property: "og:image:type", content: "image/png" }],
   ],
 
-
-
-
-
-
-
-
-
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: nav(),
