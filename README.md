@@ -26,9 +26,9 @@ on your machine.
 
 ### Prerequisites
 
-- [node](https://nodejs.org/en/)
-- [npm](https://www.npmjs.com/)
-- [vitepress](https://vitepress.dev/guide/getting-started)
+* [node](https://nodejs.org/en/)
+* [npm](https://www.npmjs.com/)
+* [vitepress](https://vitepress.dev/guide/getting-started)
 
 ### Installation
 
@@ -47,7 +47,7 @@ on your machine.
 3. Run the app
 
    ```sh
-   $ npm run docs:dev
+   $ make run-dev
    ```
 
 ## Directory Structure
@@ -59,11 +59,11 @@ on your machine.
 We love contributions from the community! Whether you're fixing typos,
 improving content clarity, or adding new topics, every contribution helps.
 
-- Fork & clone: Fork this repository and clone it to your local machine.
-- Branch: Always create a new branch for your changes. Naming it relevantly.
-- Commit Changes: Make your changes and commit them with a clear and concise
+* Fork & clone: Fork this repository and clone it to your local machine.
+* Branch: Always create a new branch for your changes. Naming it relevantly.
+* Commit Changes: Make your changes and commit them with a clear and concise
   commit message.
-- Push & Create PR: Push your changes to your fork and create a pull request
+* Push & Create PR: Push your changes to your fork and create a pull request
   to the main branch of this repository.
 
 Please ensure to review the detailed Contribution Guidelines above before
@@ -72,9 +72,11 @@ making a pull request.
 ### Link Format Guidelines
 
 When adding internal links to documentation, please use the following format:
-`[link text](/base-working-dir/subdir/page.md#section-id)`, i.e. `[link text](/how-to-guides/quick-start.md#get-your-auth-token)`
+`[link text](/base-working-dir/subdir/page.md#section-id)`, i.e.
+`[link text](/how-to-guides/quick-start.md#get-your-auth-token)`
 
-This format ensures long-term compatibility and consistent behavior across different platforms and documentation builds.
+This format ensures long-term compatibility and consistent behavior across
+different platforms and documentation builds.
 
 ## Feedback & Suggestions
 
