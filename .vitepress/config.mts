@@ -120,8 +120,8 @@ function nav() {
     {
       text: "Join the network",
       items: [
-        { text: "Learn", link: "/how-to-guides/overview" },
-        { text: "Quick Start", link: "/learn/overview/intro" },
+        { text: "Learn", link: "/learn/overview/intro" },
+        { text: "Quick Start", link: "/how-to-guides/overview" },
         {
           text: "Resources",
           items: [
