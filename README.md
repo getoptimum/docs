@@ -3,7 +3,7 @@
     <img src="static/img/banner.png" alt="Logo">
   </a>
 
-  <h2 align="center">Optimum Docs</h3>
+  <h2 align="center">Optimum Docs</h2>
 
   <p align="center">
     Welcome to the official documentation repository for <a href="https://www.getoptimum.xyz/">Optimum</a>.

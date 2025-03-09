@@ -12,6 +12,9 @@ export default defineConfig({
   markdown: {
     math: true,
   },
+  srcExclude: [
+    "README.md"
+  ],
   sitemap: {
     hostname: "https://docs.getoptimum.xyz",
   },
@@ -161,6 +164,14 @@ function sidebarHome() {
           text: "OPT",
           collapsed: true,
           items: [
+            {
+              text: "Overview of OPT",
+              link: "/learn/opt",
+            },
+            {
+              text: "How to stake OPT",
+              link: "/learn/how-to-stake-opt",
+            },
           ],
         },
       ],
