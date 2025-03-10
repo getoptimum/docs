@@ -27,7 +27,7 @@ on your machine.
 ### Prerequisites
 
 * [node](https://nodejs.org/en/)
-* [npm](https://www.npmjs.com/)
+* [yarn](https://yarnpkg.com/)
 * [vitepress](https://vitepress.dev/guide/getting-started)
 
 ### Installation
@@ -38,13 +38,13 @@ on your machine.
    $ git clone https://github.com/getoptimum/docs.git
    ```
 
-2. Install NPM packages
+2. Install dependencies
 
    ```sh
-   $ npm install
+   $ yarn install
    ```
 
-3. Run the app
+3. Run the docs site
 
    ```sh
    $ make run-dev
@@ -52,7 +52,12 @@ on your machine.
 
 ## Directory Structure
 
-<!-- TODO(bez): Add tree structure -->
+```text
+.
+├── how-to-guides # Guides and tutorials
+├── index.md      # Home page markdown layout
+└── learn         # Overview and primer material
+```
 
 ## Contribution Guidelines
 

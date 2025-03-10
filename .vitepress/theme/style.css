@@ -45,7 +45,7 @@
 
 /* custom brand colors */
 :root {
-  --vp-c-brand-1: #B97CFF;
+  --vp-c-brand-1: #b97cff;
   --vp-c-brand-2: #be8afa;
   --vp-c-brand-3: #c79bfa;
   --vp-c-brand-soft: #cba5f6;
@@ -90,13 +90,17 @@
 
 :root {
   --vp-home-hero-name-color: transparent;
-  --vp-home-hero-name-background: -webkit-linear-gradient(120deg,
-      #bd34fe 30%,
-      #41d1ff);
+  --vp-home-hero-name-background: -webkit-linear-gradient(
+    120deg,
+    #bd34fe 30%,
+    #41d1ff
+  );
 
-  --vp-home-hero-image-background-image: linear-gradient(-45deg,
-      #bd34fe 50%,
-      #47caff 50%);
+  --vp-home-hero-image-background-image: linear-gradient(
+    -45deg,
+    #bd34fe 50%,
+    #47caff 50%
+  );
   --vp-home-hero-image-filter: blur(44px);
 }
 
