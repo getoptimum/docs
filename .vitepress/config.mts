@@ -120,8 +120,8 @@ function nav() {
     {
       text: "Join the network",
       items: [
-        { text: "Learn", link: "/learn/overview/intro" },
-        { text: "Quick Start", link: "/how-to-guides/overview" },
+        { text: "Learn", link: "/docs/learn/overview/intro" },
+        { text: "Quick Start", link: "/docs/how-to-guides/overview" },
         {
           text: "Resources",
           items: [
@@ -156,7 +156,7 @@ function sidebarHome() {
           items: [
             {
               text: "Introduction",
-              link: "/learn/overview/intro",
+              link: "/docs/learn/overview/intro",
             },
           ],
         },
@@ -166,11 +166,11 @@ function sidebarHome() {
           items: [
             {
               text: "Overview of OPT",
-              link: "/learn/opt",
+              link: "/docs/learn/opt",
             },
             {
               text: "How to stake OPT",
-              link: "/learn/how-to-stake-opt",
+              link: "/docs/learn/how-to-stake-opt",
             },
           ],
         },
