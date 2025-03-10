@@ -52,7 +52,12 @@ on your machine.
 
 ## Directory Structure
 
-<!-- TODO(bez): Add tree structure -->
+```text
+.
+├── how-to-guides # Guides and tutorials
+├── index.md      # Home page markdown layout
+└── learn         # Overview and primer material
+```
 
 ## Contribution Guidelines
 
