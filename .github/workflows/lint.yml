@@ -1,0 +1,38 @@
+name: Lint Site
+
+on:
+  pull_request:
+  merge_group:
+  push:
+    branches:
+      - main
+      - release/**
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}-build
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 23
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Lint
+        run: make lint
+
+      - name: Lint markdown
+        run: make lint-markdown
