@@ -8,6 +8,13 @@ on:
       - main
       - release/**
 
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}-build
+  cancel-in-progress: true
+
 jobs:
   build:
     runs-on: ubuntu-latest
