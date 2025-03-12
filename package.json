@@ -5,7 +5,8 @@
     "docs:preview": "vitepress preview",
     "lint": "eslint --fix",
     "lint:md": "markdownlint '**/*.md'",
-    "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss}'"
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,css,scss}'",
+    "vercel-build": "vitepress build"
   },
   "devDependencies": {
     "@eslint/js": "^9.22.0",
