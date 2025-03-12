@@ -1,0 +1,16 @@
+{
+	"builds": [
+	  {
+		"src": "package.json",
+		"use": "@vercel/static-build",
+		"config": {
+		  "buildCommand": "yarn docs:build",
+		  "outputDirectory": ".vitepress/dist"
+		}
+	  }
+	],
+	"routes": [
+	  { "handle": "filesystem" },
+	  { "src": "/(.*)", "dest": "/" }
+	]
+}
