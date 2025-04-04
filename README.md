@@ -53,10 +53,9 @@ on your machine.
 ## Directory Structure
 
 ```text
-.
-├── how-to-guides # Guides and tutorials
-├── index.md      # Home page markdown layout
-└── learn         # Overview and primer material
+docs/
+├── how-to-guides   # Guides and tutorials
+└── learn           # Overview and primer material
 ```
 
 ## Contribution Guidelines

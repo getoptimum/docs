@@ -106,10 +106,10 @@ export default defineConfig({
     siteTitle: false,
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/getoptimum/docs' },
-      { icon: 'twitter', link: 'https://x.com/get_optimum' }
+      { icon: "github", link: "https://github.com/getoptimum/docs" },
+      { icon: "x", link: "https://x.com/get_optimum" },
+      { icon: "discord", link: "https://discord.gg/7EwFpu79cZ" },
       // { icon: "youtube", link: "" },
-      // { icon: "discord", link: "" },
       // { icon: { svg: telegramSVG }, link: "" },
     ]
   }
@@ -118,10 +118,10 @@ export default defineConfig({
 function nav() {
   return [
     {
-      text: "Join the network",
+      text: "Join the Network",
       items: [
-        { text: "Learn", link: "/learn/overview/intro" },
-        { text: "Quick Start", link: "/how-to-guides/overview" },
+        { text: "Overview", link: "/docs/how-to-guides/overview" },
+        { text: "Learn", link: "/docs/learn/overview/intro" },
         {
           text: "Resources",
           items: [
@@ -156,24 +156,34 @@ function sidebarHome() {
           items: [
             {
               text: "Introduction",
-              link: "/learn/overview/intro",
+              link: "/docs/learn/overview/intro",
             },
           ],
         },
         {
-          text: "OPT",
+          text: "Optimum P2P",
           collapsed: true,
           items: [
             {
-              text: "Overview of OPT",
-              link: "/learn/opt",
-            },
-            {
-              text: "How to stake OPT",
-              link: "/learn/how-to-stake-opt",
+              text: "Introduction",
+              link: "/docs/learn/p2p/intro",
             },
           ],
         },
+        // {
+        //   text: "MUM",
+        //   collapsed: true,
+        //   items: [
+        //     {
+        //       text: "Overview of MUM",
+        //       link: "/docs/learn/mum",
+        //     },
+        //     {
+        //       text: "How to stake MUM",
+        //       link: "/docs/learn/how-to-stake-mum",
+        //     },
+        //   ],
+        // },
       ],
     },
     {
@@ -184,7 +194,16 @@ function sidebarHome() {
     {
       text: "Resources",
       collapsed: true,
-      items: [],
+      items: [
+        {
+          text: "Technical Papers",
+          link: "/docs/resources/optimum",
+        },
+        {
+          text: "Latest News & Social Media",
+          link: "/docs/resources/news",
+        }
+      ],
     },
   ]
 }

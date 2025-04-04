@@ -1,3 +1,3 @@
-# How to stake OPT
+# Introduction
 
 ## Under Construction 🚧
