@@ -161,16 +161,16 @@ function sidebarHome() {
           ],
         },
         {
-          text: "OPT",
+          text: "MUM",
           collapsed: true,
           items: [
             {
-              text: "Overview of OPT",
-              link: "/docs/learn/opt",
+              text: "Overview of MUM",
+              link: "/docs/learn/mum",
             },
             {
-              text: "How to stake OPT",
-              link: "/docs/learn/how-to-stake-opt",
+              text: "How to stake MUM",
+              link: "/docs/learn/how-to-stake-mum",
             },
           ],
         },

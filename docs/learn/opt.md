@@ -1,3 +1,3 @@
-# Overview of the OPT Token
+# Overview of the MUM Token
 
 ## Under Construction 🚧

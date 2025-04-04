@@ -1,3 +1,3 @@
-# How to stake OPT
+# How to stake MUM
 
 ## Under Construction 🚧
