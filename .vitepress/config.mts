@@ -106,10 +106,10 @@ export default defineConfig({
     siteTitle: false,
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/getoptimum/docs' },
-      { icon: 'twitter', link: 'https://x.com/get_optimum' }
+      { icon: "github", link: "https://github.com/getoptimum/docs" },
+      { icon: "x", link: "https://x.com/get_optimum" },
+      { icon: "discord", link: "https://discord.gg/7EwFpu79cZ" },
       // { icon: "youtube", link: "" },
-      // { icon: "discord", link: "" },
       // { icon: { svg: telegramSVG }, link: "" },
     ]
   }
@@ -118,7 +118,7 @@ export default defineConfig({
 function nav() {
   return [
     {
-      text: "Join the network",
+      text: "Join the Network",
       items: [
         { text: "Learn", link: "/docs/learn/overview/intro" },
         { text: "Quick Start", link: "/docs/how-to-guides/overview" },
