@@ -120,8 +120,8 @@ function nav() {
     {
       text: "Join the Network",
       items: [
+        { text: "Overview", link: "/docs/how-to-guides/overview" },
         { text: "Learn", link: "/docs/learn/overview/intro" },
-        { text: "Quick Start", link: "/docs/how-to-guides/overview" },
         {
           text: "Resources",
           items: [
@@ -161,19 +161,29 @@ function sidebarHome() {
           ],
         },
         {
-          text: "MUM",
+          text: "Optimum P2P",
           collapsed: true,
           items: [
             {
-              text: "Overview of MUM",
-              link: "/docs/learn/mum",
-            },
-            {
-              text: "How to stake MUM",
-              link: "/docs/learn/how-to-stake-mum",
+              text: "Introduction",
+              link: "/docs/learn/p2p/intro",
             },
           ],
         },
+        // {
+        //   text: "MUM",
+        //   collapsed: true,
+        //   items: [
+        //     {
+        //       text: "Overview of MUM",
+        //       link: "/docs/learn/mum",
+        //     },
+        //     {
+        //       text: "How to stake MUM",
+        //       link: "/docs/learn/how-to-stake-mum",
+        //     },
+        //   ],
+        // },
       ],
     },
     {

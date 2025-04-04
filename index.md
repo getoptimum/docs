@@ -12,15 +12,15 @@ hero:
     alt: Optimum
   actions:
     - theme: brand
-      text: Quick Start
+      text: Overview
       link: /docs/how-to-guides/overview
     - theme: alt
       text: Introduction
       link: /docs/learn/overview/intro
 
 features:
-  - title: Learn
-    details: Learn more about the Optimum protocol, the various components involved, and how it could benefit your project.
+  - title: Overview
+    details: Learn more about Optimum, the various components involved, and how it could benefit your project.
     link: /docs/learn/overview/intro
     icon: 🎓
   - title: How-to Guides
