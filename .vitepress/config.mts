@@ -184,7 +184,16 @@ function sidebarHome() {
     {
       text: "Resources",
       collapsed: true,
-      items: [],
+      items: [
+        {
+          text: "Technical Papers",
+          link: "/docs/resources/optimum",
+        },
+        {
+          text: "Latest News & Social Media",
+          link: "/docs/resources/news",
+        }
+      ],
     },
   ]
 }

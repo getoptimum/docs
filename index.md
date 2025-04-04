@@ -29,6 +29,6 @@ features:
     icon: ⚙️
   - title: Resources
     details: Access resources for understanding the inner workings of Optimum and how to interact with the protocol via APIs.
-    link: /docs/tutorials/node-api
+    link: /docs/resources/news
     icon: 🔎
 ---
