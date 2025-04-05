@@ -79,8 +79,8 @@ export default defineConfig({
   ],
 
   transformHead: (cfg) => {
-    const abcDiaBold = cfg.assets.find((file) => /ABCDiatype-Bold\.\w+\.woff2/);
-    const abcDiaLight = cfg.assets.find((file) => /ABCDiatype-Light\.\w+\.woff2/);
+    const abcDiaBold = cfg.assets.find((_) => /ABCDiatype-Bold\.\w+\.woff2/);
+    const abcDiaLight = cfg.assets.find((_) => /ABCDiatype-Light\.\w+\.woff2/);
 
     if (abcDiaBold) {
       cfg.head.push(
