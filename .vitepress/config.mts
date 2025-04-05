@@ -78,6 +78,41 @@ export default defineConfig({
     ["meta", { property: "og:image:type", content: "image/png" }],
   ],
 
+  transformHead: (cfg) => {
+    const abcDiaBold = cfg.assets.find(() => /ABCDiatype-Bold\.\w+\.woff2/);
+    const abcDiaLight = cfg.assets.find(() => /ABCDiatype-Light\.\w+\.woff2/);
+
+    if (abcDiaBold) {
+      cfg.head.push(
+        [
+          'link',
+          {
+            rel: 'preload',
+            href: abcDiaBold,
+            as: 'font',
+            type: 'font/woff2',
+            crossorigin: ''
+          }
+        ]
+      );
+    }
+
+    if (abcDiaLight) {
+      cfg.head.push(
+        [
+          'link',
+          {
+            rel: 'preload',
+            href: abcDiaLight,
+            as: 'font',
+            type: 'font/woff2',
+            crossorigin: ''
+          }
+        ]
+      );
+    }
+  },
+
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: nav(),
@@ -111,7 +146,7 @@ export default defineConfig({
       { icon: "discord", link: "https://discord.gg/7EwFpu79cZ" },
       // { icon: "youtube", link: "" },
       // { icon: { svg: telegramSVG }, link: "" },
-    ]
+    ],
   }
 })
 
