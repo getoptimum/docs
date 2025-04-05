@@ -1,0 +1,17 @@
+@font-face {
+  font-family: 'ABC Diatype';
+  font-weight: bold;
+  src: url('/fonts/ABCDiatype-Bold.woff2') format("font-woff2");
+}
+
+@font-face {
+  font-family: 'ABC Diatype';
+  src: url('/fonts/ABCDiatype-Light.woff2') format("font-woff2");
+}
+
+:root {
+  --vp-font-family-base: 'ABC Diatype', ui-sans-serif, system-ui, sans-serif;
+  /* normal text font */
+  --vp-font-family-mono: 'ABC Diatype', monospace;
+  /* code font */
+}
