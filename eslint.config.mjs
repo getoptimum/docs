@@ -9,7 +9,8 @@ export default [
   {
     ignores: [
       '**/dist/*',
-      '**/theme/*'
+      '**/theme/*',
+      '**/cache/*'
     ]
   },
   { languageOptions: { globals: globals.browser } },
