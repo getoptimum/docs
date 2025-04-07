@@ -16,6 +16,10 @@
   /* code font */
 }
 
-:root.dark {
-  --vp-c-bg: #151515;
+image-bg {
+  display: none;
+}
+
+.image-bg .home-hero {
+  display: none;
 }
