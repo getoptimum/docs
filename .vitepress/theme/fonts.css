@@ -15,7 +15,3 @@
   --vp-font-family-mono: 'ABC Diatype', monospace;
   /* code font */
 }
-
-:root.dark {
-  --vp-c-bg: #151515;
-}
