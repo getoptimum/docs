@@ -15,11 +15,3 @@
   --vp-font-family-mono: 'ABC Diatype', monospace;
   /* code font */
 }
-
-image-bg {
-  display: none;
-}
-
-.image-bg .home-hero {
-  display: none;
-}
