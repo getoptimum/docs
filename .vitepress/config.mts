@@ -193,18 +193,18 @@ function sidebarHome() {
               text: "Introduction",
               link: "/docs/learn/overview/intro",
             },
-          ],
-        },
-        {
-          text: "Optimum P2P",
-          collapsed: true,
-          items: [
             {
-              text: "Introduction",
-              link: "/docs/learn/p2p/intro",
+              text: "OptimumP2P",
+              link: "/docs/learn/overview/p2p.md",
             },
           ],
         },
+        // {
+        //   text: "OptimumP2P",
+        //   collapsed: true,
+        //   items: [
+        //   ],
+        // },
         // {
         //   text: "MUM",
         //   collapsed: true,
@@ -227,16 +227,40 @@ function sidebarHome() {
       items: [],
     },
     {
-      text: "Resources",
+      text: "Research",
       collapsed: true,
       items: [
         {
-          text: "Technical Papers",
-          link: "/docs/resources/optimum",
+          text: "Optimum Gossip",
+          collapsed: true,
+          items: [
+            {
+              text: "Gossip",
+              link: "/docs/research/gossip/gossip",
+            },
+            {
+              text: "Transport",
+              link: "/docs/research/gossip/transport",
+            },
+            {
+              text: "Decentralized Access",
+              link: "/docs/research/gossip/decentralized-access",
+            }
+          ]
         },
         {
-          text: "Latest News & Social Media",
-          link: "/docs/resources/news",
+          text: "deRAM",
+          collapsed: true,
+          items: [
+            {
+              text: "Atomicity and Consistency",
+              link: "/docs/research/deram/atomicity-consistency",
+            },
+            {
+              text: "Decentralized Data Storage",
+              link: "/docs/research/deram/decentralized-storage",
+            }
+          ]
         }
       ],
     },
