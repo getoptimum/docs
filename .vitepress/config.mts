@@ -249,7 +249,7 @@ function sidebarHome() {
           ]
         },
         {
-text: "DeRAM",
+          text: "DeRAM",
           collapsed: true,
           items: [
             {
