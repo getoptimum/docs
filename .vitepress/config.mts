@@ -155,23 +155,23 @@ function nav() {
     {
       text: "Join the Network",
       items: [
-        { text: "Overview", link: "/docs/how-to-guides/overview" },
+        { text: "Get Started", link: "/docs/how-to-guides/overview" },
         { text: "Learn", link: "/docs/learn/overview/intro" },
         {
           text: "Resources",
           items: [
-            {
-              text: "Optimum Improvement Proposals (OIPs)",
-              link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            },
+            // {
+            //   text: "Optimum Improvement Proposals (OIPs)",
+            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
+            // },
             {
               text: "Optimum ADRs",
               link: "https://github.com/getoptimum/optimum/tree/main/docs/architecture#adr-table-of-contents",
             },
-            {
-              text: "Flexnode API Docs",
-              link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            },
+            // {
+            //   text: "Flexnode API Docs",
+            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
+            // },
           ],
         },
       ],
