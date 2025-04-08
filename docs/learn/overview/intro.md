@@ -2,10 +2,10 @@
 description: Get a quick primer on the constituent components of the Optimum protocol.
 ---
 
-# Introduction
+# Introduction to Optimum
 
 Optimum is a highly-effective (low-latency, high-throughput), scalable, and secure
-decentralized shared memory (DeSM) solution. In essence, it introduces an atomic
+decentralized shared memory (DeRAM) solution. In essence, it introduces an atomic
 read/write memory designed for the Web3 environment, addressing the unique
 challenges posed by asynchronous communication, high node churn, decentralized
 decision-making, and the presence of potentially malicious nodes.

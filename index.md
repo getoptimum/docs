@@ -12,7 +12,7 @@ hero:
     alt: Optimum
   actions:
     - theme: brand
-      text: Overview
+      text: Get Started
       link: /docs/how-to-guides/overview
     - theme: alt
       text: Introduction
@@ -27,8 +27,8 @@ features:
     details: Explore step-by-step guides for running and integrating with various types of nodes, how to read and write data, and how to gossip.
     link: /docs/how-to-guides/overview
     icon: ⚙️
-  - title: Resources
-    details: Access resources for understanding the inner workings of Optimum and how to interact with the protocol via APIs.
-    link: /docs/resources/news
+  - title: Research
+    details: Access resources for understanding the inner workings of Optimum and the research behind the technology.
+    link: /docs/research/overview
     icon: 🔎
 ---

@@ -155,23 +155,23 @@ function nav() {
     {
       text: "Join the Network",
       items: [
-        { text: "Overview", link: "/docs/how-to-guides/overview" },
+        { text: "Get Started", link: "/docs/how-to-guides/overview" },
         { text: "Learn", link: "/docs/learn/overview/intro" },
         {
           text: "Resources",
           items: [
-            {
-              text: "Optimum Improvement Proposals (OIPs)",
-              link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            },
+            // {
+            //   text: "Optimum Improvement Proposals (OIPs)",
+            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
+            // },
             {
               text: "Optimum ADRs",
               link: "https://github.com/getoptimum/optimum/tree/main/docs/architecture#adr-table-of-contents",
             },
-            {
-              text: "Flexnode API Docs",
-              link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            },
+            // {
+            //   text: "Flexnode API Docs",
+            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
+            // },
           ],
         },
       ],
@@ -183,7 +183,7 @@ function sidebarHome() {
   return [
     {
       text: "Learn",
-      collapsed: true,
+      collapsed: false,
       items: [
         {
           text: "Overview of Optimum",
@@ -193,18 +193,18 @@ function sidebarHome() {
               text: "Introduction",
               link: "/docs/learn/overview/intro",
             },
-          ],
-        },
-        {
-          text: "Optimum P2P",
-          collapsed: true,
-          items: [
             {
-              text: "Introduction",
-              link: "/docs/learn/p2p/intro",
+              text: "OptimumP2P",
+              link: "/docs/learn/overview/p2p.md",
             },
           ],
         },
+        // {
+        //   text: "OptimumP2P",
+        //   collapsed: true,
+        //   items: [
+        //   ],
+        // },
         // {
         //   text: "MUM",
         //   collapsed: true,
@@ -227,16 +227,40 @@ function sidebarHome() {
       items: [],
     },
     {
-      text: "Resources",
-      collapsed: true,
+      text: "Research",
+      collapsed: false,
       items: [
         {
-          text: "Technical Papers",
-          link: "/docs/resources/optimum",
+          text: "Optimum Gossip",
+          collapsed: true,
+          items: [
+            {
+              text: "Gossip",
+              link: "/docs/research/gossip/gossip",
+            },
+            {
+              text: "Transport",
+              link: "/docs/research/gossip/transport",
+            },
+            {
+              text: "Decentralized Access",
+              link: "/docs/research/gossip/decentralized-access",
+            }
+          ]
         },
         {
-          text: "Latest News & Social Media",
-          link: "/docs/resources/news",
+          text: "DeRAM",
+          collapsed: true,
+          items: [
+            {
+              text: "Atomicity and Consistency",
+              link: "/docs/research/deram/atomicity-consistency",
+            },
+            {
+              text: "Decentralized Data Storage",
+              link: "/docs/research/deram/decentralized-storage",
+            }
+          ]
         }
       ],
     },
