@@ -183,7 +183,7 @@ function sidebarHome() {
   return [
     {
       text: "Learn",
-      collapsed: true,
+      collapsed: false,
       items: [
         {
           text: "Overview of Optimum",
@@ -228,7 +228,7 @@ function sidebarHome() {
     },
     {
       text: "Research",
-      collapsed: true,
+      collapsed: false,
       items: [
         {
           text: "Optimum Gossip",
