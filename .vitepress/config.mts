@@ -153,7 +153,7 @@ export default defineConfig({
 function nav() {
   return [
     {
-      text: "Join the Network",
+      text: "Menu",
       items: [
         { text: "Get Started", link: "/docs/how-to-guides/overview" },
         { text: "Learn", link: "/docs/learn/overview/intro" },
