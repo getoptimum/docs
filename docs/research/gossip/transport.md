@@ -1,11 +1,13 @@
 # Network Coding for Transport
 
 ## [2024]
+
 **H. Esfahanizadeh, V. Vasudevan, B. Kim, S. Siva, J. Kim, A. Cohen, and M. Médard**,  
 *[On the Benefits of Coding for Network Slicing](https://arxiv.org/html/2404.17686v1)*,  
 **IEEE ICC Workshop on Ultra High Data Rate Enable Next Generation Hyper-reliable and Low-Latency Communications for Futurist 6G Networks**, June 2024.
 
 ## [2023]
+
 **V. Adat Vasudevan, M. Médard, and T. Soni**,  
 *[Practical Sliding Window Recoder: Design, Analysis, and Use Cases](https://arxiv.org/pdf/2306.10135)*,  
 **IEEE International Symposium on Local and Metropolitan Area Networks (LANMAN)**, July 2023.
@@ -19,11 +21,13 @@
 **IEEE/ACM Transactions on Networking**, vol. 31, no. 2, pp. 606-619, April 2023.
 
 ## [2022]
+
 **A. Cohen, M. Médard, and Shitz S. S.**,  
 *[Broadcast Approach Meets Network Coding for Data Streaming](https://arxiv.org/pdf/2202.03018)*,  
 **ISIT**, Jul. 2022.
 
 ## [2021]
+
 **A. Cohen, Esfahanizadeh, H., Sousa, B., Vilela, J. P., Luís, M., Raposo, D., Michel, F., Sargento, S., and Médard, M.**,  
 *[Bringing Network Coding into SDN: Architectural Study for Meshed Heterogeneous Communications](https://dspace.mit.edu/handle/1721.1/144020?show=full)*,  
 **IEEE Communications Magazine**, vol. 59, no. 4, pp. 37-43, May 2021.
@@ -33,11 +37,13 @@
 **ICC**, 2021.
 
 ## [2020]
+
 **A. Cohen, Thiran, G., Bracha, V., and Médard, M.**,  
 *[Adaptive Causal Network Coding with Feedback for Multipath Multi-hop Communications](https://www.researchgate.net/publication/343242848_Adaptive_Causal_Network_Coding_with_Feedback_for_Multipath_Multi-hop_Communications)*,  
 **IEEE Transactions on Communications**, Vol. 69, No. 2, pp. 766-785, Oct. 2020.
 
 ## [2019]
+
 **A. Cohen, Malak, D., Bracha, V. B., and Médard, M.**,  
 *[Adaptive Causal Network Coding With Feedback](https://arxiv.org/pdf/1905.02870)*,  
 **IEEE Transactions on Communications**, 2019.
@@ -51,6 +57,7 @@
 **WiOpt**, 2019.
 
 ## [2018]
+
 **D. Malak, Médard, M., and Yeh, E.**,  
 *[ARQ with Cumulative Feedback to Compensate for Burst Errors](https://dspace.mit.edu/bitstream/handle/1721.1/137910/1808.03153.pdf?sequence=2&isAllowed=y)*,  
 **GLOBECOM**, 2018.
@@ -60,6 +67,7 @@
 **IEEE/ACM Transactions on Networking**, Vol. 26, No. 6, pp. 1-14, Oct. 2018.
 
 ## [2017]
+
 **Sundararajan, J.-K., Shah, D., Médard, M., and Sadeghi, P.**,  
 *[Feedback-Based Online Network Coding](https://devavrat.mit.edu/wp-content/uploads/2017/11/Feedback-Based-Online-Network-Coding.pdf)*,  
 **IEEE Transactions on Information Theory**, Vol. 63, No. 10, pp. 6628-6649, Oct. 2017.
@@ -77,6 +85,7 @@
 **SPACOMM**, 2017.
 
 ## [2016]
+
 **J. Cloud and Médard, M.**,  
 *[Multi-Path Low Delay Network Codes](https://dspace.mit.edu/bitstream/handle/1721.1/113398/Medard_Multi-path%20low.pdf?sequence=1)*,  
 **GLOBECOM**, 2016.
@@ -86,6 +95,7 @@
 **NETCOD**, 2016.
 
 ## [2015]
+
 **J. Krigslund, Hansen, J., Lucani, D.E., Fitzek, F.H.P, and Médard, M.**,  
 *[Network Coded Software Defined Networking: Enabling 5G Transmission and Storage Networks](https://www.researchgate.net/profile/Muriel-Medard/publication/281896741_Network_Coded_Software_Defined_Networking_Enabling_5G_Transmission_and_Storage_Networks/links/568e86ec08ae78cc0515f0c2/Network-Coded-Software-Defined-Networking-Enabling-5G-Transmission-and-Storage-Networks.pdf)*,  
 **IEEE Communications Magazine**, vol.53, no.9, pp.100-107, September 2015.
@@ -115,6 +125,7 @@
 **NETCOD**, 2015.
 
 ## [2014]
+
 **M. Kim, Cloud, J., ParandehGheibi, A., Urbina, L., Fouli, K., Leith, D., and Médard, M.**,  
 *[Congestion Control for Coded Transport Layers](https://dspace.mit.edu/bitstream/handle/1721.1/100957/Congestion-Control-for-Coded.pdf?sequence=1)*,  
 **IEEE ICC Communication QoS, Reliability and Modeling Symposium**, 2014.
@@ -140,6 +151,7 @@
 **Mobile Networks and Applications (556) Springer**, vol. 19, no. 6, pp. 790-803, June 2014.
 
 ## [2013]
+
 **W. Guo, Shi, X., Cai., N, and Médard, M.**,  
 *[Localized Dimension Growth: A Convolutional Random Network Coding Approach to Managing Memory and Decoding Delay](https://www.researchgate.net/publication/258817782_Localized_Dimension_Growth_A_Convolutional_Random_Network_Coding_Approach_to_Managing_Memory_and_Decoding_Delay)*,  
 **IEEE Transactions on Communications**, vol. 61, no. 9, pp. 3894-3905, September 2013.
@@ -153,6 +165,7 @@
 **International Zurich Seminar on Information and Communication**, 2012 (published 2013).
 
 ## [2012]
+
 **A. Rezaee, du Pin Calmon, F., Zeger, L., and Médard, M.**,  
 *[Speeding Multicast by Acknowledgment Reduction Technique (SMART) Enabling Robustness of QoE to the Number of Users](https://www.researchgate.net/publication/260635387_Speeding_Multicast_by_Acknowledgment_Reduction_Technique_SMART_Enabling_Robustness_of_QoE_to_the_Number_of_Users)*,  
 **IEEE Journal of Selected Areas in Communication**, vol. 30, no. 7, pp. 1270-1280, August 2012.
@@ -166,6 +179,7 @@
 **Asilomar Conference on Signals, Systems and Computers**, 2012.
 
 ## [2011]
+
 **J. K. Sundararajan, Shah, D., Médard, M., Jakubczak, S., Mitzenmacher, M.  and  Barros, J.**,  
 *[Network Coding Meets TCP: Theory and Implementation](https://www.researchgate.net/publication/224211936_Network_Coding_Meets_TCP_Theory_and_Implementation)*,  
 **Proceedings of the IEEE**, pp. 490-512, March 2011.
@@ -179,6 +193,7 @@
 **NC-Pro Workshop**, 2011.
 
 ## [2010]
+
 **D. Lucani, Médard, M., and Stojanovic, M.**,  
 *[Systematic Network Coding for Time-Division Duplexing](https://dspace.mit.edu/bitstream/handle/1721.1/74093/Medard_Systematic%20network.pdf?sequence=1&isAllowed=y)*,  
 **ISIT**, 2010.
@@ -224,6 +239,7 @@
 **CDC**, 2010.
 
 ## [2009]
+
 **J.-K. Sundararajan, Shah, D.,  Médard, M., Mitzenmacher, M., and Barros, J.**,  
 *[Network Coding Meets TCP](https://dspace.mit.edu/bitstream/handle/1721.1/58796/Sundararajan-2009-Network%20coding%20meets%20TCP.pdf?sequence=1&isAllowed=y)*,  
 **INFOCOM**, April 2009.
@@ -253,11 +269,13 @@
 **IEEE Globecom**, November-December 2009.
 
 ## [2008]
+
 **A. Eryilmaz, Ozdaglar, A., Médard, M., and Ahmed, E.**,  
 *[On the Delay and Throughput Gains of Coding in Unreliable Networks](https://drive.google.com/file/d/1FdjM7YAYOr20QZ05gZUdknG0Ur5z5xZR/view?usp=drive_link)*,  
 **IEEE Transactions on Information Theory**, vol. 54, no. 12, December 2008.
 
 ## [2006]
+
 **A. Eyrilmaz, Ozdaglar, A., and Médard, M.**,  
 *[On Delay Performance Gains From Network Coding](https://drive.google.com/file/d/11ZtKeQGZ2A5vHgsArkgmJkoZnJ1r0Pb2/view?usp=drive_link)*,  
 **IEEE’s 40th Annual Conference on Information Sciences and Systems**, March 2006.
@@ -267,11 +285,13 @@
 **IEEE Transactions on Information Theory**, vol. 52, iss. 10, pp. 4413-4430, October 2006.
 
 ## [2005]
+
 **D.S. Lun, Ratnakar, N., Koetter, R., Médard, M., Ahmed, E., and Lee, H.**,  
 *[Achieving Minimum-Cost Multicast: A Decentralized Approach Based on Network Coding](https://www.researchgate.net/publication/4165607_Achieving_Minimum-Cost_Multicast_A_Decentralized_Approach_Based_on_Network_Coding)*,  
 **INFOCOM**, pp. 1607-1617, March 2005.
 
 ## [2004]
+
 **D.S. Lun, Médard, M., Ho, T., and Koetter, R.**,  
 *[Network Coding with a Cost Criterion](https://www.mit.edu/~medard/papersnew/conferencePaper.pdf)*,  
 **ISITA**, pp. 1232-1237, October 2004.
