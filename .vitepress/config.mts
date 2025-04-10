@@ -222,7 +222,7 @@ function sidebarHome() {
       ],
     },
     {
-      text: "How-to Guides",
+      text: "How-to Guides (Under Construction 🚧)",
       collapsed: true,
       items: [],
     },
