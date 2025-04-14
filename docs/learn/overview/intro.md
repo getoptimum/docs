@@ -2,7 +2,7 @@
 description: Get a quick primer on the constituent components of the Optimum protocol.
 ---
 
-# Introduction to Optimum
+# New Title
 
 Optimum is a highly-effective (low-latency, high-throughput), scalable, and secure
 decentralized shared memory (DeRAM) solution. In essence, it introduces an atomic
