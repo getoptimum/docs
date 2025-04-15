@@ -197,6 +197,10 @@ function sidebarHome() {
               text: "OptimumP2P",
               link: "/docs/learn/overview/p2p.md",
             },
+            {
+              text: "Optimum DeRAM",
+              link: "/docs/learn/overview/deram.md",
+            },
           ],
         },
         // {
@@ -231,7 +235,7 @@ function sidebarHome() {
       collapsed: false,
       items: [
         {
-          text: "Optimum Gossip",
+          text: "OptimumP2P",
           collapsed: true,
           items: [
             {
@@ -249,7 +253,7 @@ function sidebarHome() {
           ]
         },
         {
-          text: "DeRAM",
+          text: "Optimum DeRAM",
           collapsed: true,
           items: [
             {
