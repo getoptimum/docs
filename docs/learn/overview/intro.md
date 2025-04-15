@@ -4,25 +4,29 @@ description: Get a quick primer on the constituent components of the Optimum pro
 
 # Introduction to Optimum
 
-Optimum is a highly-effective (low-latency, high-throughput), scalable, and secure
-decentralized shared memory (DeRAM) solution. In essence, it introduces an atomic
-read/write memory designed for the Web3 environment, addressing the unique
-challenges posed by asynchronous communication, high node churn, decentralized
-decision-making, and the presence of potentially malicious nodes.
+Optimum is the world’s first decentralized, high-performance memory infrastructure
+for any blockchain — designed to scale data access, reduce network strain, and
+power the next generation of dApps. Powered by Random Linear Network Coding (RLNC)
+— a proven, MIT-developed data encoding technique — Optimum turns sluggish,
+redundant networks into fast, efficient, scalable systems.
 
-Achieving a reliable shared memory object in this setting requires careful
-attention to reducing latency, enhancing fault tolerance, minimizing bandwidth
-and storage costs, ensuring high throughput, and maintaining non-blocking,
-high-availability performance.
+Optimum is a decentralized network of flexnodes that can be run by anyone and
+permissionlessly connect to any blockchain.
 
-Our approach leverages Random Linear Network Codes (RLNC), selected for their
-flexible structure, which helps avoid costly distributed synchronization
-primitives. This flexibility contributes to improved durability, reduced
-bandwidth usage, and enhanced fault tolerance within a distributed storage
-framework.
+With Optimum, blockchains gain a memory bus and RAM that rivals the performance
+of modern computing. At its core, Optimum is building a provably optimal memory
+infrastructure that transforms blockchains into high-speed, scalable computing
+networks. The architecture is modular, permissionless, and easy to integrate via
+APIs.
 
-Our system is implemented as a network of functionally homogeneous nodes, termed
-Flexnodes, which collectively provide decentralized storage and communication
-services. External clients can interact with any Flexnode to perform read/write
-operations, using this system both for data storage and as a communication
-socket within the network.
+Optimum's products include Optimum P2P and decentralized Random Access Memory -
+DeRAM that deliver benefits across the entire blockchain ecosystem:
+
+* **For validators**: Accelerated data propagation, lower operational costs,
+  higher APY and MEV income
+* **For L1 and L2 blockchains**: Faster block propagation, reduced bandwidth
+  consumption, and optimized storage
+* **For dApp developers**: Improved transaction relay and prioritization,
+  enabling latency, throughput, and cost-sensitive apps
+* **For end users**: Faster transactions and more responsive interfaces, improve
+  user experience
