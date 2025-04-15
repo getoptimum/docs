@@ -1,5 +1,7 @@
 import { defineConfig } from 'vitepress'
 
+const { BASE: base = "/" } = process.env;
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lang: "en-US",
@@ -8,7 +10,7 @@ export default defineConfig({
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: true,
-  // base: base,
+  base: base,
   markdown: {
     math: true,
   },
