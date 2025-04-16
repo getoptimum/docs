@@ -28,5 +28,5 @@ DeRAM that deliver benefits across the entire blockchain ecosystem:
   consumption, and optimized storage
 * **For dApp developers**: Improved transaction relay and prioritization,
   enabling latency, throughput, and cost-sensitive apps
-* **For end users**: Faster transactions and more responsive interfaces, improve
+* **For end users**: Faster transactions and more responsive interfaces, improving
   user experience
