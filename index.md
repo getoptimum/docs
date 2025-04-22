@@ -6,7 +6,7 @@ titleTemplate: ":title"
 hero:
   name: "Optimum Docs"
   text: "The world's first high-performance memory infrastructure for any blockchain."
-  # tagline: My great project tagline
+  tagline: Scale any chain
   image:
     src: /home-logo.png
     alt: Optimum
