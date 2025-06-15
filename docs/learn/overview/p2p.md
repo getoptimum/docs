@@ -8,23 +8,21 @@ Gossip protocols are widely used to disseminate information across peer-to-peer 
 
 ## Limitations of Traditional Gossip
 
-Standard gossip protocols (e.g., Gossipsub) suffer from:
-- High latency: Peers must receive full messages before forwarding.
-- Bandwidth waste: Peers may receive multiple redundant copies of the same message.
+* High latency: Peers must receive full messages before forwarding.
+* Bandwidth waste: Peers may receive multiple redundant copies of the same message.
 
 ## RLNC and OptimumP2P
 
-OptimumP2P uses RLNC to encode messages into small, unique shards. Peers can forward shards immediately upon receipt, and only a subset of shards is required to reconstruct the original message. This approach provides:
-- Reduced latency: Forwarding starts with the first shard.
-- Bandwidth efficiency: Redundant data is minimized.
-- Fault tolerance: Any sufficient subset of shards enables decoding.
+* Reduced latency: Forwarding starts with the first shard.
+* Bandwidth efficiency: Redundant data is minimized.
+* Fault tolerance: Any sufficient subset of shards enables decoding.
 
 ## Performance Characteristics
 
-- **Latency**: Testnet results show 50%+ reduction in propagation latency compared to Gossipsub.
-- **Bandwidth**: RLNC reduces redundant transmissions, achieving sub-linear bandwidth growth as the network scales.
-- **Fault tolerance**: The protocol is resilient to packet loss and node churn; partial data is sufficient for message recovery.
-- **Scalability**: Efficient for both L1 and L2 chains, and supports high throughput under load.
+* **Latency**: Testnet results show 50%+ reduction in propagation latency compared to Gossipsub.
+* **Bandwidth**: RLNC reduces redundant transmissions, achieving sub-linear bandwidth growth as the network scales.
+* **Fault tolerance**: The protocol is resilient to packet loss and node churn; partial data is sufficient for message recovery.
+* **Scalability**: Efficient for both L1 and L2 chains, and supports high throughput under load.
 
 ## Summary
 
