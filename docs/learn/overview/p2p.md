@@ -1,48 +1,29 @@
-# Introduction to OptimumP2P
+# What is OptimumP2P
 
-OptimumP2P is a performant message-passing (aka gossipping) library that allows
-nodes in any network to quickly communicate with each other in a Publish-Subscribe
-protocol. OptimumP2P is optimized for high speed, low latency, and low bandwidth.
-The system is built on well-established algorithms for gossipping, but with the
-innovative approach of using Random Linear Network Coding (RLNC), a cutting-edge
-network coding technology developed at the Massachusetts Institute of Technology
-(MIT).
+OptimumP2P is a performant message-passing (gossiping) protocol for fast, bandwidth-efficient data propagation in decentralized networks. It is optimized for high speed, low latency, and low bandwidth usage. OptimumP2P leverages Random Linear Network Coding (RLNC), a network coding technique developed at MIT, to address the limitations of traditional gossip protocols.
 
-## Message-passing systems
+## Message-Passing Systems and Motivation
 
-Gossipping is a widely-used mechanism of disseminating information across a set
-of peers that are not necessarily known to each other. Such protocols are used
-in both Web2 and Web3 networks. In the Web3 domain, gossip is especially used to
-propagate transactions and blocks as they are created.
+Gossip protocols are widely used to disseminate information across peer-to-peer networks, including Web3 systems. In blockchain networks, gossip is critical for propagating transactions and blocks. Slow propagation can result in missed block rewards for validators and reduced profitability for MEV optimizers. Efficient message dissemination is essential for network health and participant incentives.
 
-Gossip is one of the most performance-critical aspects of a Web3 system. As an
-example, slow propagation could lead to a validator's proposed blocks not being
-included in the history of the ledger, thus risking the stability of the network
-and the validator's block rewards. Similarly, being slow to receive new transactions
-could affect the profitability of MEV optimizers, intent solvers, etc.
+## Limitations of Traditional Gossip
 
-Thus, faster message dissemination is critical to participants in a Web3 protocol,
-and to the overall health of the network itself.
+* High latency: Peers must receive full messages before forwarding.
+* Bandwidth waste: Peers may receive multiple redundant copies of the same message.
 
-## RLNC and Gossip
+## RLNC and OptimumP2P
 
-Today's Gossip protocols are good at eventual delivery of messages, but suffer
-from:
+* Reduced latency: Forwarding starts with the first shard.
+* Bandwidth efficiency: Redundant data is minimized.
+* Fault tolerance: Any sufficient subset of shards enables decoding.
 
-* Long time-to-delivery (latency), since a message needs to be fully received by
-  a peer before it can be forwarded onwards.
-* Wasted bandwidth, since a peer may receive multiple copies of the same message,
-  thus using several times more bandwidth than necessary.
+## Performance Characteristics
 
-The use of RLNC improves on both of these weaknesses. With RLNC, peers don't
-transmit entire messages at a time, but smaller shards that are coded pieces of
-the bigger message. Each shard is unique, and it does not matter which shards a
-peer receives -- so long as they receive a set number of shards, they can decode the message.
+* **Latency**: Testnet results show 50%+ reduction in propagation latency compared to Gossipsub.
+* **Bandwidth**: RLNC reduces redundant transmissions, achieving sub-linear bandwidth growth as the network scales.
+* **Fault tolerance**: The protocol is resilient to packet loss and node churn; partial data is sufficient for message recovery.
+* **Scalability**: Efficient for both L1 and L2 chains, and supports high throughput under load.
 
-This means that:
+## Summary
 
-* Peers start forwarding useful information as soon as they have received the
-  first shard.
-* Any redundant information a peer receives is significantly smaller in size
-  (e.g. 1/32nd the size of the original message), and therefore, bandwidth usage
-  is significantly lower.
+OptimumP2P is a high-performance, developer-friendly protocol for fast, reliable, and bandwidth-efficient data propagation in decentralized networks. By leveraging RLNC, it addresses the limitations of traditional gossip, providing measurable improvements in latency, bandwidth usage, and fault tolerance. The protocol is designed for easy integration, broad compatibility, and robust security, making it suitable for validators, chains, and applications seeking to optimize network performance.
