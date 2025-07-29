@@ -23,9 +23,9 @@ The **Protocol Abstraction** layer provides a unified interface that allows seam
 
 The data flow diagram illustrates how OptimumP2P integrates with blockchain infrastructure to provide enhanced data propagation. The system operates through three main components: the Validator Node, the Optimum Service, and the Networks layer.
 
-At the **Validator Node** level, the Optimum Agent interfaces directly with the blockchain client through IPC (Inter-Process Communication). Transaction data flows from the blockchain client to the Optimum Agent, which serves as the bridge between the blockchain infrastructure and the OptimumP2P network.
+At the **Validator Node** level, OptimumP2P interfaces directly with the blockchain client to access transaction data. This integration serves as the bridge between the blockchain infrastructure and the OptimumP2P network.
 
-The **Optimum Service** acts as the central processing unit where the core RLNC encoding and network coordination takes place. When transaction data arrives from the Optimum Agent, the service applies Random Linear Network Coding to create redundant, encoded shards that can be efficiently propagated across the network.
+The **Optimum Service** acts as the central processing unit where the core RLNC encoding and network coordination takes place. When transaction data is received from the validator, the service applies Random Linear Network Coding to create redundant, encoded shards that can be efficiently propagated across the network.
 
 The **Networks** component demonstrates the dual-path approach for maximum reliability. The primary path uses Fast Sync through the Optimum Network for rapid propagation using RLNC-encoded data. This network injects encoded shards to global blockchain nodes and validator nodes, ensuring fast delivery of critical information.
 
