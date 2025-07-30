@@ -32,9 +32,10 @@ This documentation provides technical guidance for building applications on Opti
 
 ## Reference Documentation
 
+- [OptimumP2P Technical Overview](../learn/overview/p2p.md)
 - [libp2p Specifications](https://github.com/libp2p/specs)
 - [GossipSub Protocol](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/README.md)
-- [OptimumP2P Technical Overview](../learn/overview/p2p.md)
+
 
 ## Support
 
