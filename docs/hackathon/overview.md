@@ -18,6 +18,7 @@ This documentation provides technical guidance for building applications on Opti
 - [mump2p-cli](./clients/cli.md) - Command-line interface usage
 
 ### Configuration
+- [GossipSub Configuration](./configuration/gossipsub.md) - Understanding and configuring the underlying pub/sub protocol
 - [Network Parameters](./configuration/network-params.md) - Mesh topology and RLNC settings
 - [Docker Environment Variables](./configuration/docker-vars.md) - Complete environment variable reference
 - [Performance Tuning](./configuration/tuning.md) - Optimization guidelines
@@ -34,7 +35,8 @@ This documentation provides technical guidance for building applications on Opti
 
 - [OptimumP2P Technical Overview](../learn/overview/p2p.md)
 - [libp2p Specifications](https://github.com/libp2p/specs)
-- [GossipSub Protocol](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/README.md)
+- [GossipSub v1.0 Specification](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md)
+- [libp2p PubSub Interface](https://github.com/libp2p/specs/blob/master/pubsub/README.md)
 
 
 ## Support

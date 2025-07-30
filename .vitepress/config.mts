@@ -242,6 +242,10 @@ function sidebarHome() {
           collapsed: true,
           items: [
             {
+              text: "GossipSub Configuration",
+              link: "/docs/hackathon/configuration/gossipsub",
+            },
+            {
               text: "Network Parameters",
               link: "/docs/hackathon/configuration/network-params",
             },

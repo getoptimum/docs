@@ -447,3 +447,9 @@ docker-compose logs -f | grep -E "(publish|subscribe|message)"
 # Verify P2P mesh status
 curl http://localhost:9091/debug/peers
 ```
+
+## See Also
+
+- [GossipSub Configuration Guide](/docs/hackathon/configuration/gossipsub.md) - Detailed explanation of underlying pub/sub protocol parameters
+- [P2P-Only Deployment](/docs/hackathon/deployment/p2p-only.md) - Alternative deployment without gateways
+- [First Message Tutorial](/docs/hackathon/quick-start/first-message.md) - Step-by-step getting started guide

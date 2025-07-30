@@ -280,4 +280,10 @@ curl http://localhost:9091/debug/peers
 Check message propagation in logs:
 ```bash
 docker-compose logs -f | grep "message"
-``` 
+```
+
+## See Also
+
+- [GossipSub Configuration Guide](/docs/hackathon/configuration/gossipsub.md) - Detailed explanation of underlying pub/sub protocol parameters
+- [P2P with Gateway Deployment](/docs/hackathon/deployment/p2p-with-gateway.md) - Alternative deployment with gateway layer
+- [First Message Tutorial](/docs/hackathon/quick-start/first-message.md) - Step-by-step getting started guide 
