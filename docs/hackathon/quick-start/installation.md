@@ -18,7 +18,7 @@ Open your terminal (Command Prompt on Windows, Terminal on Mac/Linux) and type:
 ```bash
 docker --version
 ```
-You should see something like `Docker version 20.10.x`
+
 
 ### 2. Docker Compose
 Docker Compose helps us run multiple Docker containers together. It usually comes with Docker Desktop, but let's verify:
@@ -26,7 +26,7 @@ Docker Compose helps us run multiple Docker containers together. It usually come
 ```bash
 docker-compose --version
 ```
-You should see something like `docker-compose version 1.29.x`
+
 
 ### 3. Git (Optional but recommended)
 Git helps you download and manage code. Most computers have it pre-installed.
