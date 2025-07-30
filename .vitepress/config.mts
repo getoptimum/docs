@@ -189,7 +189,7 @@ function sidebarHome() {
       items: [
         {
           text: "Overview",
-          link: "/docs/hackathon/",
+          link: "/docs/hackathon/overview",
         },
         {
           text: "Quick Start",
