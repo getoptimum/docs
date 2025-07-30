@@ -1,6 +1,6 @@
 # OptimumP2P
 
-OptimumP2P is a novel gossip algorithm that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to enhance message dissemination in peer-to-peer networks. It is a protocol implemented within [libp2p](https://docs.libp2p.io/) that serves as an enhanced alternative to traditional gossip protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), providing faster data propagation, improved bandwidth efficiency, and better fault tolerance through network coding techniques.
+OptimumP2P is a novel gossip algorithm that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to enhance message dissemination in peer-to-peer networks. It is built on top of [libp2p](https://docs.libp2p.io/) and serves as an enhanced alternative to traditional gossip protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), providing faster data propagation, improved bandwidth efficiency, and better fault tolerance through network coding techniques.
 
 ## How OptimumP2P Works
 
