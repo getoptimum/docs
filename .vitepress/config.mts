@@ -184,6 +184,80 @@ function nav() {
 function sidebarHome() {
   return [
     {
+      text: "Hackathon",
+      collapsed: false,
+      items: [
+        {
+          text: "Overview",
+          link: "/docs/hackathon/",
+        },
+        {
+          text: "Quick Start",
+          collapsed: true,
+          items: [
+            {
+              text: "Installation & Setup",
+              link: "/docs/hackathon/quick-start/installation",
+            },
+            {
+              text: "First Message Example",
+              link: "/docs/hackathon/quick-start/first-message",
+            },
+          ],
+        },
+        {
+          text: "Deployment Options",
+          collapsed: true,
+          items: [
+            {
+              text: "P2P Network Only",
+              link: "/docs/hackathon/deployment/p2p-only",
+            },
+            {
+              text: "P2P Network with Gateway",
+              link: "/docs/hackathon/deployment/p2p-with-gateway",
+            },
+          ],
+        },
+        {
+          text: "Client Development",
+          collapsed: true,
+          items: [
+            {
+              text: "WebSocket Client",
+              link: "/docs/hackathon/clients/websocket",
+            },
+            {
+              text: "gRPC Stream Client",
+              link: "/docs/hackathon/clients/grpc",
+            },
+            {
+              text: "mump2p-cli",
+              link: "/docs/hackathon/clients/cli",
+            },
+          ],
+        },
+        {
+          text: "Configuration",
+          collapsed: true,
+          items: [
+            {
+              text: "Network Parameters",
+              link: "/docs/hackathon/configuration/network-params",
+            },
+            {
+              text: "Docker Environment Variables",
+              link: "/docs/hackathon/configuration/docker-vars",
+            },
+            {
+              text: "Performance Tuning",
+              link: "/docs/hackathon/configuration/tuning",
+            },
+          ],
+        },
+      ],
+    },
+    {
       text: "Learn",
       collapsed: false,
       items: [
