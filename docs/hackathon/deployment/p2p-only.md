@@ -83,29 +83,130 @@ networks:
 ## Environment Variables
 
 ### Core Configuration
-- `NODE_MODE`: Set to `optimum` for RLNC-enhanced protocol or `gossipsub` for standard GossipSub
-- `CLUSTER_ID`: Unique identifier for the node
-- `LOG_LEVEL`: Logging verbosity (`debug`, `info`, `warn`, `error`)
+
+- **`NODE_MODE`**: P2P protocol implementation mode
+  - Purpose: Selects the underlying pub/sub protocol
+  - Values: `optimum` (RLNC-enhanced) or `gossipsub` (standard libp2p)
+  - Default: `optimum`
+  - Usage: Use `optimum` for better performance with RLNC coding
+  - Note: All nodes in network should use same mode for compatibility
+
+- **`CLUSTER_ID`**: Unique identifier for each P2P node
+  - Purpose: Distinguishes nodes in logs, metrics, and network topology
+  - Usage: Should be unique across all P2P nodes in deployment
+  - Format: Alphanumeric string, typically `p2pnode-1`, `p2pnode-2`, etc.
+  - Required: Yes, no default value
+
+- **`LOG_LEVEL`**: Logging verbosity level
+  - Purpose: Controls the amount and detail of log output
+  - Values: `debug`, `info`, `warn`, `error`
+  - Default: `info`
+  - Usage Guide:
+    - `debug`: Most verbose, includes detailed P2P protocol events (development)
+    - `info`: Standard level with operational information
+    - `warn`: Only warnings and errors (quiet operation)
+    - `error`: Only error messages (minimal logging)
 
 ### Port Configuration
-- `SIDECAR_PORT`: gRPC sidecar port for client connections (default: 33212)
-- `API_PORT`: HTTP API port for metrics and status (default: 9090)
-- `OPTIMUM_PORT`: P2P protocol port (default: 7070)
+
+- **`SIDECAR_PORT`**: gRPC bidirectional communication port
+  - Purpose: Port where clients connect directly to interact with P2P node
+  - Default: `33212`
+  - Range: Any available port
+  - Usage: Must be accessible from client applications for direct P2P access
+  - Network: Used for client-to-node gRPC communication
+
+- **`API_PORT`**: HTTP monitoring and management API port
+  - Purpose: Exposes REST endpoints for health checks, node state, and metrics
+  - Default: `9090`
+  - Range: Any available port
+  - Endpoints: `/api/v1/health`, `/api/v1/node-state`, `/api/v1/version`
+  - Usage: Used for operational monitoring and debugging
+
+- **`OPTIMUM_PORT`**: P2P protocol communication port
+  - Purpose: Port for peer-to-peer communication between nodes
+  - Default: `7070`
+  - Range: Any available port
+  - Usage: Must be accessible between all P2P nodes in the mesh
+  - Network: Used for inter-node OptimumP2P protocol communication
 
 ### RLNC Parameters
-- `OPTIMUM_MAX_MSG_SIZE`: Maximum message size in bytes (default: 1048576 = 1MB)
-- `OPTIMUM_SHARD_FACTOR`: Number of coded shards to generate (default: 4)
-- `OPTIMUM_SHARD_MULT`: Redundancy multiplier for shards (default: 1.5)
-- `OPTIMUM_THRESHOLD`: Decoding threshold as fraction (default: 0.75)
 
-### Mesh Topology
-- `OPTIMUM_MESH_TARGET`: Target number of peers in mesh (default: 6)
-- `OPTIMUM_MESH_MIN`: Minimum peers before grafting (default: 3)
-- `OPTIMUM_MESH_MAX`: Maximum peers before pruning (default: 12)
+- **`OPTIMUM_MAX_MSG_SIZE`**: Maximum message size in bytes
+  - Purpose: Limits individual message size to prevent memory issues
+  - Default: `1048576` (1MB)
+  - Usage: Larger values allow bigger payloads but use more memory/bandwidth
+  
 
-### Bootstrap Configuration
-- `BOOTSTRAP_PEERS`: Comma-separated list of bootstrap peer addresses
-- `IDENTITY_DIR`: Directory for storing peer identity keys
+- **`OPTIMUM_SHARD_FACTOR`**: Number of coded shards per message
+  - Purpose: Controls how many pieces each message is split into for RLNC
+  - Default: `4`
+  - Impact: Higher values increase redundancy and fault tolerance but use more bandwidth
+  - Note: Must be non-zero to enable RLNC functionality
+
+- **`OPTIMUM_SHARD_MULT`**: Shard size redundancy multiplier
+  - Purpose: Controls redundancy factor for error recovery
+  - Default: `1.5` 
+  - Impact: Higher values improve error recovery but increase bandwidth usage
+  - Note: Values >1.0 add redundancy (e.g., 1.5 = 50% redundancy)
+  
+
+- **`OPTIMUM_THRESHOLD`**: Forward/decode threshold ratio
+  - Purpose: Fraction of shards needed before forwarding or decoding message
+  - Default: `0.75` (75%)
+  - Validation: Must be between 0 and 1 (exclusive of 0, inclusive of 1)
+  - Impact: Critical for network performance tuning
+  - Note: Lower values reduce latency but may reduce reliability; higher values improve reliability but increase latency
+
+### Mesh Topology Configuration
+
+- **`OPTIMUM_MESH_TARGET`**: Target number of peer connections
+  - Purpose: Ideal number of peers each node connects to in the mesh
+  - Default: `6`
+  - Range: 3-50 (typically 4-12 for most deployments)
+  - Impact: Higher values increase redundancy and fault tolerance but use more resources
+
+
+- **`OPTIMUM_MESH_MIN`**: Minimum mesh peer connections
+  - Purpose: Minimum connections before attempting to add more peers
+  - Default: `4` 
+  - Note: Should be less than MESH_TARGET
+  - Impact: Lower values reduce fault tolerance, higher values increase resource usage
+  - Usage: Prevents network partitioning by maintaining minimum connectivity
+
+- **`OPTIMUM_MESH_MAX`**: Maximum mesh peer connections
+  - Purpose: Maximum connections before pruning excess peers
+  - Default: `12` 
+  - Note: Should be greater than MESH_TARGET
+  - Impact: Prevents resource exhaustion while maintaining network connectivity
+  - Usage: Sets upper bound to control memory and bandwidth usage
+
+### Bootstrap and Identity Configuration
+
+- **`BOOTSTRAP_PEERS`**: Initial peer discovery addresses
+  - Purpose: List of known peers for joining the mesh network
+  - Format: `/ip4/<ip>/tcp/<port>/p2p/<peer-id>`
+  - Example: `/ip4/172.28.0.12/tcp/7070/p2p/12D3KooW...`
+  - Usage: New nodes use these to discover and join the network
+  - Multiple: Can specify multiple peers separated by commas
+  - Note: At least one bootstrap peer must be accessible for network joining
+
+- **`IDENTITY_DIR`**: Node cryptographic identity directory
+  - Purpose: Directory containing node's P2P identity key (p2p.key)
+  - Default: `/identity`
+  - Usage: Only needed for bootstrap nodes, other nodes auto-generate identity
+  - Security: Contains private key material, should be properly secured
+  - Permissions: Ensure proper file permissions (600) for security
+
+### Configuration Notes
+
+All parameter values can be adjusted based on specific use case requirements. TWhen modifying parameters:
+
+- Higher OPTIMUM_THRESHOLD values improve reliability but increase latency
+- Higher OPTIMUM_MESH_TARGET values improve fault tolerance but use more resources
+- Higher OPTIMUM_SHARD_FACTOR values improve redundancy but increase bandwidth usage
+- OPTIMUM_MESH_MIN should be less than OPTIMUM_MESH_TARGET
+- OPTIMUM_MESH_MAX should be greater than OPTIMUM_MESH_TARGET
 
 ## Starting the Network
 

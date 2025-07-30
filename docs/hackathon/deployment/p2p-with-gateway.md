@@ -186,14 +186,160 @@ networks:
         - subnet: 172.28.0.0/16
 ```
 
+## P2P Node Environment Variables
+
+### Core P2P Configuration
+
+- **`CLUSTER_ID`**: Unique identifier for each P2P node
+  - Purpose: Distinguishes nodes in logs, metrics, and network topology
+  - Usage: Should be unique across all P2P nodes in deployment
+  - Format: Alphanumeric string, typically `p2pnode-1`, `p2pnode-2`, etc.
+  - Required: Yes, no default value
+
+- **`NODE_MODE`**: P2P protocol implementation mode
+  - Purpose: Selects the underlying pub/sub protocol
+  - Values: `optimum` (RLNC-enhanced) or `gossipsub` (standard libp2p)
+  - Default: `optimum`
+  - Usage: Use `optimum` for better performance with RLNC coding
+  - Note: All nodes in network should use same mode for compatibility
+
+- **`SIDECAR_PORT`**: gRPC bidirectional communication port
+  - Purpose: Port where gateways and clients connect to interact with P2P node
+  - Default: `33212`
+  - Range: Any available port (1024-65535)
+  - Usage: Must be accessible from gateway containers for internal communication
+  - Network: Used for internal container-to-container communication
+
+- **`API_PORT`**: HTTP monitoring and management API port
+  - Purpose: Exposes REST endpoints for health checks, node state, and metrics
+  - Default: `8081` for gateway, `9090` for P2P nodes (varies by component)
+  - Endpoints: `/api/v1/health`, `/api/v1/node-state`, `/api/v1/version`
+  - Usage: Used for operational monitoring and debugging
+
+### Network Discovery Configuration
+
+- **`IDENTITY_DIR`**: Node cryptographic identity directory
+  - Purpose: Directory containing node's P2P identity key (p2p.key)
+  - Default: `/identity`
+  - Usage: Only needed for bootstrap nodes, other nodes auto-generate identity
+  - Security: Contains private key material, should be properly secured
+
+- **`BOOTSTRAP_PEERS`**: Initial peer discovery addresses
+  - Purpose: List of known peers for joining the mesh network
+  - Format: `/ip4/<ip>/tcp/<port>/p2p/<peer-id>`
+  - Example: `/ip4/172.28.0.12/tcp/7070/p2p/12D3KooW...`
+  - Usage: New nodes use these to discover and join the network
+  - Multiple: Can specify multiple peers separated by commas
+
+### OptimumP2P Protocol Configuration
+
+- **`OPTIMUM_PORT`**: P2P protocol communication port
+  - Purpose: Port for peer-to-peer communication between nodes
+  - Default: `7070`
+  - Range: Any available port, commonly 7070-7080
+  - Usage: Must be accessible between all P2P nodes in the mesh
+  - Network: Used for inter-node OptimumP2P protocol communication
+
+- **`OPTIMUM_MAX_MSG_SIZE`**: Maximum message size in bytes
+  - Purpose: Limits individual message size to prevent memory issues
+  - Default: `1048576` (1MB)
+  - Usage: Larger values allow bigger payloads but use more memory/bandwidth
+
+### RLNC (Random Linear Network Coding) Configuration
+
+- **`OPTIMUM_SHARD_FACTOR`**: Number of coded shards per message
+  - Purpose: Controls how many pieces each message is split into for RLNC
+  - Default: `4` 
+  - Impact: Higher values increase redundancy and fault tolerance but use more bandwidth
+  - Note: Must be non-zero to enable RLNC functionality
+
+- **`OPTIMUM_SHARD_MULT`**: Shard size redundancy multiplier
+  - Purpose: Controls redundancy factor for error recovery
+  - Default: `1.5` 
+  - Impact: Higher values improve error recovery but increase bandwidth usage
+  - Note: Values >1.0 add redundancy (e.g., 1.5 = 50% redundancy)
+
+- **`OPTIMUM_THRESHOLD`**: Forward/decode threshold ratio
+  - Purpose: Fraction of shards needed before forwarding or decoding message
+  - Default: `0.75` (75%)
+  - Validation: Must be between 0 and 1 (exclusive of 0, inclusive of 1)
+  - Impact: Critical for network performance tuning
+  - Note: Lower values reduce latency but may reduce reliability; higher values improve reliability but increase latency
+
+### Mesh Topology Configuration
+
+- **`OPTIMUM_MESH_TARGET`**: Target number of peer connections
+  - Purpose: Ideal number of peers each node connects to in the mesh
+  - Default: `6` 
+  - Impact: Higher values increase redundancy and fault tolerance but use more resources
+  - Scaling: Adjust based on network size and reliability requirements
+
+- **`OPTIMUM_MESH_MIN`**: Minimum mesh peer connections
+  - Purpose: Minimum connections before attempting to add more peers
+  - Default: `4` 
+  - Note: Should be less than `MESH_TARGET`
+  - Impact: Lower values reduce fault tolerance, higher values increase resource usage
+  - Usage: Prevents network partitioning by maintaining minimum connectivity
+
+- **`OPTIMUM_MESH_MAX`**: Maximum mesh peer connections
+  - Purpose: Maximum connections before pruning excess peers
+  - Default: `12` 
+  - Note: Should be greater than `MESH_TARGET`
+  - Impact: Prevents resource exhaustion while maintaining network connectivity
+  - Usage: Sets upper bound to control memory and bandwidth usage
+
+### Configuration Notes
+
+All parameter values can be adjusted based on specific use case requirements. When modifying parameters:
+
+- Higher OPTIMUM_THRESHOLD values improve reliability but increase latency
+- Higher OPTIMUM_MESH_TARGET values improve fault tolerance but use more resources  
+- Higher OPTIMUM_SHARD_FACTOR values improve redundancy but increase bandwidth usage
+- OPTIMUM_MESH_MIN should be less than OPTIMUM_MESH_TARGET
+- OPTIMUM_MESH_MAX should be greater than OPTIMUM_MESH_TARGET
+
 ## Gateway Configuration
 
 ### Environment Variables
-- `GATEWAY_PORT`: HTTP/WebSocket server port (default: :8080)
-- `CLUSTER_ID`: Unique gateway identifier
-- `ENABLE_AUTH`: Enable Auth0 authentication (true/false)
-- `P2P_NODES`: Comma-separated list of P2P node sidecar addresses
-- `LOG_LEVEL`: Logging verbosity
+
+- **`GATEWAY_PORT`**: HTTP/WebSocket server port (default: `:8080`)
+  - Purpose: Defines the port where the gateway listens for client connections
+  - Usage: Internal container port for REST API and WebSocket connections
+  - Example: `:8080`, `:3000`, `:8081`
+  - Note: External port mapping is configured separately in docker-compose ports section
+
+- **`CLUSTER_ID`**: Unique gateway identifier 
+  - Purpose: Distinguishes between multiple gateway instances in logs, metrics, and monitoring
+  - Usage: Should be unique across all gateway instances in your deployment
+  - Format: Alphanumeric string, no spaces
+  - Example: `gateway-1`, `gateway-primary`, `gateway-us-east`
+  - Required: Yes, no default value
+
+- **`ENABLE_AUTH`**: Enable Auth0 JWT authentication (true/false)
+  - Purpose: Controls whether API requests require JWT authentication
+  - Usage: Set to `false` for development/testing, `true` for production
+  - Values: `true` (requires valid JWT tokens) or `false` (open access)
+  - Default: `false`
+  - Note: When `true`, requires additional Auth0 configuration (AUTH0_DOMAIN, AUTH0_AUDIENCE)
+
+- **`P2P_NODES`**: Comma-separated list of P2P node gRPC sidecar addresses
+  - Purpose: Defines which P2P nodes the gateway can connect to for message routing
+  - Format: `hostname:port,hostname:port,...`
+  - Usage: Gateway load-balances requests across these nodes for high availability
+  - Port: Should match SIDECAR_PORT of P2P nodes (typically 33212)
+  - Example: `p2pnode-1:33212,p2pnode-2:33212,p2pnode-3:33212`
+  - Behavior: Gateway attempts to connect to all listed nodes and routes to healthy ones
+
+- **`LOG_LEVEL`**: Logging verbosity level
+  - Purpose: Controls the amount and detail of log output
+  - Values: `debug`, `info`, `warn`, `error`
+  - Default: `info`
+  - Usage Guide:
+    - `debug`: Most verbose, includes request/response details, connection events (development)
+    - `info`: Standard production level with operational information
+    - `warn`: Only warnings and errors (quiet production)
+    - `error`: Only error messages (minimal logging)
+  - Performance: Higher verbosity may impact performance and storage
 
 ### Authentication (Optional)
 For production deployments, enable authentication:
@@ -263,27 +409,6 @@ client := pb.NewGatewayStreamClient(conn)
 stream, err := client.Stream(context.Background())
 ```
 
-## Load Balancing
-
-Deploy multiple gateways for high availability:
-- Gateway 1: `localhost:8081` (HTTP), `localhost:50051` (gRPC)
-- Gateway 2: `localhost:8082` (HTTP), `localhost:50052` (gRPC)
-
-Use a load balancer (nginx, HAProxy) to distribute traffic:
-```nginx
-upstream gateway_backend {
-    server localhost:8081;
-    server localhost:8082;
-}
-
-server {
-    listen 80;
-    location / {
-        proxy_pass http://gateway_backend;
-    }
-}
-```
-
 ## Monitoring
 
 ### Gateway Metrics
@@ -298,13 +423,6 @@ server {
 
 ## Scaling Considerations
 
-### Gateway Scaling
-Gateways are stateless and can be scaled horizontally:
-- Add more gateway instances
-- Use connection pooling for P2P node connections
-- Implement circuit breakers for fault tolerance
-
-### P2P Network Scaling
 Scale the P2P network by adding more nodes:
 - Maintain OPTIMUM_MESH_TARGET ratio to network size
 - Consider network topology and latency
@@ -329,12 +447,3 @@ docker-compose logs -f | grep -E "(publish|subscribe|message)"
 # Verify P2P mesh status
 curl http://localhost:9091/debug/peers
 ```
-
-### Performance Issues
-```bash
-# Monitor gateway metrics
-curl http://localhost:8081/metrics
-
-# Check resource usage
-docker stats
-``` 
