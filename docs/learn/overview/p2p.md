@@ -10,10 +10,10 @@ OptimumP2P is a gossip mechanism based on RLNC, also known as Galois Gossip, tha
 
 OptimumP2P is implemented as a P2P node that can run either the traditional [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) protocol or the enhanced OptimumP2P protocol with RLNC. The node maintains:
 
-- **[libp2p](https://docs.libp2p.io/) Host**: The underlying network layer for peer connections
-- **Protocol Selection**: Can run [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), OptimumP2P, or both protocols simultaneously  
-- **Mesh Topology**: Maintains peer connections similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) with configurable mesh degrees
-- **RLNC Parameters**: Configurable shred factor, publisher multipliers, and forwarding thresholds
+* **[libp2p](https://docs.libp2p.io/) Host**: The underlying network layer for peer connections
+* **Protocol Selection**: Can run [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), OptimumP2P, or both protocols simultaneously  
+* **Mesh Topology**: Maintains peer connections similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) with configurable mesh degrees
+* **RLNC Parameters**: Configurable shred factor, publisher multipliers, and forwarding thresholds
 
 ### Random Linear Network Coding (RLNC) Fundamentals
 
@@ -39,8 +39,8 @@ When a node publishes a message in OptimumP2P:
 
 1. **Message Preparation**: The original message is prepared for coding by adding length prefixes and padding if necessary
 2. **RLNC Encoding**: The message is divided into `k` fragments and encoded using RLNC into multiple shards using configurable parameters:
-   - `ShredFactor`: Controls how the data is fragmented  
-   - `PublisherShardMultiplier`: Determines how many shards to create initially
+   * `ShredFactor`: Controls how the data is fragmented  
+   * `PublisherShardMultiplier`: Determines how many shards to create initially
 3. **Shard Distribution**: The publisher sends different shards to different peers in round-robin fashion
 
 When a node receives a shard:
@@ -49,17 +49,17 @@ When a node receives a shard:
 2. **Storage**: Valid shards are added to the node's shard set for that message  
 3. **Decoding Attempt**: If the node has collected `k` or more linearly independent shards, it attempts to decode the original message
 4. **Forwarding Logic**: 
-   - **From Publisher**: Shards received directly from the publisher are forwarded immediately to all mesh peers
-   - **From Intermediate Nodes**: If the node has more than a threshold number of shards (`ForwardShardThreshold`), it creates a new recoded shard and forwards it to mesh peers
+   * **From Publisher**: Shards received directly from the publisher are forwarded immediately to all mesh peers
+   * **From Intermediate Nodes**: If the node has more than a threshold number of shards (`ForwardShardThreshold`), it creates a new recoded shard and forwards it to mesh peers
 
 ### Control Messages
 
 OptimumP2P uses control messages similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) to optimize traffic:
 
-- **IDONTWANT**: Announced when a node has successfully decoded a message, preventing peers from sending more shards for that message
-- **IHAVE**: Announces that a node has a complete message and can provide shards to other nodes  
-- **IWANT**: Requests additional shards for a message that hasn't been fully decoded
-- **GRAFT/PRUNE**: Manages mesh topology similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub)
+* **IDONTWANT**: Announced when a node has successfully decoded a message, preventing peers from sending more shards for that message
+* **IHAVE**: Announces that a node has a complete message and can provide shards to other nodes  
+* **IWANT**: Requests additional shards for a message that hasn't been fully decoded
+* **GRAFT/PRUNE**: Manages mesh topology similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub)
 
 ## Beyond Just Validators: Ecosystem-Wide Benefits
 
@@ -73,41 +73,41 @@ The diagram above shows an example sidecar integration pattern where OptimumP2P 
 
 OptimumP2P supercharges validator and full node performance in bandwidth-constrained and latency-sensitive networks:
 
-- **[Ethereum](https://ethereum.org/)**: Faster mempool propagation, lower uncle rates, and potential integration into both execution and consensus paths
-- **[Solana](https://solana.com/)**: Enhances Turbine-style data sharding with fault-tolerant packet loss recovery  
-- **[Cosmos](https://cosmos.network/) & IBC networks**: Strengthens interchain relaying with lower-latency packet delivery and cross-zone message reliability
+* **[Ethereum](https://ethereum.org/)**: Faster mempool propagation, lower uncle rates, and potential integration into both execution and consensus paths
+* **[Solana](https://solana.com/)**: Enhances Turbine-style data sharding with fault-tolerant packet loss recovery  
+* **[Cosmos](https://cosmos.network/) & IBC networks**: Strengthens interchain relaying with lower-latency packet delivery and cross-zone message reliability
 
 ### DeFi Chains
 
 High-frequency trading chains rely on fast, reliable state propagation:
 
-- RLNC-based propagation keeps order books consistent across nodes
-- Ensures fairness and synchrony in price discovery
-- Reduces centralization pressure around sequencer or indexer nodes
+* RLNC-based propagation keeps order books consistent across nodes
+* Ensures fairness and synchrony in price discovery
+* Reduces centralization pressure around sequencer or indexer nodes
 
 ### AI Chains
 
 AI networks are data-intensive and latency-sensitive:
 
-- OptimumP2P enables fast gossiping of model weights, gradients, and other updates
-- Supports high-throughput training/inference coordination across distributed nodes
-- Reduces straggler nodes and failed task replication due to packet loss
+* OptimumP2P enables fast gossiping of model weights, gradients, and other updates
+* Supports high-throughput training/inference coordination across distributed nodes
+* Reduces straggler nodes and failed task replication due to packet loss
 
 ### DePIN Chains 
 
 Decentralized physical infrastructure demands reliable node coordination at scale:
 
-- Improves coordination across GPU/compute/storage nodes
-- Ensures higher task completion rate for inferencing workloads
-- Supports dynamic node membership with graceful joins/leaves
+* Improves coordination across GPU/compute/storage nodes
+* Ensures higher task completion rate for inferencing workloads
+* Supports dynamic node membership with graceful joins/leaves
 
 ### Gaming & Social Chains
 
 These chains rely on fast event propagation for user interactions:
 
-- OptimumP2P delivers low-latency, real-time interactions (game state syncs, social updates)
-- Improves experience for multiplayer, onchain games and social dApps
-- Reduces costs of redundant relay infra through efficient data spreading
+* OptimumP2P delivers low-latency, real-time interactions (game state syncs, social updates)
+* Improves experience for multiplayer, onchain games and social dApps
+* Reduces costs of redundant relay infra through efficient data spreading
 
 ## Security Model
 
