@@ -22,7 +22,7 @@ RLNC is the core technology that provides OptimumP2P its performance advantages.
 
 **Key Principles:**
 
-* **Encoding**: Original data is divided into `k` pieces. These pieces are then used to generate a larger set of `n` coded shards by creating random linear combinations of the original pieces. The coefficients for these combinations are chosen from a finite field. Any equation generated has a high probability (`1 - 1/q`, where `q` is the field size) of being linearly independent, ensuring its utility.
+* **Encoding**: Original data is divided into `k` pieces. These pieces are then used to generate a larger set of `n` coded shards by creating random linear combinations of the original pieces. The coefficients for these combinations are chosen from a finite field to ensure linear independence.
 * **Early Forwarding & Composability**: A key feature of RLNC is that nodes do not need to wait to receive all `k` pieces to contribute to the network. As soon as a node receives a shard, it can be combined with other received shards to create and forward a *new, unique* coded shard (a process called recoding). This continuous "mixing" of information allows data to propagate fluidly and rapidly.
 * **Decoding**: A receiver only needs to collect *any* `k` linearly independent shards to reconstruct the original message by solving a system of linear equations. This makes the system highly resilient to packet loss, as the specific shards that arrive do not matter, only the total number of unique shards.
 
@@ -40,7 +40,7 @@ When a node publishes a message in OptimumP2P:
 2. **RLNC Encoding**: The message is divided into `k` fragments and encoded using RLNC into multiple shards using configurable parameters:
    * `ShredFactor`: Controls how the data is fragmented  
    * `PublisherShardMultiplier`: Determines how many shards to create initially
-3. **Shard Distribution**: The publisher sends different shards to different peers in round-robin fashion
+3. **Coded Shard Distribution**: The publisher sends different coded shards to different peers in round-robin fashion
 
 When a node receives a shard:
 
@@ -48,16 +48,16 @@ When a node receives a shard:
 2. **Storage**: Valid shards are added to the node's shard set for that message  
 3. **Decoding Attempt**: If the node has collected `k` or more linearly independent shards, it attempts to decode the original message
 4. **Forwarding Logic**: 
-   * **From Publisher**: Shards received directly from the publisher are forwarded immediately to all mesh peers
+   * **From Publisher**: Coded shards received directly from the publisher are forwarded immediately to all mesh peers
    * **From Intermediate Nodes**: If the node has more than a threshold number of shards (`ForwardShardThreshold`), it creates a new recoded shard and forwards it to mesh peers
 
 ### Control Messages
 
 OptimumP2P uses control messages similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) to optimize traffic:
 
-* **IDONTWANT**: Announced when a node has successfully decoded a message, preventing peers from sending more shards for that message
-* **IHAVE**: Announces that a node has a complete message and can provide shards to other nodes  
-* **IWANT**: Requests additional shards for a message that hasn't been fully decoded
+* **IDONTWANT**: Announced when a node has successfully decoded a message, preventing peers from sending more coded shards for that message
+* **IHAVE**: Announces that a node has a complete message and can provide coded shards to other nodes  
+* **IWANT**: Requests additional coded shards for a message that hasn't been fully decoded
 * **GRAFT/PRUNE**: Manages mesh topology similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub)
 
 ## Configuration Parameters
@@ -67,7 +67,7 @@ OptimumP2P provides several configurable parameters to tune performance for diff
 ### RLNC Encoding Parameters
 
 * **ShredFactor**: Controls how the data is fragmented into pieces before encoding. Higher values provide more granular sharding but increase computational overhead.
-* **PublisherShardMultiplier**: Determines how many shards to create initially when publishing a message. Formula: `shards_created = ShredFactor * PublisherShardMultiplier`
+* **PublisherShardMultiplier**: Determines how many coded shards to create initially when publishing a message. Formula: `coded_shards_created = ShredFactor * PublisherShardMultiplier`
 * **ForwardShardThreshold**: Sets the threshold for intermediate nodes to create and forward new recoded shards. Nodes forward when they have more than `ShredFactor * ForwardShardThreshold` shards
 
 ### Mesh Topology Parameters
