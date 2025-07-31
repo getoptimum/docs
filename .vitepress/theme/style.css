@@ -134,3 +134,34 @@
 .DocSearch {
   --docsearch-primary-color: var(--vp-c-brand-1) !important;
 }
+
+/**
+ * Component: Theme-aware Images
+ * -------------------------------------------------------------------------- */
+
+.theme-aware-image {
+  position: relative;
+}
+
+.theme-aware-image img {
+  width: 100%;
+  height: auto;
+}
+
+/* Hide dark images in light mode */
+.light-mode-only {
+  display: block !important;
+}
+
+.dark-mode-only {
+  display: none !important;
+}
+
+/* Show dark images in dark mode, hide light images */
+html.dark .light-mode-only {
+  display: none !important;
+}
+
+html.dark .dark-mode-only {
+  display: block !important;
+}
