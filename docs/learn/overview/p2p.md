@@ -82,11 +82,11 @@ OptimumP2P provides several configurable parameters to tune performance for diff
 
 These parameters can be adjusted based on network conditions, bandwidth constraints, and latency requirements to optimize OptimumP2P performance for specific use cases.
 
-## Beyond Just Validators: Ecosystem-Wide Benefits
+## Use Cases
 
 OptimumP2P serves as a foundational, general-purpose data propagation protocol with benefits extending across various blockchain use cases.
 
-### Classic L1s: Ethereum, Solana, Cosmos
+### Validators and Node Operators
 
 OptimumP2P supercharges validator and full node performance in bandwidth-constrained and latency-sensitive networks:
 
