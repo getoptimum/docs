@@ -1,35 +1,18 @@
 # OptimumP2P
 
-OptimumP2P is a chain-agnostic data propagation protocol that utilizes Random Linear Network Coding (RLNC) to improve the speed, efficiency, and reliability of data dissemination in blockchain networks. It is designed as an enhanced alternative to traditional gossip protocols like GossipSub, offering faster block propagation, reduced bandwidth consumption, and improved fault tolerance.
+OptimumP2P is a novel gossip algorithm that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to enhance message dissemination in peer-to-peer networks. It is built on top of [libp2p](https://docs.libp2p.io/) and serves as an enhanced alternative to traditional gossip protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), providing faster data propagation, improved bandwidth efficiency, and better fault tolerance through network coding techniques.
 
-## The Problem: Blockchain Data Propagation Bottlenecks
+## How OptimumP2P Works
 
-In modern blockchain networks, data propagation represents a critical bottleneck affecting transaction throughput, block finality, and overall network performance. When a validator proposes a new block, that block must reach a supermajority of network participants before consensus can be achieved.
+OptimumP2P is a gossip mechanism based on RLNC, also known as Galois Gossip, that builds upon [libp2p](https://docs.libp2p.io/)'s [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) protocol. Instead of transmitting complete messages between peers, OptimumP2P breaks messages into coded shards that can be independently forwarded and mathematically recombined to reconstruct the original data.
 
-Traditional gossip protocols like GossipSub introduce several challenges:
+### Node Architecture
 
-* **High Latency**: Nodes must receive a full message before they can forward it to their peers, leading to cumulative delays across multi-hop paths.
-* **Bandwidth Inefficiency**: The same message is often transmitted multiple times over redundant paths, consuming excess bandwidth and increasing operational costs for node operators.
-* **Scalability Limits**: As network size and message frequency increase, these protocols can struggle to maintain performance, limiting the practical bounds of block size and block time.
+OptimumP2P is implemented as a P2P node that enhances traditional gossip protocols with RLNC capabilities. The node maintains:
 
-## How OptimumP2P Works: A Network Coding Approach
-
-OptimumP2P addresses these limitations through RLNC, a technique that enables optimal data propagation in distributed networks. Instead of forwarding entire messages, nodes transmit smaller, coded pieces (shards) of the original data.
-
-<div class="theme-aware-image">
-  <img src="/static/img/P2P_data_flow_light.png" alt="OptimumP2P Data Flow" class="light-mode-only">
-  <img src="/static/img/P2P_data_flow_dark.png" alt="OptimumP2P Data Flow" class="dark-mode-only">
-</div>
-
-The data flow involves three main components:
-
-1.  **Validator Node Integration**: OptimumP2P interfaces directly with a blockchain client to access data, such as newly produced blocks or transactions.
-2.  **The Optimum Service**: This component is responsible for RLNC encoding. When it receives data, it applies network coding to generate redundant, coded shards.
-3.  **Network Propagation**: The coded shards are propagated through the OptimumP2P network. A fallback mechanism to standard gossip protocols can be maintained for reliability and interoperability.
-
-This model operates on a publish-subscribe (pub/sub) basis. Any node can publish data, and interested nodes across the globe can subscribe to receive it. This is well-suited for common Web3 communication patterns, from transaction broadcasting to block attestation.
-
-![OptimumP2P Network Topology](/static/img/img_1.png)
+* **[libp2p](https://docs.libp2p.io/) Host**: The underlying network layer for peer connections
+* **Mesh Topology**: Maintains peer connections similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) with configurable mesh degrees
+* **RLNC Parameters**: Configurable parameters for encoding and forwarding behavior (see [Configuration Parameters](#configuration-parameters))
 
 ### Random Linear Network Coding (RLNC) Fundamentals
 
@@ -39,7 +22,7 @@ RLNC is the core technology that provides OptimumP2P its performance advantages.
 
 **Key Principles:**
 
-* **Encoding**: Original data is divided into `k` pieces. These pieces are then used to generate a larger set of `n` coded shards by creating random linear combinations of the original pieces. The coefficients for these combinations are chosen from a finite field. Any equation generated has a high probability (`1 - 1/q`, where `q` is the field size) of being linearly independent, ensuring its utility.
+* **Encoding**: Original data is divided into `k` pieces. These pieces are then used to generate a larger set of `n` coded shards by creating random linear combinations of the original pieces. The coefficients for these combinations are chosen from a finite field to ensure linear independence.
 * **Early Forwarding & Composability**: A key feature of RLNC is that nodes do not need to wait to receive all `k` pieces to contribute to the network. As soon as a node receives a shard, it can be combined with other received shards to create and forward a *new, unique* coded shard (a process called recoding). This continuous "mixing" of information allows data to propagate fluidly and rapidly.
 * **Decoding**: A receiver only needs to collect *any* `k` linearly independent shards to reconstruct the original message by solving a system of linear equations. This makes the system highly resilient to packet loss, as the specific shards that arrive do not matter, only the total number of unique shards.
 
@@ -49,46 +32,99 @@ This approach offers several advantages:
 * **Loss Tolerance**: Messages can be decoded with any combination of shards, as long as a sufficient number reach the destination.
 * **Bandwidth Efficiency**: Sharding and recoding reduce the amount of redundant data transmission, lowering overall bandwidth usage.
 
-### High-Level Architecture
+### Protocol Operation
 
-OptimumP2P is composed of several components that work together:
+When a node publishes a message in OptimumP2P:
 
-*   **Gateway Layer**: Provides a standardized API for blockchain clients to interact with the network via HTTP and WebSockets. It handles client connections, topic management, and authentication.
-*   **P2P Node Network**: Implements the core RLNC protocol using **[libp2p](https://docs.libp2p.io/)**. It manages peer connections, discovery (via DHT), and protocol negotiation.
-*   **Protocol Abstraction**: A layer that allows for dynamic protocol selection, enabling interoperability with nodes that may not be running OptimumP2P by falling back to standard GossipSub.
+1. **Message Preparation**: The original message is prepared for coding by adding length prefixes and padding if necessary
+2. **RLNC Encoding**: The message is divided into `k` fragments and encoded using RLNC into multiple shards using configurable parameters:
+   * `ShredFactor`: Controls how the data is fragmented  
+   * `PublisherShardMultiplier`: Determines how many shards to create initially
+3. **Coded Shard Distribution**: The publisher sends different coded shards to different peers in round-robin fashion
 
-### High-Level Integration Model
+When a node receives a shard:
 
-OptimumP2P is designed to integrate with existing blockchain clients without requiring modifications to their core code. A common integration pattern is the **sidecar relay model**.
+1. **Validation**: The node checks if the shard provides new degrees of freedom (linearly independent information)
+2. **Storage**: Valid shards are added to the node's shard set for that message  
+3. **Decoding Attempt**: If the node has collected `k` or more linearly independent shards, it attempts to decode the original message
+4. **Forwarding Logic**: 
+   * **From Publisher**: Coded shards received directly from the publisher are forwarded immediately to all mesh peers
+   * **From Intermediate Nodes**: If the node has more than a threshold number of shards (`ForwardShardThreshold`), it creates a new recoded shard and forwards it to mesh peers
 
-![OptimumP2P Validator Implementation](/static/img/img_2.png)
+### Control Messages
 
-In this model, an **Optimum Relay** process runs alongside the validator's standard Consensus Layer (CL) client.
+OptimumP2P uses control messages similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) to optimize traffic:
 
-1.  The relay peers directly with the local CL client.
-2.  When a proposer needs to publish a new block, its relay forwards the block to the interconnected OptimumP2P network.
-3.  Other validators on the network subscribe to block topics. Their local relays receive the block from the OptimumP2P network and deliver it to their own CL clients for attestation.
+* **IDONTWANT**: Announced when a node has successfully decoded a message, preventing peers from sending more coded shards for that message
+* **IHAVE**: Announces that a node has a complete message and can provide coded shards to other nodes  
+* **IWANT**: Requests additional coded shards for a message that hasn't been fully decoded
+* **GRAFT/PRUNE**: Manages mesh topology similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub)
 
-This architecture allows validators to tap into the high-performance OptimumP2P network for data propagation while maintaining their existing, unmodified client software for all core consensus duties.
+## Configuration Parameters
 
-## Beyond Just Validators: Ecosystem-Wide Benefits
+OptimumP2P provides several configurable parameters to tune performance for different network conditions and requirements:
 
-OptimumP2P is designed as a foundational, general-purpose data propagation layer. Its benefits extend across the entire blockchain ecosystem and it can serve as an enhanced networking stack for any blockchain client, such as those used in Ethereum or as a potential alternative to specialized protocols like Solana's Turbine.
+### RLNC Encoding Parameters
 
-### For L1/L2 Chains and Node Operators
+* **ShredFactor**: Controls how the data is fragmented into pieces before encoding. Higher values provide more granular sharding but increase computational overhead.
+* **PublisherShardMultiplier**: Determines how many coded shards to create initially when publishing a message. Formula: `coded_shards_created = ShredFactor * PublisherShardMultiplier`
+* **ForwardShardThreshold**: Sets the threshold for intermediate nodes to create and forward new recoded shards. Nodes forward when they have more than `ShredFactor * ForwardShardThreshold` shards
 
-An efficient propagation layer can lead to several advantages for the core network and its operators.
+### Mesh Topology Parameters
 
-*   **Scalability Improvements**: By addressing propagation bottlenecks, networks can explore opportunities to increase block sizes or shorten block times without negatively impacting decentralization.
-*   **Operational Cost Reduction**: Lower bandwidth requirements can translate to reduced operational costs for node operators, particularly for those in bandwidth-constrained environments. This helps maintain network decentralization by keeping participation accessible.
+* **MeshDegreeTarget**: Target number of peers to maintain in the mesh overlay
+* **MeshDegreeMin**: Minimum number of mesh peers before triggering grafting
+* **MeshDegreeMax**: Maximum number of mesh peers before triggering pruning
 
-### For Application Developers and End Users
+### Performance Tuning
 
-The performance of the base-layer network directly impacts the applications built on top of it.
+* **RandomMessageSize**: Default message size used for testing and benchmarking (in bytes)
 
-*   **Enablement of Low-Latency dApps**: A network that supports lower-latency interactions can enable more responsive decentralized applications, including those in gaming or high-frequency DeFi.
-*   **Improved User Experience**: The goal is to improve the end-user experience through the potential for faster transaction confirmations and a more stable gas fee environment resulting from eased network congestion.
-*   **Enhanced Reliability**: A more predictable network can simplify dApp development by reducing the need for complex retry logic to handle network instability.
+These parameters can be adjusted based on network conditions, bandwidth constraints, and latency requirements to optimize OptimumP2P performance for specific use cases.
+
+## Use Cases
+
+OptimumP2P serves as a foundational, general-purpose data propagation protocol with benefits extending across various blockchain use cases.
+
+### Validators and Node Operators
+
+OptimumP2P supercharges validator and full node performance in bandwidth-constrained and latency-sensitive networks:
+
+* **[Ethereum](https://ethereum.org/)**: Faster mempool propagation, lower uncle rates, and potential integration into both execution and consensus paths
+* **[Solana](https://solana.com/)**: Enhances Turbine-style data sharding with fault-tolerant packet loss recovery  
+* **[Cosmos](https://cosmos.network/) & IBC networks**: Strengthens interchain relaying with lower-latency packet delivery and cross-zone message reliability
+
+### DeFi Chains
+
+High-frequency trading chains rely on fast, reliable state propagation:
+
+* RLNC-based propagation keeps order books consistent across nodes
+* Ensures fairness and synchrony in price discovery
+* Reduces centralization pressure around sequencer or indexer nodes
+
+### AI Chains
+
+AI networks are data-intensive and latency-sensitive:
+
+* OptimumP2P enables fast gossiping of model weights, gradients, and other updates
+* Supports high-throughput training/inference coordination across distributed nodes
+* Reduces straggler nodes and failed task replication due to packet loss
+
+### DePIN Chains 
+
+Decentralized physical infrastructure demands reliable node coordination at scale:
+
+* Improves coordination across GPU/compute/storage nodes
+* Ensures higher task completion rate for inferencing workloads
+* Supports dynamic node membership with graceful joins/leaves
+
+### Gaming & Social Chains
+
+These chains rely on fast event propagation for user interactions:
+
+* OptimumP2P delivers low-latency, real-time interactions (game state syncs, social updates)
+* Improves experience for multiplayer, onchain games and social dApps
+* Reduces costs of redundant relay infra through efficient data spreading
 
 ## Security Model
 
@@ -96,8 +132,8 @@ OptimumP2P's security model is built upon the robust foundations of **[libp2p](h
 
 Key inherited security features include:
 
-*   **Authenticated and Encrypted Channels**: All peer-to-peer communication is secured using Noise or TLS, preventing eavesdropping and tampering.
-*   **Sybil and Eclipse Attack Mitigation**: The protocol uses libp2p's peer discovery and management systems, which include defenses against an attacker flooding the network with malicious nodes to gain control or isolate honest peers.
+*   **Authenticated and Encrypted Channels**: All peer-to-peer communication is secured using [Noise](https://noiseprotocol.org/) or [TLS](https://tools.ietf.org/html/rfc8446), preventing eavesdropping and tampering.
+*   **Sybil and Eclipse Attack Mitigation**: The protocol uses [libp2p](https://docs.libp2p.io/)'s peer discovery and management systems, which include defenses against an attacker flooding the network with malicious nodes to gain control or isolate honest peers.
 
 ### Network Coding-Specific Security: Pollution Attacks
 
