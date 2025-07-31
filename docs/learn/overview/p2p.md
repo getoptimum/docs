@@ -8,12 +8,11 @@ OptimumP2P is a gossip mechanism based on RLNC, also known as Galois Gossip, tha
 
 ### Node Architecture
 
-OptimumP2P is implemented as a P2P node that can run either the traditional [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) protocol or the enhanced OptimumP2P protocol with RLNC. The node maintains:
+OptimumP2P is implemented as a P2P node that enhances traditional gossip protocols with RLNC capabilities. The node maintains:
 
 * **[libp2p](https://docs.libp2p.io/) Host**: The underlying network layer for peer connections
-* **Protocol Selection**: Can run [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), OptimumP2P, or both protocols simultaneously  
 * **Mesh Topology**: Maintains peer connections similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) with configurable mesh degrees
-* **RLNC Parameters**: Configurable shred factor, publisher multipliers, and forwarding thresholds
+* **RLNC Parameters**: Configurable parameters for encoding and forwarding behavior (see [Configuration Parameters](#configuration-parameters))
 
 ### Random Linear Network Coding (RLNC) Fundamentals
 
@@ -61,13 +60,31 @@ OptimumP2P uses control messages similar to [GossipSub](https://github.com/libp2
 * **IWANT**: Requests additional shards for a message that hasn't been fully decoded
 * **GRAFT/PRUNE**: Manages mesh topology similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub)
 
+## Configuration Parameters
+
+OptimumP2P provides several configurable parameters to tune performance for different network conditions and requirements:
+
+### RLNC Encoding Parameters
+
+* **ShredFactor**: Controls how the data is fragmented into pieces before encoding. Higher values provide more granular sharding but increase computational overhead.
+* **PublisherShardMultiplier**: Determines how many shards to create initially when publishing a message. Formula: `shards_created = ShredFactor * PublisherShardMultiplier`
+* **ForwardShardThreshold**: Sets the threshold for intermediate nodes to create and forward new recoded shards. Nodes forward when they have more than `ShredFactor * ForwardShardThreshold` shards
+
+### Mesh Topology Parameters
+
+* **MeshDegreeTarget**: Target number of peers to maintain in the mesh overlay
+* **MeshDegreeMin**: Minimum number of mesh peers before triggering grafting
+* **MeshDegreeMax**: Maximum number of mesh peers before triggering pruning
+
+### Performance Tuning
+
+* **RandomMessageSize**: Default message size used for testing and benchmarking (in bytes)
+
+These parameters can be adjusted based on network conditions, bandwidth constraints, and latency requirements to optimize OptimumP2P performance for specific use cases.
+
 ## Beyond Just Validators: Ecosystem-Wide Benefits
 
 OptimumP2P serves as a foundational, general-purpose data propagation protocol with benefits extending across various blockchain use cases.
-
-![OptimumP2P Validator Implementation](/static/img/img_2.png)
-
-The diagram above shows an example sidecar integration pattern where OptimumP2P runs alongside existing consensus layer clients. This allows validators to benefit from enhanced data propagation without modifying their core consensus software.
 
 ### Classic L1s: Ethereum, Solana, Cosmos
 
