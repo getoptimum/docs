@@ -242,20 +242,12 @@ function sidebarHome() {
           collapsed: true,
           items: [
             {
+              text: "OptimumP2P Configuration",
+              link: "/docs/hackathon/configuration/optimump2p",
+            },
+            {
               text: "GossipSub Configuration",
               link: "/docs/hackathon/configuration/gossipsub",
-            },
-            {
-              text: "Network Parameters",
-              link: "/docs/hackathon/configuration/network-params",
-            },
-            {
-              text: "Docker Environment Variables",
-              link: "/docs/hackathon/configuration/docker-vars",
-            },
-            {
-              text: "Performance Tuning",
-              link: "/docs/hackathon/configuration/tuning",
             },
           ],
         },

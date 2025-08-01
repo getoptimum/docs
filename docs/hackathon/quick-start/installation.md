@@ -48,48 +48,6 @@ git clone https://github.com/getoptimum/optimum-dev-setup-guide.git
 cd optimum-dev-setup-guide
 ```
 
-## Choose Your Setup
-
-OptimumP2P can run in two ways:
-
-1. **P2P Network Only** - Direct peer-to-peer communication (more advanced)
-2. **P2P Network with Gateway** - Includes a web-friendly layer (recommended for beginners)
-
-For your first time, we recommend starting with the **Gateway setup** because:
-- It's easier to test and see results
-- You can use simple web tools to send messages
-- It includes helpful monitoring tools
-
-## Quick Test
-
-Let's do a simple test to make sure everything works:
-
-1. Create a new folder called `optimum-test`:
-```bash
-mkdir optimum-test
-cd optimum-test
-```
-
-2. Create a simple test file:
-```bash
-echo "version: '3.8'
-services:
-  test:
-    image: hello-world" > docker-compose.yml
-```
-
-3. Run the test:
-```bash
-docker-compose up
-```
-
-If you see "Hello from Docker!" message, everything is working correctly.
-
-4. Clean up:
-```bash
-docker-compose down
-```
-
 ## What's Next?
 
 Now that you have everything installed:

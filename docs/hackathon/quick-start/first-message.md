@@ -216,8 +216,8 @@ docker-compose down -v --rmi all
 Now that you've successfully sent messages through OptimumP2P:
 
 1. **Build custom clients**: Explore the [Client Development](../clients/) guides
-2. **Optimize configuration**: Learn about [Network Parameters](../configuration/network-params.md)
-3. **Deploy to production**: Review [Performance Tuning](../configuration/tuning.md)
+2. **Optimize configuration**: Learn about [OptimumP2P Configuration](../configuration/optimump2p.md)
+3. **Compare protocols**: Review [GossipSub Configuration](../configuration/gossipsub.md)
 
 ## Troubleshooting
 

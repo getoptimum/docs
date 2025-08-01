@@ -1,47 +1,67 @@
-# OptimumP2P Hackathon Documentation
+# OptimumP2P Hackathon Guide
 
-This documentation provides technical guidance for building applications on OptimumP2P, a high-performance peer-to-peer messaging protocol that uses Random Linear Network Coding (RLNC) for efficient message propagation.
+Welcome to the OptimumP2P hackathon documentation. This guide provides everything you need to deploy, configure, and integrate OptimumP2P - a novel RLNC-enhanced gossip algorithm for high-performance peer-to-peer networks.
 
-## Documentation Structure
+## What is OptimumP2P?
 
-### Quick Start
-- [Installation & Setup](./quick-start/installation.md)
-- [First Message Example](./quick-start/first-message.md)
+OptimumP2P is a novel gossip algorithm that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to enhance traditional gossip protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub). For a comprehensive technical overview, see **[OptimumP2P Technical Overview](../learn/overview/p2p.md)**.
 
-### Deployment Options
-- [P2P Network Only](./deployment/p2p-only.md) - Direct P2P mesh setup
-- [P2P Network with Gateway](./deployment/p2p-with-gateway.md) - Gateway-enabled setup for client applications
+## Quick Start
 
-### Client Development
-- [WebSocket Client](./clients/websocket.md) - Real-time applications using WebSocket API
-- [gRPC Stream Client](./clients/grpc.md) - High-performance bidirectional streaming
-- [mump2p-cli](./clients/cli.md) - Command-line interface usage
+Get OptimumP2P running in under 5 minutes:
 
-### Configuration
-- [GossipSub Configuration](./configuration/gossipsub.md) - Understanding and configuring the underlying pub/sub protocol
-- [Network Parameters](./configuration/network-params.md) - Mesh topology and RLNC settings
-- [Docker Environment Variables](./configuration/docker-vars.md) - Complete environment variable reference
-- [Performance Tuning](./configuration/tuning.md) - Optimization guidelines
+1. **[Installation](./quick-start/installation.md)** - Set up Docker and dependencies
+2. **[First Message](./quick-start/first-message.md)** - Publish and receive your first message
 
-## Technical Features
+## Deployment Options
 
-- RLNC-enhanced message propagation with reduced bandwidth usage
-- libp2p-based networking with built-in security and peer discovery
-- Dual access modes: direct P2P and gateway-mediated
-- Multiple client interfaces: WebSocket, gRPC, CLI
-- Configurable network parameters for different deployment scenarios
+Choose your deployment strategy:
 
-## Reference Documentation
+### P2P Network Only
+- **[P2P-Only Deployment](./deployment/p2p-only.md)** - Deploy just the P2P nodes for direct integration
 
-- [OptimumP2P Technical Overview](../learn/overview/p2p.md)
-- [libp2p Specifications](https://github.com/libp2p/specs)
-- [GossipSub v1.0 Specification](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md)
-- [libp2p PubSub Interface](https://github.com/libp2p/specs/blob/master/pubsub/README.md)
+### Gateway + P2P Network  
+- **[Gateway + P2P Deployment](./deployment/p2p-with-gateway.md)** - Full stack with REST/WebSocket APIs
 
+## Client Integration
 
-## Support
+Connect to OptimumP2P using various client methods:
 
-- [Troubleshooting Guide](./troubleshooting.md)
-- [Frequently Asked Questions](./faq.md)
+- **[mump2p-cli](./clients/)** - Command-line client for testing and automation
+- **[gRPC Clients](./clients/)** - Direct gRPC integration examples
+- **[REST/WebSocket APIs](./clients/)** - Gateway-based client integration
 
-Begin with the [Installation & Setup](./quick-start/installation.md) guide to start development. 
+## Configuration
+
+Fine-tune OptimumP2P for your use case:
+
+- **[OptimumP2P Configuration](./configuration/optimump2p.md)** - RLNC parameters, mesh topology, and performance tuning  
+- **[GossipSub Configuration](./configuration/gossipsub.md)** - Standard GossipSub parameters for comparison
+
+## Performance & Comparison
+
+Benchmark and compare OptimumP2P:
+
+- **[Metrics Collection](./clients/)** - Understanding performance metrics
+- **[OptimumP2P vs GossipSub](./clients/)** - Performance comparison methodology
+
+## Docker Images Used
+
+The hackathon uses these pre-built Docker images:
+
+- **`getoptimum/p2pnode:latest`** - Core P2P node with OptimumP2P protocol
+- **`getoptimum/gateway:latest`** - Gateway service for client APIs
+
+Both images support protocol switching:
+- `NODE_MODE=optimum` - RLNC-enhanced OptimumP2P (recommended)
+- `NODE_MODE=gossipsub` - Standard GossipSub for comparison
+
+## Architecture Deep Dive
+
+For developers and integrators:
+
+- **[OptimumP2P Technical Overview](../learn/overview/p2p.md)** - Complete technical specification
+
+---
+
+**Ready to get started?** Begin with **[Installation](./quick-start/installation.md)** or dive into the **[Technical Overview](../learn/overview/p2p.md)**. 
