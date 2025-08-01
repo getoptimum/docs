@@ -48,14 +48,6 @@ git clone https://github.com/getoptimum/optimum-dev-setup-guide.git
 cd optimum-dev-setup-guide
 ```
 
-## What's Next?
-
-Now that you have everything installed:
-
-1. **Learn the basics**: Read [Core Concepts](./concepts.md) to understand how OptimumP2P works
-2. **Try it out**: Follow [First Message Example](./first-message.md) to send your first message
-3. **Build something**: Check out [Client Development](../clients/) to create your own application
-
 ## Troubleshooting
 
 ### "Docker command not found"
