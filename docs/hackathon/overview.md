@@ -27,9 +27,8 @@ Choose your deployment strategy:
 
 Connect to OptimumP2P using various client methods:
 
-- **[mump2p-cli](./clients/)** - Command-line client for testing and automation
-- **[gRPC Clients](./clients/)** - Direct gRPC integration examples
-- **[REST/WebSocket APIs](./clients/)** - Gateway-based client integration
+- **[mump2p-cli](./clients/mump2p-cli.md)** - Command-line client for testing and automation
+- **[gRPC Client Examples](./clients/grpc-examples.md)** - Direct gRPC integration examples
 
 ## Configuration
 

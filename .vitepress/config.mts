@@ -184,76 +184,6 @@ function nav() {
 function sidebarHome() {
   return [
     {
-      text: "Hackathon",
-      collapsed: false,
-      items: [
-        {
-          text: "Overview",
-          link: "/docs/hackathon/overview",
-        },
-        {
-          text: "Quick Start",
-          collapsed: true,
-          items: [
-            {
-              text: "Installation & Setup",
-              link: "/docs/hackathon/quick-start/installation",
-            },
-            {
-              text: "First Message Example",
-              link: "/docs/hackathon/quick-start/first-message",
-            },
-          ],
-        },
-        {
-          text: "Deployment Options",
-          collapsed: true,
-          items: [
-            {
-              text: "P2P Network Only",
-              link: "/docs/hackathon/deployment/p2p-only",
-            },
-            {
-              text: "P2P Network with Gateway",
-              link: "/docs/hackathon/deployment/p2p-with-gateway",
-            },
-          ],
-        },
-        {
-          text: "Client Development",
-          collapsed: true,
-          items: [
-            {
-              text: "WebSocket Client",
-              link: "/docs/hackathon/clients/websocket",
-            },
-            {
-              text: "gRPC Stream Client",
-              link: "/docs/hackathon/clients/grpc",
-            },
-            {
-              text: "mump2p-cli",
-              link: "/docs/hackathon/clients/cli",
-            },
-          ],
-        },
-        {
-          text: "Configuration",
-          collapsed: true,
-          items: [
-            {
-              text: "OptimumP2P Configuration",
-              link: "/docs/hackathon/configuration/optimump2p",
-            },
-            {
-              text: "GossipSub Configuration",
-              link: "/docs/hackathon/configuration/gossipsub",
-            },
-          ],
-        },
-      ],
-    },
-    {
       text: "Learn",
       collapsed: false,
       items: [
@@ -298,9 +228,70 @@ function sidebarHome() {
       ],
     },
     {
-      text: "How-to Guides (Under Construction 🚧)",
-      collapsed: true,
-      items: [],
+      text: "Hackathon Docs",
+      collapsed: false,
+      items: [
+        {
+          text: "Overview",
+          link: "/docs/hackathon/overview",
+        },
+        {
+          text: "Quick Start",
+          collapsed: true,
+          items: [
+            {
+              text: "Installation & Setup",
+              link: "/docs/hackathon/quick-start/installation",
+            },
+            {
+              text: "First Message Example",
+              link: "/docs/hackathon/quick-start/first-message",
+            },
+          ],
+        },
+        {
+          text: "Deployment Options",
+          collapsed: true,
+          items: [
+            {
+              text: "P2P Network Only",
+              link: "/docs/hackathon/deployment/p2p-only",
+            },
+            {
+              text: "P2P Network with Gateway",
+              link: "/docs/hackathon/deployment/p2p-with-gateway",
+            },
+          ],
+        },
+        {
+          text: "Client Development",
+          collapsed: true,
+          items: [
+            {
+              text: "mump2p-cli",
+              link: "/docs/hackathon/clients/mump2p-cli",
+            },
+            {
+              text: "gRPC Client Examples",
+              link: "/docs/hackathon/clients/grpc-examples",
+            },
+          ],
+        },
+        {
+          text: "Configuration",
+          collapsed: true,
+          items: [
+            {
+              text: "OptimumP2P Configuration",
+              link: "/docs/hackathon/configuration/optimump2p",
+            },
+            {
+              text: "GossipSub Configuration",
+              link: "/docs/hackathon/configuration/gossipsub",
+            },
+          ],
+        },
+      ],
     },
     {
       text: "Research",
