@@ -1,6 +1,6 @@
 # Your First Message
 
-This tutorial demonstrates how to send your first message through OptimumP2P using the gateway setup. We'll use the actual configuration and scripts from the development setup guide.
+This tutorial demonstrates how to send your first message through OptimumP2P using the proxy setup. We'll use the actual configuration and scripts from the development setup guide.
 
 ## Prerequisites
 
@@ -24,7 +24,7 @@ git clone https://github.com/getoptimum/optimum-dev-setup-guide.git
 cd optimum-dev-setup-guide
 ```
 
-Or create your own `docker-compose.yml` using the configuration from the [P2P Network with Gateway](../deployment/p2p-with-gateway.md) guide.
+Or create your own `docker-compose.yml` using the configuration from the [P2P Network with Proxy](../deployment/p2p-with-proxy.md) guide.
 
 ## Step 2: Start the Network
 
@@ -51,29 +51,29 @@ docker-compose ps
 ```
 
 You should see containers for:
-- gateway-1 (port 8081)
-- gateway-2 (port 8082) 
+- proxy-1 (port 8081)
+- proxy-2 (port 8082) 
 - p2pnode-1, p2pnode-2, p2pnode-3, p2pnode-4
 
-## Step 3: Test Gateway Connectivity
+## Step 3: Test Proxy Connectivity
 
-The gateway provides REST API endpoints for publishing and subscribing. Test connectivity:
+The proxy provides REST API endpoints for publishing and subscribing. Test connectivity:
 
 ```bash
-# Test gateway-1
+# Test proxy-1
 curl -I http://localhost:8081
 
-# Test gateway-2
+# Test proxy-2
 curl -I http://localhost:8082
 ```
 
-## Step 4: Build the Gateway Client
+## Step 4: Build the Proxy Client
 
-The repository includes a Go client for interacting with the gateway:
+The repository includes a Go client for interacting with the proxy:
 
 ```bash
-cd grpc_gateway_client
-go build -o gateway-client ./gateway_client.go
+cd grpc_proxy_client
+go build -o proxy-client ./gateway_client.go
 ```
 
 ## Step 5: Subscribe to Messages
@@ -86,7 +86,7 @@ In one terminal window, start a subscriber:
 ```
 
 The subscriber will:
-1. Register with the gateway via REST API (`/api/subscribe`)
+1. Register with the proxy via REST API (`/api/subscribe`)
 2. Open a gRPC stream to receive messages
 3. Display received messages in the format: `[RECEIVED] Topic: <topic> | Message: <message>`
 
@@ -155,10 +155,10 @@ Test network performance with higher message volumes:
 
 ```bash
 # High-frequency publishing (100 messages with 100ms delay)
-./gateway-client -topic=performance -threshold=0.5 -count=100 -delay=100ms
+./proxy-client -topic=performance -threshold=0.5 -count=100 -delay=100ms
 
 # Stress test (1000 messages)
-./gateway-client -topic=stress -threshold=0.5 -count=1000 -delay=10ms
+./proxy-client -topic=stress -threshold=0.5 -count=1000 -delay=10ms
 ```
 
 ## Understanding the Parameters
@@ -170,7 +170,7 @@ The threshold parameter (0.0 to 1.0) controls RLNC decoding:
 - Typical range: 0.5 to 0.8
 
 ### Client ID
-Each client needs a unique identifier for the gateway to track subscriptions and route messages correctly.
+Each client needs a unique identifier for the proxy to track subscriptions and route messages correctly.
 
 ### Topic Names
 - Case-sensitive strings
@@ -181,8 +181,8 @@ Each client needs a unique identifier for the gateway to track subscriptions and
 
 ### View logs
 ```bash
-# Gateway logs
-docker-compose logs -f gateway-1
+# Proxy logs
+docker-compose logs -f proxy-1
 
 # P2P node logs
 docker-compose logs -f p2pnode-1
@@ -194,7 +194,7 @@ docker-compose logs -f
 ### Check network connectivity
 ```bash
 # Test P2P node connectivity
-docker-compose exec gateway-1 nc -zv p2pnode-1 33212
+docker-compose exec proxy-1 nc -zv p2pnode-1 33212
 
 # View container network
 docker network inspect optimum-dev-setup-guide_optimum-network
@@ -233,7 +233,7 @@ Now that you've successfully sent messages through OptimumP2P:
 ### Message delivery issues
 - Verify topic names match exactly
 - Check threshold values are between 0.0 and 1.0
-- Review gateway and P2P node logs for errors
+- Review proxy and P2P node logs for errors
 
 ### Performance issues
 - Monitor container resources: `docker stats`

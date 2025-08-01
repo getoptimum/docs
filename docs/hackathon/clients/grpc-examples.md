@@ -1,13 +1,13 @@
 # gRPC Client Examples
 
-This guide demonstrates how to build and use gRPC clients for direct integration with OptimumP2P networks, covering both P2P-only and Gateway deployment scenarios.
+This guide demonstrates how to build and use gRPC clients for direct integration with OptimumP2P networks, covering both P2P-only and Proxy deployment scenarios.
 
 ## Overview
 
 OptimumP2P provides two gRPC client integration patterns:
 
 1. **P2P Direct Client** - Connect directly to P2P node sidecar (for P2P-only deployments)
-2. **Gateway Client** - Connect through the Gateway service (for Gateway + P2P deployments)
+2. **Proxy Client** - Connect through the Proxy service (for Proxy + P2P deployments)
 
 ## P2P Direct Client
 
@@ -107,15 +107,15 @@ The client receives different response types for metrics collection:
 - `ResponseType_MessageTraceOptimumP2P` - OptimumP2P protocol metrics
 - `ResponseType_Unknown` - Unknown response type
 
-## Gateway Client
+## Proxy Client
 
-The Gateway client connects through the Gateway service, which provides REST API registration and gRPC streaming for message delivery.
+The Proxy client connects through the Proxy service, which provides REST API registration and gRPC streaming for message delivery.
 
 ### Source Code Location
 
 ```
-optimum-dev-setup-guide/grpc_gateway_client/
-├── gateway_client.go      # Main client implementation
+optimum-dev-setup-guide/grpc_proxy_client/
+├── proxy_client.go      # Main client implementation
 ├── proto/                 # Protocol buffer definitions
 ├── grpc/                  # Generated gRPC code
 └── go.mod                 # Go module dependencies
@@ -126,13 +126,13 @@ optimum-dev-setup-guide/grpc_gateway_client/
 - REST API registration with threshold-based subscription
 - gRPC streaming for real-time message delivery
 - Automatic message publishing with configurable rate
-- Load balancing across multiple gateway instances
+- Load balancing across multiple proxy instances
 
-### Building the Gateway Client
+### Building the Proxy Client
 
 ```bash
-cd optimum-dev-setup-guide/grpc_gateway_client
-go build -o gateway-client ./gateway_client.go
+cd optimum-dev-setup-guide/grpc_proxy_client
+go build -o proxy-client ./proxy_client.go
 ```
 
 ### Usage Examples
@@ -141,17 +141,17 @@ go build -o gateway-client ./gateway_client.go
 
 ```bash
 # Basic subscription with threshold
-./gateway-client -topic=demo -threshold=0.7 -subscribeOnly=true
+./proxy-client -topic=demo -threshold=0.7 -subscribeOnly=true
 ```
 
 #### Publish and Subscribe Mode
 
 ```bash
 # Publish 10 messages with 2-second delay
-./gateway-client -topic=demo -threshold=0.5 -count=10 -delay=2s
+./proxy-client -topic=demo -threshold=0.5 -count=10 -delay=2s
 
 # High-frequency publishing
-./gateway-client -topic=performance -threshold=0.5 -count=1000 -delay=100ms
+./proxy-client -topic=performance -threshold=0.5 -count=1000 -delay=100ms
 ```
 
 ### Using the Convenience Script
@@ -160,13 +160,13 @@ go build -o gateway-client ./gateway_client.go
 cd optimum-dev-setup-guide
 
 # Subscribe to topic with threshold
-./script/gateway_client.sh subscribe demo 0.7
+./script/proxy_client.sh subscribe demo 0.7
 
 # Publish messages with threshold and count
-./script/gateway_client.sh publish demo 0.5 10
+./script/proxy_client.sh publish demo 0.5 10
 ```
 
-### Gateway Client Configuration
+### Proxy Client Configuration
 
 | Parameter | Description | Default | Example |
 |-----------|-------------|---------|---------|
@@ -176,11 +176,11 @@ cd optimum-dev-setup-guide
 | `-count` | Number of messages to publish | `5` | `100` |
 | `-delay` | Delay between message publishing | `2s` | `100ms`, `5s` |
 
-### Gateway Endpoints
+### Proxy Endpoints
 
-The Gateway client uses these endpoints:
+The Proxy client uses these endpoints:
 
-- **REST API**: `http://localhost:8081` (Gateway 1) / `http://localhost:8082` (Gateway 2)
+- **REST API**: `http://localhost:8081` (Proxy 1) / `http://localhost:8082` (Proxy 2)
 - **gRPC Stream**: `localhost:50051` (default)
 
 ### REST API Integration
@@ -215,9 +215,9 @@ case protobuf.ResponseType_MessageTraceOptimumP2P:
 }
 ```
 
-### Gateway Client Metrics
+### Proxy Client Metrics
 
-The Gateway client provides simpler message delivery metrics suitable for application-level performance testing.
+The Proxy client provides simpler message delivery metrics suitable for application-level performance testing.
 
 ### Example Performance Test
 
@@ -293,7 +293,7 @@ func main() {
 Both clients use Protocol Buffers for gRPC communication. The definitions are available in:
 
 - P2P Client: `optimum-dev-setup-guide/grpc_p2p_client/proto/p2p_stream.proto`
-- Gateway Client: `optimum-dev-setup-guide/grpc_gateway_client/proto/gateway_stream.proto`
+- Proxy Client: `optimum-dev-setup-guide/grpc_proxy_client/proto/proxy_stream.proto`
 
 ## Troubleshooting
 
@@ -322,9 +322,9 @@ failed to connect to node dial tcp 127.0.0.1:33212: connect: connection refused
 
 #### Partial message delivery
 
-**For Gateway Client:**
+**For Proxy Client:**
 - Adjust threshold parameter (lower values = faster delivery, less reliability)
-- Check gateway connectivity to P2P nodes
+- Check proxy connectivity to P2P nodes
 
 **For P2P Client:**
 - Verify direct connection to healthy P2P node
@@ -364,7 +364,7 @@ For production deployments, consider:
 Both clients support custom message formats. Modify the message structure in:
 
 - P2P Client: `P2PMessage` struct in `p2p_client.go`
-- Gateway Client: Message handling in `gateway_client.go`
+- Proxy Client: Message handling in `proxy_client.go`
 
 ### Integration with Other Languages
 
@@ -384,7 +384,7 @@ protoc --java_out=. --grpc-java_out=. proto/*.proto
 ## See Also
 
 - [mump2p CLI Guide](./mump2p-cli.md) - Command-line client for OptimumP2P
-- [P2P-Only Deployment](../deployment/p2p-only.md) - Setting up P2P nodes without gateway
-- [Gateway + P2P Deployment](../deployment/p2p-with-gateway.md) - Full stack with gateway services
+- [P2P-Only Deployment](../deployment/p2p-only.md) - Setting up P2P nodes without proxy
+- [Proxy + P2P Deployment](../deployment/p2p-with-proxy.md) - Full stack with proxy services
 - [OptimumP2P Configuration](../configuration/optimump2p.md) - Protocol configuration parameters
 - [GossipSub Configuration](../configuration/gossipsub.md) - Baseline protocol configuration 

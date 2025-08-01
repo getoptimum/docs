@@ -1,6 +1,6 @@
 # P2P Network Only Deployment
 
-This guide covers deploying a standalone OptimumP2P network without gateway intermediaries. In this configuration, clients connect directly to P2P nodes using gRPC sidecar connections, providing maximum performance and protocol flexibility.
+This guide covers deploying a standalone OptimumP2P network without proxy intermediaries. In this configuration, clients connect directly to P2P nodes using gRPC sidecar connections, providing maximum performance and protocol flexibility.
 
 
 ### Network Topology
@@ -285,5 +285,5 @@ docker-compose logs -f | grep "message"
 ## See Also
 
 - [GossipSub Configuration Guide](/docs/hackathon/configuration/gossipsub.md) - Detailed explanation of underlying pub/sub protocol parameters
-- [P2P with Gateway Deployment](/docs/hackathon/deployment/p2p-with-gateway.md) - Alternative deployment with gateway layer
+- [P2P with Proxy Deployment](/docs/hackathon/deployment/p2p-with-proxy.md) - Alternative deployment with proxy layer
 - [First Message Tutorial](/docs/hackathon/quick-start/first-message.md) - Step-by-step getting started guide 

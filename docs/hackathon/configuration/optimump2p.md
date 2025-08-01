@@ -242,5 +242,5 @@ services:
 
 - **[GossipSub Configuration](./gossipsub.md)** - Standard protocol parameters for comparison
 - **[P2P-Only Deployment](../deployment/p2p-only.md)** - Complete setup with configuration
-- **[Gateway + P2P Deployment](../deployment/p2p-with-gateway.md)** - Full stack configuration
+- **[Proxy + P2P Deployment](../deployment/p2p-with-proxy.md)** - Full stack configuration
 - **[OptimumP2P Technical Overview](../../learn/overview/p2p.md)** - Protocol fundamentals and RLNC details 

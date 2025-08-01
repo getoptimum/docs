@@ -20,8 +20,8 @@ Choose your deployment strategy:
 ### P2P Network Only
 - **[P2P-Only Deployment](./deployment/p2p-only.md)** - Deploy just the P2P nodes for direct integration
 
-### Gateway + P2P Network  
-- **[Gateway + P2P Deployment](./deployment/p2p-with-gateway.md)** - Full stack with REST/WebSocket APIs
+### Proxy + P2P Network  
+- **[Proxy + P2P Deployment](./deployment/p2p-with-proxy.md)** - Full stack with REST/WebSocket APIs
 
 ## Client Integration
 
@@ -49,7 +49,7 @@ Benchmark and compare OptimumP2P:
 The hackathon uses these pre-built Docker images:
 
 - **`getoptimum/p2pnode:latest`** - Core P2P node with OptimumP2P protocol
-- **`getoptimum/gateway:latest`** - Gateway service for client APIs
+- **`getoptimum/proxy:latest`** - Proxy service for client APIs
 
 Both images support protocol switching:
 - `NODE_MODE=optimum` - RLNC-enhanced OptimumP2P (recommended)

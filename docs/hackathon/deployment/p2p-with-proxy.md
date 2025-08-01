@@ -1,11 +1,11 @@
-# P2P Network with Gateway Deployment
+# P2P Network with Proxy Deployment
 
-This guide covers deploying OptimumP2P with gateway services that provide HTTP/WebSocket/gRPC APIs for client applications. The gateway acts as a bridge between traditional client-server applications and the OptimumP2P network.
+This guide covers deploying OptimumP2P with proxy services that provide HTTP/WebSocket/gRPC APIs for client applications. The proxy acts as a bridge between traditional client-server applications and the OptimumP2P network.
 
 
 ### Component Responsibilities
 
-**Gateway Layer:**
+**Proxy Layer:**
 - Protocol translation (HTTP/WebSocket/gRPC ↔ libp2p)
 - Client session management
 - Load balancing across P2P nodes
@@ -22,19 +22,19 @@ This guide covers deploying OptimumP2P with gateway services that provide HTTP/W
 
 ## Deployment Configuration
 
-Complete setup with gateways and P2P nodes:
+Complete setup with proxies and P2P nodes:
 
 ```yaml
 services:
-  gateway-1:
+  proxy-1:
     image: 'getoptimum/gateway:latest'
     platform: linux/amd64
     ports:
       - "8081:8080"   # HTTP/WebSocket
       - "50051:50051" # gRPC
     environment:
-      - GATEWAY_PORT=:8080
-      - CLUSTER_ID=gateway-1
+      - PROXY_PORT=:8080
+      - CLUSTER_ID=proxy-1
       - ENABLE_AUTH=false
       - LOG_LEVEL=debug
       - P2P_NODES=p2pnode-1:33212,p2pnode-2:33212,p2pnode-3:33212,p2pnode-4:33212
@@ -47,15 +47,15 @@ services:
       - p2pnode-3
       - p2pnode-4
 
-  gateway-2:
+  proxy-2:
     image: 'getoptimum/gateway:latest'
     platform: linux/amd64
     ports:
       - "8082:8080"
       - "50052:50051"
     environment:
-      - GATEWAY_PORT=:8080
-      - CLUSTER_ID=gateway-2
+      - PROXY_PORT=:8080
+      - CLUSTER_ID=proxy-2
       - ENABLE_AUTH=false
       - LOG_LEVEL=debug
       - P2P_NODES=p2pnode-1:33212,p2pnode-2:33212,p2pnode-3:33212,p2pnode-4:33212
@@ -204,15 +204,15 @@ networks:
   - Note: All nodes in network should use same mode for compatibility
 
 - **`SIDECAR_PORT`**: gRPC bidirectional communication port
-  - Purpose: Port where gateways and clients connect to interact with P2P node
+  - Purpose: Port where proxys and clients connect to interact with P2P node
   - Default: `33212`
   - Range: Any available port (1024-65535)
-  - Usage: Must be accessible from gateway containers for internal communication
+  - Usage: Must be accessible from proxy containers for internal communication
   - Network: Used for internal container-to-container communication
 
 - **`API_PORT`**: HTTP monitoring and management API port
   - Purpose: Exposes REST endpoints for health checks, node state, and metrics
-  - Default: `8081` for gateway, `9090` for P2P nodes (varies by component)
+  - Default: `8081` for proxy, `9090` for P2P nodes (varies by component)
   - Endpoints: `/api/v1/health`, `/api/v1/node-state`, `/api/v1/version`
   - Usage: Used for operational monitoring and debugging
 
@@ -298,21 +298,21 @@ All parameter values can be adjusted based on specific use case requirements. Wh
 - OPTIMUM_MESH_MIN should be less than OPTIMUM_MESH_TARGET
 - OPTIMUM_MESH_MAX should be greater than OPTIMUM_MESH_TARGET
 
-## Gateway Configuration
+## Proxy Configuration
 
 ### Environment Variables
 
-- **`GATEWAY_PORT`**: HTTP/WebSocket server port (default: `:8080`)
-  - Purpose: Defines the port where the gateway listens for client connections
+- **`PROXY_PORT`**: HTTP/WebSocket server port (default: `:8080`)
+  - Purpose: Defines the port where the proxy listens for client connections
   - Usage: Internal container port for REST API and WebSocket connections
   - Example: `:8080`, `:3000`, `:8081`
   - Note: External port mapping is configured separately in docker-compose ports section
 
-- **`CLUSTER_ID`**: Unique gateway identifier 
-  - Purpose: Distinguishes between multiple gateway instances in logs, metrics, and monitoring
-  - Usage: Should be unique across all gateway instances in your deployment
+- **`CLUSTER_ID`**: Unique proxy identifier 
+  - Purpose: Distinguishes between multiple proxy instances in logs, metrics, and monitoring
+  - Usage: Should be unique across all proxy instances in your deployment
   - Format: Alphanumeric string, no spaces
-  - Example: `gateway-1`, `gateway-primary`, `gateway-us-east`
+  - Example: `proxy-1`, `proxy-primary`, `proxy-us-east`
   - Required: Yes, no default value
 
 - **`ENABLE_AUTH`**: Enable Auth0 JWT authentication (true/false)
@@ -323,12 +323,12 @@ All parameter values can be adjusted based on specific use case requirements. Wh
   - Note: When `true`, requires additional Auth0 configuration (AUTH0_DOMAIN, AUTH0_AUDIENCE)
 
 - **`P2P_NODES`**: Comma-separated list of P2P node gRPC sidecar addresses
-  - Purpose: Defines which P2P nodes the gateway can connect to for message routing
+  - Purpose: Defines which P2P nodes the proxy can connect to for message routing
   - Format: `hostname:port,hostname:port,...`
-  - Usage: Gateway load-balances requests across these nodes for high availability
+  - Usage: Proxy load-balances requests across these nodes for high availability
   - Port: Should match SIDECAR_PORT of P2P nodes (typically 33212)
   - Example: `p2pnode-1:33212,p2pnode-2:33212,p2pnode-3:33212`
-  - Behavior: Gateway attempts to connect to all listed nodes and routes to healthy ones
+  - Behavior: Proxy attempts to connect to all listed nodes and routes to healthy ones
 
 - **`LOG_LEVEL`**: Logging verbosity level
   - Purpose: Controls the amount and detail of log output
@@ -354,7 +354,7 @@ environment:
 
 ### HTTP REST API
 - `POST /publish` - Publish message to topic
-- `GET /health` - Gateway health check
+- `GET /health` - Proxy health check
 - `GET /metrics` - Prometheus metrics
 
 ### WebSocket API
@@ -405,15 +405,15 @@ ws.onopen = () => {
 ### gRPC (Go)
 ```go
 conn, err := grpc.Dial("localhost:50051", grpc.WithInsecure())
-client := pb.NewGatewayStreamClient(conn)
+client := pb.NewProxyStreamClient(conn)
 stream, err := client.Stream(context.Background())
 ```
 
 ## Monitoring
 
-### Gateway Metrics
-- Gateway 1: http://localhost:8081/metrics
-- Gateway 2: http://localhost:8082/metrics
+### Proxy Metrics
+- Proxy 1: http://localhost:8081/metrics
+- Proxy 2: http://localhost:8082/metrics
 
 ### P2P Node Status
 - Node 1: http://localhost:9091
@@ -430,13 +430,13 @@ Scale the P2P network by adding more nodes:
 
 ## Troubleshooting
 
-### Gateway Connection Issues
+### Proxy Connection Issues
 ```bash
-# Check gateway logs
-docker-compose logs gateway-1
+# Check proxy logs
+docker-compose logs proxy-1
 
 # Test P2P node connectivity
-docker-compose exec gateway-1 nc -zv p2pnode-1 33212
+docker-compose exec proxy-1 nc -zv p2pnode-1 33212
 ```
 
 ### Message Delivery Issues
@@ -451,5 +451,5 @@ curl http://localhost:9091/debug/peers
 ## See Also
 
 - [GossipSub Configuration Guide](/docs/hackathon/configuration/gossipsub.md) - Detailed explanation of underlying pub/sub protocol parameters
-- [P2P-Only Deployment](/docs/hackathon/deployment/p2p-only.md) - Alternative deployment without gateways
+- [P2P-Only Deployment](/docs/hackathon/deployment/p2p-only.md) - Alternative deployment without proxys
 - [First Message Tutorial](/docs/hackathon/quick-start/first-message.md) - Step-by-step getting started guide

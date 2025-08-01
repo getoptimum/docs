@@ -121,4 +121,4 @@ GossipSub uses four types of control messages:
 
 - [libp2p GossipSub v1.0 Specification](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md)
 - [libp2p PubSub Interface](https://github.com/libp2p/specs/blob/master/pubsub/README.md)
-- [Optimum P2P Configuration Guide](/docs/hackathon/deployment/p2p-with-gateway.md#p2p-node-configuration) 
+- [Optimum P2P Configuration Guide](/docs/hackathon/deployment/p2p-with-proxy.md#p2p-node-configuration) 

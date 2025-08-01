@@ -258,8 +258,8 @@ function sidebarHome() {
               link: "/docs/hackathon/deployment/p2p-only",
             },
             {
-              text: "P2P Network with Gateway",
-              link: "/docs/hackathon/deployment/p2p-with-gateway",
+                              text: "P2P Network with Proxy",
+              link: "/docs/hackathon/deployment/p2p-with-proxy",
             },
           ],
         },
