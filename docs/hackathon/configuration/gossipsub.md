@@ -8,13 +8,10 @@ GossipSub is a pubsub protocol designed for decentralized networks that builds o
 
 ### Key Concepts
 
-* **Mesh**: Direct connections between peers for message forwarding
-
-* **Gossip**: Metadata exchange about available messages with non-mesh peers
-
-* **Fanout**: Temporary connections for publishing when not subscribed to a topic
-
-* **Degree**: The number of peer connections each node maintains
+- **Mesh**: Direct connections between peers for message forwarding
+- **Gossip**: Metadata exchange about available messages with non-mesh peers
+- **Fanout**: Temporary connections for publishing when not subscribed to a topic
+- **Degree**: The number of peer connections each node maintains
 
 ## Core GossipSub Parameters
 
@@ -50,76 +47,48 @@ Optimum P2P implements GossipSub with configurable parameters through environmen
 
 ### Environment Variables
 
-* **`GOSSIPSUB_PORT`**: Port for GossipSub protocol communication
+- **`GOSSIPSUB_PORT`**: Port for GossipSub protocol communication
+  - Purpose: Network port for GossipSub peer-to-peer communication
+  - Default: `6060`
+  - Usage: Internal P2P networking, separate from API ports
+  - Example: `GOSSIPSUB_PORT=6060`
 
-    * Purpose: Network port for GossipSub peer-to-peer communication
+- **`GOSSIPSUB_MAX_MSG_SIZE`**: Maximum message size in bytes
+  - Purpose: Limits individual message size to prevent memory issues
+  - Default: `1048576` (1MB)
+  - Usage: Larger values allow bigger payloads but use more memory
+  - Example: `GOSSIPSUB_MAX_MSG_SIZE=1048576`
 
-    * Default: `6060`
+- **`GOSSIPSUB_MESH_TARGET`**: Target number of mesh connections
+  - Purpose: Ideal number of direct peer connections (corresponds to `D`)
+  - Default: `6`
+  - Impact: Higher values increase redundancy but use more bandwidth
+  - Example: `GOSSIPSUB_MESH_TARGET=6`
 
-    * Usage: Internal P2P networking, separate from API ports
+- **`GOSSIPSUB_MESH_MIN`**: Minimum mesh connections
+  - Purpose: Lower threshold before attempting to add peers (corresponds to `D_low`)
+  - Default: `4`
+  - Note: Should be less than `GOSSIPSUB_MESH_TARGET`
+  - Example: `GOSSIPSUB_MESH_MIN=4`
 
-    * Example: `GOSSIPSUB_PORT=6060`
-
-* **`GOSSIPSUB_MAX_MSG_SIZE`**: Maximum message size in bytes
-
-    * Purpose: Limits individual message size to prevent memory issues
-
-    * Default: `1048576` (1MB)
-
-    * Usage: Larger values allow bigger payloads but use more memory
-
-    * Example: `GOSSIPSUB_MAX_MSG_SIZE=1048576`
-
-* **`GOSSIPSUB_MESH_TARGET`**: Target number of mesh connections
-
-    * Purpose: Ideal number of direct peer connections (corresponds to `D`)
-
-    * Default: `6`
-
-    * Impact: Higher values increase redundancy but use more bandwidth
-
-    * Example: `GOSSIPSUB_MESH_TARGET=6`
-
-* **`GOSSIPSUB_MESH_MIN`**: Minimum mesh connections
-
-    * Purpose: Lower threshold before attempting to add peers (corresponds to `D_low`)
-
-    * Default: `4`
-
-    * Note: Should be less than `GOSSIPSUB_MESH_TARGET`
-
-    * Example: `GOSSIPSUB_MESH_MIN=4`
-
-* **`GOSSIPSUB_MESH_MAX`**: Maximum mesh connections  
-
-    * Purpose: Upper threshold before pruning excess peers (corresponds to `D_high`)
-
-    * Default: `12`
-
-    * Note: Should be greater than `GOSSIPSUB_MESH_TARGET`
-
-    * Example: `GOSSIPSUB_MESH_MAX=12`
+- **`GOSSIPSUB_MESH_MAX`**: Maximum mesh connections  
+  - Purpose: Upper threshold before pruning excess peers (corresponds to `D_high`)
+  - Default: `12`
+  - Note: Should be greater than `GOSSIPSUB_MESH_TARGET`
+  - Example: `GOSSIPSUB_MESH_MAX=12`
 
 ### Configuration Example
 
 ```yaml
-
 # docker-compose.yml
-
 services:
   p2pnode-1:
     environment:
-
-* GOSSIPSUB_PORT=6060
-
-    * GOSSIPSUB_MAX_MSG_SIZE=1048576
-
-        * GOSSIPSUB_MESH_TARGET=6
-
-        * GOSSIPSUB_MESH_MIN=4
-
-        * GOSSIPSUB_MESH_MAX=12
-
+      - GOSSIPSUB_PORT=6060
+      - GOSSIPSUB_MAX_MSG_SIZE=1048576
+      - GOSSIPSUB_MESH_TARGET=6
+      - GOSSIPSUB_MESH_MIN=4
+      - GOSSIPSUB_MESH_MAX=12
 ```
 
 ## GossipSub vs Optimum Protocol
@@ -127,7 +96,6 @@ services:
 Optimum P2P runs two protocols simultaneously:
 
 1. **Standard GossipSub**: For baseline pub/sub functionality
-
 2. **Optimum Protocol**: Enhanced with RLNC (Random Linear Network Coding)
 
 Both protocols have their own configuration parameters:
@@ -143,19 +111,14 @@ Both protocols have their own configuration parameters:
 
 GossipSub uses four types of control messages:
 
-* **GRAFT**: Add peer to mesh (invite to join topic mesh)
+- **GRAFT**: Add peer to mesh (invite to join topic mesh)
+- **PRUNE**: Remove peer from mesh (remove from topic mesh)  
+- **IHAVE**: Announce available messages (gossip metadata)
+- **IWANT**: Request specific messages (response to IHAVE)
 
-* **PRUNE**: Remove peer from mesh (remove from topic mesh)  
-
-* **IHAVE**: Announce available messages (gossip metadata)
-
-* **IWANT**: Request specific messages (response to IHAVE)
 
 ## References
 
-* [libp2p GossipSub v1.0 Specification](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md)
-
-* [libp2p PubSub Interface](https://github.com/libp2p/specs/blob/master/pubsub/README.md)
-
-* [Optimum P2P Configuration Guide](/docs/hackathon/deployment/p2p-with-gateway.md#p2p-node-configuration) 
-
+- [libp2p GossipSub v1.0 Specification](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md)
+- [libp2p PubSub Interface](https://github.com/libp2p/specs/blob/master/pubsub/README.md)
+- [Optimum P2P Configuration Guide](/docs/hackathon/deployment/p2p-with-gateway.md#p2p-node-configuration) 
