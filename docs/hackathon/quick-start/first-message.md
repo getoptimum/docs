@@ -73,7 +73,7 @@ The repository includes a Go client for interacting with the proxy:
 
 ```bash
 cd grpc_proxy_client
-go build -o proxy-client ./gateway_client.go
+go build -o proxy-client ./proxy_client.go
 ```
 
 ## Step 5: Subscribe to Messages
@@ -82,7 +82,7 @@ In one terminal window, start a subscriber:
 
 ```bash
 # Subscribe to topic "demo" with threshold 0.7
-./script/gateway_client.sh subscribe demo 0.7
+./script/proxy_client.sh subscribe demo 0.7
 ```
 
 The subscriber will:
@@ -96,7 +96,7 @@ In another terminal window, publish messages:
 
 ```bash
 # Publish 5 messages to topic "demo" with threshold 0.5
-./script/gateway_client.sh publish demo 0.5 5
+./script/proxy_client.sh publish demo 0.5 5
 ```
 
 The publisher will:
@@ -135,16 +135,16 @@ Test topic isolation by using different topic names:
 
 ```bash
 # Terminal 1: Subscribe to "weather"
-./script/gateway_client.sh subscribe weather 0.7
+./script/proxy_client.sh subscribe weather 0.7
 
 # Terminal 2: Subscribe to "news"  
-./script/gateway_client.sh subscribe news 0.7
+./script/proxy_client.sh subscribe news 0.7
 
 # Terminal 3: Publish to "weather"
-./script/gateway_client.sh publish weather 0.5 3
+./script/proxy_client.sh publish weather 0.5 3
 
 # Terminal 4: Publish to "news"
-./script/gateway_client.sh publish news 0.5 3
+./script/proxy_client.sh publish news 0.5 3
 ```
 
 Each subscriber will only receive messages from their subscribed topic.

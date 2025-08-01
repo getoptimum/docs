@@ -282,6 +282,10 @@ function sidebarHome() {
           collapsed: true,
           items: [
             {
+              text: "Protocol Selection",
+              link: "/docs/hackathon/configuration/protocol-selection",
+            },
+            {
               text: "OptimumP2P Configuration",
               link: "/docs/hackathon/configuration/optimump2p",
             },

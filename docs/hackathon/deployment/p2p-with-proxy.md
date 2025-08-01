@@ -27,7 +27,7 @@ Complete setup with proxies and P2P nodes:
 ```yaml
 services:
   proxy-1:
-    image: 'getoptimum/gateway:latest'
+    image: 'getoptimum/proxy:latest'
     platform: linux/amd64
     ports:
       - "8081:8080"   # HTTP/WebSocket
@@ -48,7 +48,7 @@ services:
       - p2pnode-4
 
   proxy-2:
-    image: 'getoptimum/gateway:latest'
+    image: 'getoptimum/proxy:latest'
     platform: linux/amd64
     ports:
       - "8082:8080"

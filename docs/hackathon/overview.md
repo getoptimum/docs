@@ -1,6 +1,6 @@
-# OptimumP2P Hackathon Guide
+# OptimumP2P Network Configuration Guide
 
-Welcome to the OptimumP2P hackathon documentation. This guide provides everything you need to deploy, configure, and integrate OptimumP2P - a novel RLNC-enhanced gossip algorithm for high-performance peer-to-peer networks.
+This guide provides everything you need to deploy, configure, and experiment with OptimumP2P.
 
 ## What is OptimumP2P?
 
@@ -34,6 +34,7 @@ Connect to OptimumP2P using various client methods:
 
 Fine-tune OptimumP2P for your use case:
 
+- **[Protocol Selection](./configuration/protocol-selection.md)** - Switch between OptimumP2P and GossipSub modes
 - **[OptimumP2P Configuration](./configuration/optimump2p.md)** - RLNC parameters, mesh topology, and performance tuning  
 - **[GossipSub Configuration](./configuration/gossipsub.md)** - Standard GossipSub parameters for comparison
 
@@ -54,6 +55,8 @@ The hackathon uses these pre-built Docker images:
 Both images support protocol switching:
 - `NODE_MODE=optimum` - RLNC-enhanced OptimumP2P (recommended)
 - `NODE_MODE=gossipsub` - Standard GossipSub for comparison
+
+See **[Protocol Selection](./configuration/protocol-selection.md)** for detailed configuration and deployment examples.
 
 ## Architecture Deep Dive
 
