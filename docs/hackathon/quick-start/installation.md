@@ -37,16 +37,9 @@ git --version
 
 ## Getting the Code
 
-You have two options to get the OptimumP2P setup files:
+The OptimumP2P setup files are provided directly in this documentation. You'll create the necessary configuration files as part of the tutorial steps.
 
-### Option 1: Download from this documentation
-Create a new folder on your computer and save the docker-compose.yml files from the [Deployment Options](../deployment/) section.
-
-### Option 2: Clone the development setup repository
-```bash
-git clone https://github.com/getoptimum/optimum-dev-setup-guide.git
-cd optimum-dev-setup-guide
-```
+All required configurations and code snippets are included in the [Quick Start Guide](./first-message.md) - no external repositories needed!
 
 ## Troubleshooting
 

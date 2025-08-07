@@ -13,10 +13,12 @@ OptimumP2P provides two gRPC client integration patterns:
 
 The P2P direct client connects to individual P2P node sidecar gRPC endpoints for direct protocol interaction.
 
-### Source Code Location
+### Creating the P2P Client
+
+The P2P client code is provided below. Create the following directory structure:
 
 ```
-optimum-dev-setup-guide/grpc_p2p_client/
+grpc_p2p_client/
 ├── p2p_client.go          # Main client implementation
 ├── proto/                 # Protocol buffer definitions
 ├── grpc/                  # Generated gRPC code
@@ -32,8 +34,301 @@ optimum-dev-setup-guide/grpc_p2p_client/
 
 ### Building the P2P Client
 
+#### Step 1: Create the directory and initialize Go module
+
 ```bash
-cd optimum-dev-setup-guide/grpc_p2p_client
+mkdir grpc_p2p_client
+cd grpc_p2p_client
+go mod init p2p_client
+```
+
+#### Step 2: Add dependencies
+
+```bash
+go get google.golang.org/grpc
+go get google.golang.org/protobuf
+```
+
+#### Step 3: Create protobuf definition
+
+Create `proto/p2p_stream.proto`:
+
+```bash
+mkdir proto
+```
+
+Create `proto/p2p_stream.proto` with this content:
+
+```protobuf
+syntax = "proto3";
+
+package proto;
+
+option go_package = "optimum-gateway/proto;proto";
+
+service CommandStream {
+  rpc ListenCommands (stream Request) returns (stream Response) {}
+  rpc Health (Void) returns (HealthResponse) {}
+  rpc ListTopics(Void) returns (TopicList) {}
+}
+
+message Void {}
+
+message HealthResponse {
+  bool status = 1;
+  string nodeMode = 2;
+  float memoryUsed = 3;
+  float cpuUsed = 4;
+  float diskUsed = 5;
+}
+
+enum ResponseType {
+  Unknown = 0;
+  Message = 1;
+  MessageTraceOptimumP2P = 2;
+  MessageTraceGossipSub = 3;
+}
+
+message Request {
+  int32 command = 1;
+  bytes data = 2;
+  string topic = 3;
+}
+
+message Response {
+  ResponseType command = 1;
+  bytes data = 2;
+  bytes metadata = 3;
+}
+
+message TopicList {
+  repeated string topics = 1;
+}
+```
+
+#### Step 4: Generate protobuf code
+
+```bash
+mkdir grpc
+protoc --go_out=grpc --go-grpc_out=grpc proto/p2p_stream.proto
+```
+
+#### Step 5: Create the client code
+
+Create `p2p_client.go` with this content:
+
+```go
+package main
+
+import (
+	"context"
+	"crypto/rand"
+	"encoding/hex"
+	"encoding/json"
+	"flag"
+	"fmt"
+	"io"
+	"log"
+	"math"
+	"os"
+	"os/signal"
+	"strings"
+	"sync/atomic"
+	"syscall"
+	"time"
+
+	"google.golang.org/grpc"
+	"google.golang.org/grpc/credentials/insecure"
+	"google.golang.org/grpc/keepalive"
+	"google.golang.org/grpc/status"
+
+	protobuf "p2p_client/grpc"
+)
+
+type P2PMessage struct {
+	MessageID    string
+	Topic        string
+	Message      []byte
+	SourceNodeID string
+}
+
+type Command int32
+
+const (
+	CommandUnknown Command = iota
+	CommandPublishData
+	CommandSubscribeToTopic
+	CommandUnSubscribeToTopic
+)
+
+var (
+	addr    = flag.String("addr", "localhost:33212", "sidecar gRPC address")
+	mode    = flag.String("mode", "subscribe", "mode: subscribe | publish")
+	topic   = flag.String("topic", "", "topic name")
+	message = flag.String("msg", "", "message data (for publish)")
+
+	count = flag.Int("count", 1, "number of messages to publish (for publish mode)")
+	sleep = flag.Duration("sleep", 0, "optional delay between publishes (e.g., 1s, 500ms)")
+
+	keepaliveTime    = flag.Duration("keepalive-interval", 2*time.Minute, "gRPC keepalive ping interval")
+	keepaliveTimeout = flag.Duration("keepalive-timeout", 20*time.Second, "gRPC keepalive ping timeout")
+)
+
+func main() {
+	flag.Parse()
+	if *topic == "" {
+		log.Fatalf("−topic is required")
+	}
+
+	conn, err := grpc.NewClient(*addr,
+		grpc.WithTransportCredentials(insecure.NewCredentials()),
+		grpc.WithInitialWindowSize(1024*1024*1024),
+		grpc.WithInitialConnWindowSize(1024*1024*1024),
+		grpc.WithDefaultCallOptions(
+			grpc.MaxCallRecvMsgSize(math.MaxInt),
+			grpc.MaxCallSendMsgSize(math.MaxInt),
+		),
+		grpc.WithKeepaliveParams(keepalive.ClientParameters{
+			Time:                *keepaliveTime,
+			Timeout:             *keepaliveTimeout,
+			PermitWithoutStream: false,
+		}))
+	if err != nil {
+		log.Fatalf("failed to connect to node %v", err)
+	}
+	defer conn.Close()
+
+	client := protobuf.NewCommandStreamClient(conn)
+	ctx, cancel := context.WithCancel(context.Background())
+	defer cancel()
+
+	stream, err := client.ListenCommands(ctx)
+	if err != nil {
+		log.Fatalf("ListenCommands: %v", err)
+	}
+
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		fmt.Println("\nshutting down…")
+		cancel()
+		os.Exit(0)
+	}()
+
+	switch *mode {
+	case "subscribe":
+		subReq := &protobuf.Request{
+			Command: int32(CommandSubscribeToTopic),
+			Topic:   *topic,
+		}
+		if err := stream.Send(subReq); err != nil {
+			log.Fatalf("send subscribe: %v", err)
+		}
+		fmt.Printf("Subscribed to topic %q, waiting for messages…\n", *topic)
+
+		var receivedCount int32
+		msgChan := make(chan *protobuf.Response, 10000)
+
+		go func() {
+			for {
+				resp, err := stream.Recv()
+				if err == io.EOF {
+					close(msgChan)
+					return
+				}
+				if err != nil {
+					if st, ok := status.FromError(err); ok {
+						msg := st.Message()
+						if strings.Contains(msg, "ENHANCE_YOUR_CALM") || strings.Contains(msg, "too_many_pings") {
+							log.Printf("Connection closed due to keepalive ping limit.")
+							close(msgChan)
+							return
+						}
+					}
+					log.Printf("recv error: %v", err)
+					close(msgChan)
+					return
+				}
+				msgChan <- resp
+			}
+		}()
+
+		for {
+			select {
+			case <-ctx.Done():
+				log.Printf("Context canceled. Total messages received: %d", atomic.LoadInt32(&receivedCount))
+				return
+			case resp, ok := <-msgChan:
+				if !ok {
+					log.Printf("Stream closed. Total messages received: %d", atomic.LoadInt32(&receivedCount))
+					return
+				}
+				go func(resp *protobuf.Response) {
+					handleResponse(resp, &receivedCount)
+				}(resp)
+			}
+		}
+
+	case "publish":
+		if *message == "" && *count == 1 {
+			log.Fatalf("−msg is required in publish mode")
+		}
+		for i := 0; i < *count; i++ {
+			var data []byte
+			if *count == 1 {
+				data = []byte(*message)
+			} else {
+				randomBytes := make([]byte, 4)
+				if _, err := rand.Read(randomBytes); err != nil {
+					log.Fatalf("failed to generate random bytes: %v", err)
+				}
+				randomSuffix := hex.EncodeToString(randomBytes)
+				data = []byte(fmt.Sprintf("P2P message %d - %s", i+1, randomSuffix))
+			}
+
+			pubReq := &protobuf.Request{
+				Command: int32(CommandPublishData),
+				Topic:   *topic,
+				Data:    data,
+			}
+			if err := stream.Send(pubReq); err != nil {
+				log.Fatalf("send publish: %v", err)
+			}
+			fmt.Printf("Published %q to %q\n", string(data), *topic)
+
+			if *sleep > 0 {
+				time.Sleep(*sleep)
+			}
+		}
+
+	default:
+		log.Fatalf("unknown mode %q", *mode)
+	}
+}
+
+func handleResponse(resp *protobuf.Response, counter *int32) {
+	switch resp.GetCommand() {
+	case protobuf.ResponseType_Message:
+		var p2pMessage P2PMessage
+		if err := json.Unmarshal(resp.GetData(), &p2pMessage); err != nil {
+			log.Printf("Error unmarshalling message: %v", err)
+			return
+		}
+		n := atomic.AddInt32(counter, 1)
+		fmt.Printf("[%d] Received message: %q\n", n, string(p2pMessage.Message))
+	case protobuf.ResponseType_MessageTraceGossipSub:
+	case protobuf.ResponseType_MessageTraceOptimumP2P:
+	case protobuf.ResponseType_Unknown:
+	default:
+		log.Println("Unknown response command:", resp.GetCommand())
+	}
+}
+```
+
+#### Step 6: Build the client
+
+```bash
 go build -o p2p-client ./p2p_client.go
 ```
 
@@ -57,21 +352,62 @@ go build -o p2p-client ./p2p_client.go
   -count=100 -sleep=200ms
 ```
 
-### Using the Convenience Script
+### Using a Convenience Script (Optional)
 
-The repository includes a helper script for easier usage:
+You can create a helper script `p2p_client.sh` for easier usage:
 
 ```bash
-cd optimum-dev-setup-guide
+#!/usr/bin/env bash
+set -e
 
+P2P_CLIENT_DIR="./grpc_p2p_client"
+
+cd "$P2P_CLIENT_DIR"
+
+go build -o p2p-client ./p2p_client.go
+
+if [ -z "${1:-}" ]; then
+  echo "Usage: $0 <addr> (subscribe <topic>)|(publish <topic> <message|\"random\"> [options])" >&2
+  exit 1
+fi
+
+ADDR="$1"
+shift
+
+case "${1:-}" in
+  subscribe)
+    TOPIC="$2"
+    shift 2
+    ./p2p-client -mode=subscribe -topic="$TOPIC" --addr="$ADDR" "$@"
+    ;;
+  publish)
+    TOPIC="$2"
+    MESSAGE="$3"
+    shift 3
+    if [[ "$MESSAGE" == "random" ]]; then
+      ./p2p-client -mode=publish -topic="$TOPIC" --addr="$ADDR" "$@"
+    else
+      ./p2p-client -mode=publish -topic="$TOPIC" -msg="$MESSAGE" --addr="$ADDR" "$@"
+    fi
+    ;;
+  *)
+    echo "Usage: $0 <addr> (subscribe <topic>)|(publish <topic> <message> [options])" >&2
+    exit 1
+    ;;
+esac
+```
+
+Then use it like:
+
+```bash
 # Subscribe to topic
-./script/p2p_client.sh 127.0.0.1:33221 subscribe test-topic
+./p2p_client.sh 127.0.0.1:33221 subscribe test-topic
 
 # Publish a message
-./script/p2p_client.sh 127.0.0.1:33221 publish test-topic "Hello World"
+./p2p_client.sh 127.0.0.1:33221 publish test-topic "Hello World"
 
 # Publish multiple random messages
-./script/p2p_client.sh 127.0.0.1:33221 publish test-topic "random" -count=100 -sleep=200ms
+./p2p_client.sh 127.0.0.1:33221 publish test-topic "random" -count=100 -sleep=200ms
 ```
 
 ### P2P Client Configuration
@@ -111,15 +447,9 @@ The client receives different response types for metrics collection:
 
 The Proxy client connects through the Proxy service, which provides REST API registration and gRPC streaming for message delivery.
 
-### Source Code Location
+### Creating the Proxy Client
 
-```
-optimum-dev-setup-guide/grpc_proxy_client/
-├── proxy_client.go      # Main client implementation
-├── proto/                 # Protocol buffer definitions
-├── grpc/                  # Generated gRPC code
-└── go.mod                 # Go module dependencies
-```
+The Proxy client code is provided in the [Quick Start Guide](../quick-start/first-message.md#step-4-create-the-proxy-client). Follow those steps to create the complete proxy client with all necessary files.
 
 ### Client Features
 
@@ -130,10 +460,7 @@ optimum-dev-setup-guide/grpc_proxy_client/
 
 ### Building the Proxy Client
 
-```bash
-cd optimum-dev-setup-guide/grpc_proxy_client
-go build -o proxy-client ./proxy_client.go
-```
+Refer to the [Quick Start Guide Steps 4a-4g](../quick-start/first-message.md#step-4-create-the-proxy-client) for complete build instructions.
 
 ### Usage Examples
 
@@ -156,14 +483,14 @@ go build -o proxy-client ./proxy_client.go
 
 ### Using the Convenience Script
 
-```bash
-cd optimum-dev-setup-guide
+Refer to the [Quick Start Guide](../quick-start/first-message.md) for examples of using the proxy client directly with command-line flags like:
 
+```bash
 # Subscribe to topic with threshold
-./script/proxy_client.sh subscribe demo 0.7
+./proxy-client -topic=demo -threshold=0.7 -subscribeOnly
 
 # Publish messages with threshold and count
-./script/proxy_client.sh publish demo 0.5 10
+./proxy-client -topic=demo -threshold=0.5 -count=10
 ```
 
 ### Proxy Client Configuration
@@ -223,13 +550,13 @@ The Proxy client provides simpler message delivery metrics suitable for applicat
 
 ```bash
 # Terminal 1: Start OptimumP2P subscriber
-./script/p2p_client.sh 127.0.0.1:33221 subscribe perf-test
+./p2p-client -addr=127.0.0.1:33221 -mode=subscribe -topic=perf-test
 
 # Terminal 2: Start GossipSub subscriber  
-./script/p2p_client.sh 127.0.0.1:33222 subscribe perf-test
+./p2p-client -addr=127.0.0.1:33222 -mode=subscribe -topic=perf-test
 
 # Terminal 3: Publish test messages
-./script/p2p_client.sh 127.0.0.1:33221 publish perf-test "random" -count=1000 -sleep=10ms
+./p2p-client -addr=127.0.0.1:33221 -mode=publish -topic=perf-test -count=1000 -sleep=10ms
 ```
 
 ## Integration Examples
@@ -290,10 +617,10 @@ func main() {
 
 ### Protocol Buffer Definitions
 
-Both clients use Protocol Buffers for gRPC communication. The definitions are available in:
+Both clients use Protocol Buffers for gRPC communication. The definitions are provided in the code sections above:
 
-- P2P Client: `optimum-dev-setup-guide/grpc_p2p_client/proto/p2p_stream.proto`
-- Proxy Client: `optimum-dev-setup-guide/grpc_proxy_client/proto/proxy_stream.proto`
+- P2P Client: See the protobuf definition in the "Building the P2P Client" section
+- Proxy Client: See the [Quick Start Guide](../quick-start/first-message.md#step-4d-create-protobuf-definition)
 
 ## Troubleshooting
 
@@ -337,7 +664,7 @@ failed to connect to node dial tcp 127.0.0.1:33212: connect: connection refused
 ```bash
 # Regenerate gRPC code if needed
 cd grpc_p2p_client
-protoc --go_out=. --go-grpc_out=. proto/*.proto
+protoc --go_out=grpc --go-grpc_out=grpc proto/*.proto
 ```
 
 #### Module dependency issues
