@@ -1,8 +1,8 @@
 # Introduction to Optimum DeRAM
 
-Optimum is a highly-effective (low-latency, high-throughput), scalable, and secure
-decentralized memory (DeRAM) solution. In essence, it introduces an atomic
-read/write memory designed for the Web3 environment, addressing the unique
+**Optimum DeRAM (Decentralized Memory)** is a highly effective, low-latency, high-throughput, 
+and scalable memory abstraction built within the Optimum protocol. 
+In essence, it introduces an atomic read/write memory designed for the Web3 environment, addressing the unique
 challenges posed by asynchronous communication, high node churn, decentralized
 decision-making, and the presence of potentially malicious nodes.
 
@@ -22,3 +22,5 @@ Flexnodes, which collectively provide decentralized storage and communication
 services. External clients can interact with any Flexnode to perform read/write
 operations, using this system both for data storage and as a communication
 socket within the network.
+
+**More coming soon.**
