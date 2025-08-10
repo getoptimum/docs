@@ -1,128 +1,62 @@
-# OptimumP2P Network Configuration Guide
+# OptimumP2P Quickstart & Developer Guide
 
-This guide helps you install, run, and experiment with OptimumP2P — a next-generation gossip protocol built for Web3 networks. 
-Whether you’re a hacker, builder, or researcher, this guide will walk you through:
+This guide walks you through everything you need to **understand**, **deploy**, **run**, and **experiment** with OptimumP2P.
+It’s designed for beginners but complete enough for advanced developers to jump in and integrate.
 
-* Setup and deployment
-* Messaging and client integration
-* Configuration and tuning
-* Performance testing
-* Debugging and troubleshooting
-
-Start with the [OptimumP2P Technical Overview](../learn/overview/p2p.md) — a primer on how RLNC-based gossip works.
-
----
-
-## 📚 Table of Contents
-
-<details>
-<summary><strong>Expand to view all sections</strong></summary>
-
-- [OptimumP2P Network Configuration Guide](#optimump2p-network-configuration-guide)
-  - [📚 Table of Contents](#-table-of-contents)
-  - [Quick Start](#quick-start)
-    - [1. Install Dependencies](#1-install-dependencies)
-    - [2. Send Your First Message](#2-send-your-first-message)
-  - [Deployment Options](#deployment-options)
-    - [OptimumP2P Nodes](#optimump2p-nodes)
-    - [Proxy + OptimumP2P Nodes (Recommended)](#proxy--optimump2p-nodes-recommended)
-  - [Client Integration](#client-integration)
-    - [CLI](#cli)
-    - [App Integration](#app-integration)
-  - [Configuration](#configuration)
-  - [Performance \& Comparison](#performance--comparison)
-  - [Docker Images Used](#docker-images-used)
-  - [Architecture Deep Dive](#architecture-deep-dive)
-
-</details>
-
----
-
-## Quick Start
-
-Get a local OptimumP2P network running in minutes:
-
-### 1. [Install Dependencies](./quick-start/installation.md)
-
-* Docker + Docker Compose  
-* Git (optional)  
-* Go (for client dev)
-
-### 2. [Send Your First Message](./quick-start/first-message.md)
-
-* Start 4 P2P nodes + 2 proxy  
-* Subscribe to a topic  
-* Publish messages via REST/gRPC  
-* Receive live decoded messages
-
----
-
-## Deployment Options
-
-Choose a setup depending on your use case:
-
-### OptimumP2P Nodes
-
-Deploys just the gossip layer (lightweight, direct node-to-node).  
-[Guide →](./deployment/p2p-only.md)
-
-### Proxy + OptimumP2P Nodes (Recommended)
-
-Adds REST and gRPC APIs for clients, UIs, testing.  
-[Guide →](./deployment/p2p-with-proxy.md)
-
----
-
-## Client Integration
-
-### CLI
-
-* **[mump2p-cli](./clients/mump2p-cli.md)** — Simple tool to test publish/subscribe
-
-### App Integration
-
-* **[gRPC Examples](./clients/grpc-examples.md)** — Full Go clients using bi-directional streaming
-
-Use these to build chat apps, multiplayer games, decentralized sensors, or MEV relays.
-
----
+If you want deep technical theory, see the **[OptimumP2P Technical Overview](../learn/overview/p2p.md)** — this guide stays hands-on.
 
 
-## Configuration
+## Table of Contents
 
-Fine-tune OptimumP2P for your use case:
+1. [What You’ll Build](#-what-youll-build): A high-level look at the system you’ll set up and the end goal. 
+2. [Prerequisites](#-prerequisites)  
+3. [Installation & Setup](#-installation--setup)  
+4. [Deploying the Network](#-deploying-the-network)  
+5. [Sending & Receiving Your First Message](#-sending--receiving-your-first-message)  
+6. [Multiple Topics & Isolation](#-multiple-topics--isolation)  
+7. [Load Testing](#-load-testing)  
+8. [Key Parameters Explained](#-key-parameters-explained)  
+9. [Monitoring & Debugging](#-monitoring--debugging)  
+10. [Cleanup & Reset](#-cleanup--reset)  
+11. [FAQ & Glossary](#-faq--glossary)  
+12. [Next Steps](#-next-steps)  
+13. [More Coming Soon](#-more-coming-soon)
 
-* **[Protocol Selection](./configuration/protocol-selection.md)** - Switch between OptimumP2P and GossipSub modes
-* **[OptimumP2P Configuration](./configuration/optimump2p.md)** - RLNC parameters, mesh topology, and performance tuning  
-* **[GossipSub Configuration](./configuration/gossipsub.md)** - Standard GossipSub parameters for comparison
 
-## Performance & Comparison
+## What You’ll Build
 
-Benchmark and compare OptimumP2P:
+By the end of this guide, you will have:
 
-* **[Metrics Collection](./clients/)** - Understanding performance metrics
-* **[OptimumP2P vs GossipSub](./clients/)** - Performance comparison methodology
+* A **local OptimumP2P network** with 4 P2P nodes + 2 proxy servers  
+* The ability to **send and receive messages in real-time** over gRPC  
+* Support for **multiple topics** with complete isolation  
+* Tools for **load testing, debugging, and monitoring**
 
-## Docker Images Used
+## Prerequisites
 
-The hackathon uses these pre-built Docker images:
+Before starting, make sure you have:
 
-* **`getoptimum/p2pnode:latest`** - Core P2P node with OptimumP2P protocol
-* **`getoptimum/proxy:latest`** - Proxy service for client APIs
+* **Docker** ([Install here](https://www.docker.com/products/docker-desktop))
+* **Docker Compose** (comes with Docker Desktop)
+* **Git** (optional, but recommended)
+* **Go 1.24+** ([Install here](https://go.dev/dl/)) — only needed if running the Go client
 
-Both images support protocol switching:
+**Check your setup:**
 
-* `NODE_MODE=optimum` - RLNC-enhanced OptimumP2P (recommended)
-* `NODE_MODE=gossipsub` - Standard GossipSub for comparison
+```bash
+docker --version
+docker-compose --version
+go version
+```
 
-See **[Protocol Selection](./configuration/protocol-selection.md)** for detailed configuration and deployment examples.
+## Installation & Setup
 
-## Architecture Deep Dive
+### **Create a working directory**
 
-For developers and integrators:
+```sh
+mkdir optimump2p-hackathon && cd optimump2p-hackathon
+```
 
-* **[OptimumP2P Technical Overview](../learn/overview/p2p.md)** - Complete technical specification
+1. **Prepare identity folder**
 
----
-
-**Ready to get started?** Begin with **[Installation](./quick-start/installation.md)** or dive into the **[Technical Overview](../learn/overview/p2p.md)**. 
+The identity folder stores node peer IDs.

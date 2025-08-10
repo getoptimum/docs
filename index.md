@@ -24,8 +24,8 @@ features:
     details: Access resources for understanding the inner workings of Optimum and the research behind the technology.
     link: /docs/research/overview
     icon: 🔎
-  - title: Hackathon Documentation
+  - title: Quickstart & Developer Guide
     details: Complete guide for building applications on OptimumP2P with deployment options, client examples, and configuration.
-    link: /docs/hackathon/overview
+    link: /docs/guides/overview
     icon: 🚀
 ---
