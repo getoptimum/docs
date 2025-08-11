@@ -47,9 +47,8 @@ This guide is organized into self-contained chapters:
 2. **[Getting Started with Docker](02-getting-started-docker.md)** — Run your own local proxy and P2P nodes for full control.
 3. **[Understanding Key Parameters](03-parameters.md)** — Tune thresholds, shards, and mesh settings for your workload.
 4. **[Common Experiments](04-experiments.md)** — Test performance and reliability under different conditions.
-5. **[Cleanup & Reset](05-cleanup-reset.md)** — Safely remove or reset your test setup.
-6. **[FAQ & Glossary](06-faq-glossary.md)** — Quick answers and key term definitions.
-7. **[Next Steps](07-next-steps.md)** — Ideas for integration and advanced usage.
+5. **[FAQ & Glossary](05-faq-glossary.md)** — Quick answers and key term definitions.
+6. **[Next Steps](06-next-steps.md)** — Ideas for integration and advanced usage.
 
 
 ## Who This Guide Is For

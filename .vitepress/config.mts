@@ -157,7 +157,7 @@ function nav() {
     {
       text: "Menu",
       items: [
-        { text: "Get Started", link: "/docs/how-to-guides/overview" },
+        // { text: "Get Started", link: "/docs/how-to-guides/overview" },
         { text: "Learn", link: "/docs/learn/overview/intro" },
         {
           text: "Resources",
@@ -258,135 +258,15 @@ function sidebarHome() {
           link: "/docs/guides/04-experiments",
         },
         {
-          text: "Cleaning Up and Reset",
-          link: "/docs/guides/05-cleanup-reset",
-        },
-        {
           text: "FAQ Glossary",
-          link: "/docs/guides/06-faq-glossary",
+          link: "/docs/guides/05-faq-glossary",
         },
         {
           text: "Next Steps",
-          link: "/docs/guides/07-next-steps",
+          link: "/docs/guides/06-next-steps",
         },
-        // {
-        //   text: "Deployment Options",
-        //   collapsed: true,
-        //   items: [
-        //     {
-        //       text: "P2P Network Only",
-        //       link: "/docs/hackathon/deployment/p2p-only",
-        //     },
-        //     {
-        //                       text: "P2P Network with Proxy",
-        //       link: "/docs/hackathon/deployment/p2p-with-proxy",
-        //     },
-        //   ],
-        // },
-        // {
-        //   text: "Client Development",
-        //   collapsed: true,
-        //   items: [
-        //     {
-        //       text: "mump2p-cli",
-        //       link: "/docs/hackathon/clients/mump2p-cli",
-        //     },
-        //     {
-        //       text: "gRPC Client Examples",
-        //       link: "/docs/hackathon/clients/grpc-examples",
-        //     },
-        //   ],
-        // },
-        // {
-        //   text: "Configuration",
-        //   collapsed: true,
-        //   items: [
-        //     {
-        //       text: "Protocol Selection",
-        //       link: "/docs/hackathon/configuration/protocol-selection",
-        //     },
-        //     {
-        //       text: "OptimumP2P Configuration",
-        //       link: "/docs/hackathon/configuration/optimump2p",
-        //     },
-        //     {
-        //       text: "GossipSub Configuration",
-        //       link: "/docs/hackathon/configuration/gossipsub",
-        //     },
-        //   ],
-        // },
       ],
     },
-    // {
-    //   text: "Hackathon Docs",
-    //   collapsed: false,
-    //   items: [
-    //     {
-    //       text: "Overview",
-    //       link: "/docs/hackathon/overview",
-    //     },
-    //     {
-    //       text: "Quick Start",
-    //       collapsed: true,
-    //       items: [
-    //         {
-    //           text: "Installation & Setup",
-    //           link: "/docs/hackathon/quick-start/installation",
-    //         },
-    //         {
-    //           text: "First Message Example",
-    //           link: "/docs/hackathon/quick-start/first-message",
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       text: "Deployment Options",
-    //       collapsed: true,
-    //       items: [
-    //         {
-    //           text: "P2P Network Only",
-    //           link: "/docs/hackathon/deployment/p2p-only",
-    //         },
-    //         {
-    //                           text: "P2P Network with Proxy",
-    //           link: "/docs/hackathon/deployment/p2p-with-proxy",
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       text: "Client Development",
-    //       collapsed: true,
-    //       items: [
-    //         {
-    //           text: "mump2p-cli",
-    //           link: "/docs/hackathon/clients/mump2p-cli",
-    //         },
-    //         {
-    //           text: "gRPC Client Examples",
-    //           link: "/docs/hackathon/clients/grpc-examples",
-    //         },
-    //       ],
-    //     },
-    //     {
-    //       text: "Configuration",
-    //       collapsed: true,
-    //       items: [
-    //         {
-    //           text: "Protocol Selection",
-    //           link: "/docs/hackathon/configuration/protocol-selection",
-    //         },
-    //         {
-    //           text: "OptimumP2P Configuration",
-    //           link: "/docs/hackathon/configuration/optimump2p",
-    //         },
-    //         {
-    //           text: "GossipSub Configuration",
-    //           link: "/docs/hackathon/configuration/gossipsub",
-    //         },
-    //       ],
-    //     },
-    //   ],
-    // },
     {
       text: "Research",
       collapsed: false,

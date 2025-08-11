@@ -1,171 +1,126 @@
 # Common Experiments
 
-This chapter gives you practical test scenarios to **measure and validate** OptimumP2P’s performance.  
-You’ll explore latency, reliability, and throughput under different network conditions — both for **GossipSub** and **OptimumP2P (RLNC)**.
+Once your OptimumP2P network is running (see [Parameters](./03-parameters.md)), you can try different experiments to understand **performance, reliability, and scaling behavior**.
 
-These experiments assume you have:
+> **Before You Begin:**  
+> Make sure you’ve read:
+>
+> * [Node Modes & Config Parameters](./03-parameters.md) — to understand what each env var controls.
+> * [mump2p CLI](./01-getting-started-cli.md) and [gRPC Client Setup](./02-getting-started-docker.md) — for sending and receiving test messages.
 
-- A **running network** (Proxy + P2P or Direct P2P).
-- **Client access** via gRPC, REST, or CLI.
-- The ability to **change parameters** (env vars or config files).
-- Basic **monitoring tools** (logs, metrics, Grafana, or Prometheus).
+Each experiment below lists the **goal**, a quick **how-to**, and **what to observe**.  
 
----
+You can run them using:
 
-## 1. Experiment: Shard Factor Sweep
+* **mump2p CLI** (see [CLI Guide](./01-getting-started-cli.md))
+* **gRPC client** (with `MessageTraceGossipSub` or `MessageTraceOptimumP2P` for protocol metrics)
 
-**Goal:** See how coded shard count affects delivery reliability and CPU usage.
 
-**Setup:**
-1. Start your network with these shard factor values:
-   - `OPTIMUM_SHARD_FACTOR=2`
-   - `OPTIMUM_SHARD_FACTOR=4`
-   - `OPTIMUM_SHARD_FACTOR=8`
-   - `OPTIMUM_SHARD_FACTOR=16`
-2. Keep all other parameters identical.
 
-**Procedure:**
-- Publish the same 1MB message to the same topic.
-- Introduce artificial packet loss (e.g., `tc netem loss 20%`).
-- Measure:
-  - Time to first full decode.
-  - Percentage of peers that successfully decoded.
-  - CPU load on sender and receiver.
+## 1. Shard Factor Sweep
 
-**Expected Result:**
-- **Low values (2–4)**: Low CPU, but reduced reliability under loss.
-- **High values (8–16)**: High reliability, but more CPU and bandwidth.
+**Goal:** See how the number of coded shards affects reliability and CPU usage in `NODE_MODE=optimum`.
 
----
+**How:**
 
-## 2. Experiment: Forward Threshold Tuning
+* Vary `OPTIMUM_SHARD_FACTOR` (e.g., 2, 4, 8, 16).
+* Keep all other parameters the same.
+* Publish the same message in each run.
 
-**Goal:** Measure latency vs reliability when forwarding coded shards early.
+**Observe:**
 
-**Setup:**
-- Keep `OPTIMUM_SHARD_FACTOR=8`.
-- Test with:
-  - `OPTIMUM_THRESHOLD=0.5`
-  - `OPTIMUM_THRESHOLD=0.75`
-  - `OPTIMUM_THRESHOLD=0.9`
+* Delivery success rate.
+* Decode latency.
+* CPU load.
 
-**Procedure:**
-- Publish bursts of small messages (50–100KB).
-- Measure:
-  - End-to-end latency.
-  - % of decodes completed at each peer.
-  - Total shard traffic on the network.
 
-**Expected Result:**
-- **Low threshold (0.5)**: Lower latency, slightly more failed decodes under loss.
-- **High threshold (0.9)**: Slower, but highly reliable.
+## 2. Forward Threshold Tuning
 
----
+**Goal:** Measure latency vs reliability trade-off when forwarding coded shards early.
 
-## 3. Experiment: Mesh Density Impact
+**How:**
 
-**Goal:** Compare sparse vs dense peer connections.
+* Fix `OPTIMUM_SHARD_FACTOR=8`.
+* Test `OPTIMUM_THRESHOLD` at 0.5, 0.75, 0.9.
+* Publish bursts of small messages.
 
-**Setup:**
-- Keep shard factor and threshold constant.
-- Change:
-  - Sparse mesh: `*_MESH_TARGET=4`
-  - Dense mesh: `*_MESH_TARGET=12`
+**Observe:**
 
-**Procedure:**
-- Publish 100 messages to the topic.
-- Log:
-  - Average peer-to-peer hop count.
-  - Message duplication count.
-  - Latency from first to last peer.
+* End-to-end latency.
+* Percentage of successful decodes.
 
-**Expected Result:**
-- Sparse mesh reduces bandwidth, increases hops.
-- Dense mesh improves redundancy, may increase duplicates.
 
----
+## 3. Mesh Density Impact
 
-## 4. Experiment: GossipSub vs OptimumP2P
+**Goal:** Compare performance with sparse vs dense peer meshes.
 
-**Goal:** See if RLNC improves your specific network scenario.
+**How:**
 
-**Setup:**
-- Run two identical networks:
-  - **GossipSub** — `NODE_MODE=gossipsub`, default mesh params.
-  - **OptimumP2P** — `NODE_MODE=optimum`, same mesh params, RLNC enabled.
+* Change `*_MESH_TARGET` (e.g., 4 vs 12).
+* Run the same publish/subscribe test.
 
-**Procedure:**
-- Publish the same 100 messages to both networks.
-- Measure:
-  - First-receiver latency.
-  - All-receivers latency.
-  - Total bytes transmitted.
-  - Reliability under induced packet loss.
+**Observe:**
 
-**Expected Result:**
-- OptimumP2P should win on **lossy networks** due to redundancy.
-- On perfect links, GossipSub may match latency but use less CPU.
+* Average hop count.
+* Delivery latency.
+* Duplicate message rate.
 
----
 
-## 5. Experiment: Proxy + P2P vs Direct P2P
+## 4. GossipSub vs OptimumP2P
 
-**Goal:** Understand whether a proxy speeds up or slows down delivery in your use case.
+**Goal:** Compare standard libp2p gossip to RLNC-enhanced gossip in the same environment.
 
-**Setup:**
-- Same number of P2P nodes in both deployments.
-- One with `gateway` (proxy) in front of clients.
-- One where clients connect directly to P2P nodes.
+**How:**
 
-**Procedure:**
-- Subscribe 10 clients to the same topic.
-- Publish 50 messages from different P2P nodes.
-- Measure:
-  - Average time from publish to all clients.
-  - Total client bandwidth usage.
-  - Proxy CPU load (if using gateway).
+* Run one cluster with `NODE_MODE=gossipsub`.
+* Run another with `NODE_MODE=optimum`.
+* Publish the same workload.
 
-**Expected Result:**
-- Proxy improves aggregation and reduces uplink load from publisher.
-- Direct P2P may reduce single-hop latency but increase total traffic.
+**Observe:**
 
----
+* First-receiver latency.
+* All-receivers latency.
+* Bandwidth usage.
+* Loss resilience.
 
-## 6. Experiment: Load Test
 
-**Goal:** Find the throughput limit before degradation.
+## 5. Proxy + P2P vs Direct P2P
 
-**Setup:**
-- Use a load generator (e.g., `mump2p-cli` in a loop or a custom gRPC publisher).
-- Keep parameters constant.
+**Goal:** See if using OptimumProxy improves delivery for your setup.
 
-**Procedure:**
-- Gradually increase message rate from 10 msg/s to 1,000 msg/s.
-- Watch:
-  - Message loss rate.
-  - Latency growth.
-  - Node CPU/memory.
+**How:**
 
-**Expected Result:**
-- At some rate, latency spikes and reliability drops.
-- Use results to size your cluster for production.
+* Deploy once with Proxy in front of P2P nodes.
+* Deploy once with clients connecting directly to nodes.
+* Run the same test in both setups.
 
----
+**Observe:**
 
-## 7. Monitoring Checklist for All Experiments
+* Client receive time.
+* Bandwidth usage.
+* Proxy CPU load.
 
-During each test:
-- **Check logs** for errors (`grep error` or `grep shard`).
-- **Check metrics**:
-  - `peer_count`
-  - `message_delivered_total`
-  - `shard_decoded_total`
-  - `delivery_latency_seconds`
-- **Check system health**:
-  - CPU / Memory via `docker stats`
-  - Network usage via `iftop` or `nload`
 
----
+## 6. Load Test
 
-## Next Step
-Move on to [06 — Monitoring & Debugging](06-monitoring-debugging.md) to learn how to interpret metrics and fix issues uncovered during testing.
+**Goal:** Find the throughput limit of your network.
+
+**How:**
+
+* Gradually increase message rate (e.g., 10 → 1,000 msg/s).
+* Use multiple publishers if needed.
+
+**Observe:**
+
+* Latency growth.
+* Message loss rate.
+* Node CPU/memory usage.
+
+
+> **Tip:** Enable protocol traces in the gRPC client to get hop-by-hop delivery info:
+>
+> * `MessageTraceGossipSub` for GossipSub mode.
+> * `MessageTraceOptimumP2P` for OptimumP2P mode.
+
+TODO:: github ref, and cite the gRPC client part.
+For metrics collection guidance, see [github sample implementations](github.com).

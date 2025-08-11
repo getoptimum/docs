@@ -14,11 +14,11 @@ The `mump2p` CLI is your shortcut into `OptimumP2P` — a high-performance, RLNC
 
 Instead of:
 
-* Hunting for node IPs
-* Wrestling with peer discovery
-* Tweaking endless configurations
+* Manually locating and connecting to active OptimumP2P nodes
+* Handling low-level peer discovery and connection logic
+* Managing complex network and encoding configurations
 
-...you simply point your CLI to our hosted `optimum-proxy` (available in multiple regions) and start sending or receiving messages instantly.
+The `mump2p` CLI connects you directly to  our hosted `optimum-proxy` (available in multiple regions) and start sending or receiving messages instantly.
 It connects to an `optimum-proxy` and lets you publish and subscribe to real-time topics — with authentication, usage tracking, and advanced delivery options.
 
 
@@ -39,6 +39,7 @@ The **Optimum Proxy** removes that complexity:
 * Enforces thresholds and applies filters.
 * Tracks usage and applies fair rate limits.
 
+With `mump2p`, you connect only to the proxy — it does the rest.
 
 ## Why Authentication?
 
@@ -55,7 +56,7 @@ Without authentication, you can only use **open/public topics** with strict limi
 <!-- TODO:: use an image here -->
 ```plaintext
 ┌──────────────┐      ┌────────────────┐      ┌─────────────────────────────┐
-│ mump2p CLI   │───▶  │ Optimum Proxy  │───▶  │       OptimumP2P Mesh        │
+│ mump2p CLI   │───▶  │ Optimum Proxy  │───▶  │     OptimumP2P Network      │
 └──────────────┘      └────────────────┘      └─────────────┬───────────────┘
                                                            /   │   \
                                                           /    │    \
@@ -74,8 +75,6 @@ Without authentication, you can only use **open/public topics** with strict limi
                                                         ┌──────▼──────┐
                                                         │ Other Peers │
                                                         └─────────────┘
-
-
 ```
 
 * CLI talks to the Proxy via gRPC/WebSocket.
