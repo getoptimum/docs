@@ -17,104 +17,99 @@ You can run them using:
 
 
 
-## 1. Shard Factor Sweep
+## 1. GossipSub vs OptimumP2P
 
-**Goal:** See how the number of coded shards affects reliability and CPU usage in `NODE_MODE=optimum`.
-
-**How:**
-
-* Vary `OPTIMUM_SHARD_FACTOR` (e.g., 2, 4, 8, 16).
-* Keep all other parameters the same.
-* Publish the same message in each run.
-
-**Observe:**
-
-* Delivery success rate.
-* Decode latency.
-* CPU load.
-
-
-## 2. Forward Threshold Tuning
-
-**Goal:** Measure latency vs reliability trade-off when forwarding coded shards early.
-
-**How:**
-
-* Fix `OPTIMUM_SHARD_FACTOR=8`.
-* Test `OPTIMUM_THRESHOLD` at 0.5, 0.75, 0.9.
-* Publish bursts of small messages.
-
-**Observe:**
-
-* End-to-end latency.
-* Percentage of successful decodes.
-
-
-## 3. Mesh Density Impact
-
-**Goal:** Compare performance with sparse vs dense peer meshes.
-
-**How:**
-
-* Change `*_MESH_TARGET` (e.g., 4 vs 12).
-* Run the same publish/subscribe test.
-
-**Observe:**
-
-* Average hop count.
-* Delivery latency.
-* Duplicate message rate.
-
-
-## 4. GossipSub vs OptimumP2P
-
-**Goal:** Compare standard libp2p gossip to RLNC-enhanced gossip in the same environment.
+**Goal:** Compare standard libp2p gossip to RLNC-enhanced gossip to confirm OptimumP2P is faster.
 
 **How:**
 
 * Run one cluster with `NODE_MODE=gossipsub`.
 * Run another with `NODE_MODE=optimum`.
-* Publish the same workload.
+* Publish the same workload to both networks.
 
 **Observe:**
 
-* First-receiver latency.
-* All-receivers latency.
-* Bandwidth usage.
-* Loss resilience.
+* **Delivery latency** (primary metric - OptimumP2P should be faster)
+* **Bandwidth usage** (OptimumP2P should use less)
+* **Success rate** (both should deliver messages successfully)
+
+**Expected Result:** OptimumP2P should show lower latency and bandwidth usage.
 
 
-## 5. Proxy + P2P vs Direct P2P
+## 2. Shard Factor Sweep
 
-**Goal:** See if using OptimumProxy improves delivery for your setup.
+**Goal:** Find the optimal number of coded shards for your message size and network.
 
 **How:**
 
-* Deploy once with Proxy in front of P2P nodes.
-* Deploy once with clients connecting directly to nodes.
-* Run the same test in both setups.
+* Use powers of 2: `OPTIMUM_SHARD_FACTOR` = 2, 4, 8, 16, 32, 64.
+* Keep all other parameters the same.
+* Test with 1MB messages.
 
 **Observe:**
 
-* Client receive time.
-* Bandwidth usage.
-* Proxy CPU load.
+* **Delivery latency** (primary metric)
+* **Success rate** (messages should still deliver)
+
+**Expected Result:** Sweet spot around 32 shards for 1MB messages. Too few or too many shards both worsen performance.
 
 
-## 6. Load Test
+## 3. Forward Threshold Tuning
 
-**Goal:** Find the throughput limit of your network.
+**Goal:** Find the optimal threshold for forwarding coded shards early.
 
 **How:**
 
-* Gradually increase message rate (e.g., 10 → 1,000 msg/s).
+* Fix `OPTIMUM_SHARD_FACTOR=8`.
+* Test `OPTIMUM_THRESHOLD` at 0.5, 0.7, 0.9, 1.0.
+* Publish small messages in a 20-30 node network.
+
+**Observe:**
+
+* **Delivery latency** (primary metric)
+* **Bandwidth usage** (threshold=1.0 should use most bandwidth)
+
+**Expected Result:** Sweet spot around 0.7 for small networks. Too low = delivery failures, too high = high bandwidth and worse latency.
+
+
+## 4. Mesh Density Impact
+
+**Goal:** Compare OptimumP2P vs GossipSub with different mesh sizes.
+
+**How:**
+
+* Test both `NODE_MODE=gossipsub` and `NODE_MODE=optimum`.
+* For GossipSub: try `GOSSIPSUB_MESH_TARGET` = 4, 6, 8.
+* For OptimumP2P: try `OPTIMUM_MESH_TARGET` = 6, 12, 18.
+* Run the same publish/subscribe test.
+
+**Observe:**
+
+* **Delivery latency** (primary metric)
+* **Bandwidth usage**
+
+**Expected Result:** OptimumP2P should perform better with higher mesh targets (around 12) while GossipSub optimal around 6.
+
+
+
+
+
+## 5. Load Test
+
+**Goal:** Find when OptimumP2P vs GossipSub starts to fail under stress.
+
+**How:**
+
+* Test both `NODE_MODE=gossipsub` and `NODE_MODE=optimum`.
+* Vary **message size** (1KB → 10MB) and **message frequency** (1 → 1000 msg/s).
 * Use multiple publishers if needed.
 
 **Observe:**
 
-* Latency growth.
-* Message loss rate.
-* Node CPU/memory usage.
+* **When delivery starts to fail** (primary metric)
+* **Delivery rate degradation**
+
+**Expected Result:** OptimumP2P should handle higher stress levels before failing compared to GossipSub.
 
 
 > **Tip:** Enable protocol traces in the gRPC client to get hop-by-hop delivery info:
