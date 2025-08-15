@@ -92,6 +92,7 @@ curl -sSL https://raw.githubusercontent.com/getoptimum/mump2p-cli/main/install.s
 ```
 
 This automatically:
+
 * Detects your OS (Linux/macOS)
 * Downloads the latest release
 * Sets correct permissions  
