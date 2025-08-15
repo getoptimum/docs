@@ -83,25 +83,33 @@ Without authentication, you can only use **open/public topics** with strict limi
 * Your client receives fully decoded messages in real-time.
 
 
-## 1. Download the CLI
+## 1. Install mump2p CLI
 
-Always grab the latest release from GitHub:
-
-### Linux
-
-```sh
-LATEST=$(curl -s https://api.github.com/repos/getoptimum/mump2p-cli/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-curl -L -o mump2p https://github.com/getoptimum/mump2p-cli/releases/download/$LATEST/mump2p-linux
-chmod +x mump2p
-
-```
-
-### macOS
+### Quick Install (One Command)
 
 ```bash
-LATEST=$(curl -s https://api.github.com/repos/getoptimum/mump2p-cli/releases/latest | grep "tag_name" | cut -d '"' -f 4)
-curl -L -o mump2p https://github.com/getoptimum/mump2p-cli/releases/download/$LATEST/mump2p-darwin
-chmod +x mump2p
+curl -sSL https://raw.githubusercontent.com/getoptimum/mump2p-cli/main/install.sh | bash
+```
+
+This automatically:
+* Detects your OS (Linux/macOS)
+* Downloads the latest release
+* Sets correct permissions  
+* Verifies installation works
+
+### Manual Install
+
+If you prefer manual installation:
+
+| OS | Command |
+|---|---|
+| **Linux** | `curl -L -o mump2p https://github.com/getoptimum/mump2p-cli/releases/latest/download/mump2p-linux && chmod +x mump2p` |
+| **macOS** | `curl -L -o mump2p https://github.com/getoptimum/mump2p-cli/releases/latest/download/mump2p-mac && chmod +x mump2p` |
+
+### Verify Installation
+
+```bash
+./mump2p version
 ```
 
 You can visit [mump2p-cli release page](https://github.com/getoptimum/mump2p-cli/releases) for the latest version.
