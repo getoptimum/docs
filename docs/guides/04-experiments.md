@@ -42,7 +42,7 @@ You can run them using:
 
 **How:**
 
-* Use powers of 2: `OPTIMUM_SHARD_FACTOR` = 2, 4, 8, 16, 32, 64.
+* Test range: `OPTIMUM_SHARD_FACTOR` = 2, 4, 8, 16, 32, 64 (powers of 2 recommended).
 * Keep all other parameters the same.
 * Test with 1MB messages.
 
@@ -51,7 +51,7 @@ You can run them using:
 * **Delivery latency** (primary metric)
 * **Success rate** (messages should still deliver)
 
-**Expected Result:** Sweet spot around 32 shards for 1MB messages. Too few or too many shards both worsen performance.
+**Expected Result:** For 1MB messages, shard factors 4-8 typically provide the best balance of performance and reliability. Too few shards (≤2) cause delivery failures, while too many shards (≥32) increase latency due to overhead. Start with shard factor 4-8 and tune based on your network conditions.
 
 
 ## 3. Forward Threshold Tuning
@@ -69,7 +69,7 @@ You can run them using:
 * **Delivery latency** (primary metric)
 * **Bandwidth usage** (threshold=1.0 should use most bandwidth)
 
-**Expected Result:** Sweet spot around 0.7 for small networks. Too low = delivery failures, too high = high bandwidth and worse latency.
+**Expected Result:** Threshold 0.7 provides optimal performance for small networks - delivering 100% success rate with lowest latency. Thresholds below 0.6 may cause delivery failures, while values above 0.8 can reduce success rate and increase latency.
 
 
 ## 4. Mesh Density Impact
