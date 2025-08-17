@@ -110,6 +110,7 @@ If you prefer manual installation:
 ```
 
 **Output:**
+
 ```bash
 Version: v0.0.1-rc3-rc
 Commit:  5962e6a
@@ -130,6 +131,7 @@ Login via device authorization flow:
 ```
 
 **Output:**
+
 ```bash
 Initiating authentication...
 
@@ -156,6 +158,7 @@ Token expires at: 18 Aug 25 13:15 IST
 ```
 
 **Output:**
+
 ```bash
 Authentication Status:
 ----------------------
@@ -182,6 +185,7 @@ Daily Quota:       5120.00 MB
 ```
 
 **Refresh Output:**
+
 ```bash
 Current token status:
 Expires at: 18 Aug 25 13:15 IST
@@ -193,6 +197,7 @@ Valid for:      24h0m0s
 ```
 
 **Logout Output:**
+
 ```bash
 ✅ Successfully logged out
 ```
@@ -224,6 +229,7 @@ Use a custom location
 ```
 
 **Output:**
+
 ```bash
 claims is &{google-oauth2|100677750055416883405 2025-08-17 13:15:07 +0530 IST 2025-08-18 13:15:07 +0530 IST true 4194304 1000 8 5368709120 google-oauth2|100677750055416883405 1755416706719}
 claims is google-oauth2|100677750055416883405
@@ -240,6 +246,7 @@ Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```
 
 **Output:**
+
 ```bash
 Persisting data to: /path/to/messages.log
 claims is &{google-oauth2|100677750055416883405 2025-08-17 13:15:07 +0530 IST 2025-08-18 13:15:07 +0530 IST true 4194304 1000 8 5368709120 google-oauth2|100677750055416883405 1755416706719}
@@ -251,6 +258,7 @@ Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```
 
 **Persisted message format:**
+
 ```bash
 [2025-08-17T13:19:08+05:30] Testing persistence!
 ```
@@ -262,6 +270,7 @@ Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```
 
 **Output:**
+
 ```bash
 Forwarding messages to webhook: https://your-server.com/webhook
 claims is &{google-oauth2|100677750055416883405 2025-08-17 13:15:07 +0530 IST 2025-08-18 13:15:07 +0530 IST true 4194304 1000 8 5368709120 google-oauth2|100677750055416883405 1755416706719}
@@ -283,6 +292,7 @@ Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```
 
 **Output:**
+
 ```bash
 ✅ Published inline message
 {"status":"published","topic":"demo"}
@@ -295,6 +305,7 @@ Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```
 
 **Output:**
+
 ```bash
 ✅ Published sample-data.json
 {"status":"published","topic":"demo"}
@@ -315,6 +326,7 @@ Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```
 
 **Output:**
+
 ```bash
   Publish (hour):     0 / 1000
   Publish (second):   0 / 8
