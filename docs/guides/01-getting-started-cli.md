@@ -2,13 +2,11 @@
 
 The `mump2p` CLI is the quickest way to interact with [OptimumP2P](https://github.com/getoptimum/optimum-p2p) without running your own infrastructure.
 
-In the next 5 minutes, you’ll have:
+In the next 5 minutes, you'll have:
 
 * A working CLI
 * Your first published message
 * A subscription feeding you live data
-
-
 
 The `mump2p` CLI is your shortcut into `OptimumP2P` — a high-performance, RLNC-enhanced peer-to-peer network.
 
@@ -18,9 +16,8 @@ Instead of:
 * Handling low-level peer discovery and connection logic
 * Managing complex network and encoding configurations
 
-The `mump2p` CLI connects you directly to  our hosted `optimum-proxy` (available in multiple regions) and start sending or receiving messages instantly.
+The `mump2p` CLI connects you directly to our hosted `optimum-proxy` (available in multiple regions) and start sending or receiving messages instantly.
 It connects to an `optimum-proxy` and lets you publish and subscribe to real-time topics — with authentication, usage tracking, and advanced delivery options.
-
 
 ## Why Optimum Proxy?
 
@@ -49,11 +46,11 @@ Authentication in `mump2p-cli` is not just about logging in, it enables:
 * **Rate Limits**: Prevents spam and ensures fair use.
 * **Usage Tracking**: Monitor your publish/subscription stats.
 * **Account Linking**: Associate activity with your user or team.
-<!-- TODO:: will add more info here soon -->
+
 Without authentication, you can only use **open/public topics** with strict limits.
 
 ## How It Fits into the Network
-<!-- TODO:: use an image here -->
+
 ```plaintext
 ┌──────────────┐      ┌────────────────┐      ┌─────────────────────────────┐
 │ mump2p CLI   │───▶  │ Optimum Proxy  │───▶  │     OptimumP2P Network      │
@@ -81,7 +78,6 @@ Without authentication, you can only use **open/public topics** with strict limi
 * Proxy connects to the P2P Mesh (multiple nodes across regions).
 * Mesh uses RLNC for efficient message delivery and reconstruction.
 * Your client receives fully decoded messages in real-time.
-
 
 ## 1. Install mump2p CLI
 
@@ -113,18 +109,39 @@ If you prefer manual installation:
 ./mump2p version
 ```
 
+**Output:**
+```bash
+Version: v0.0.1-rc3-rc
+Commit:  5962e6a
+```
+
 You can visit [mump2p-cli release page](https://github.com/getoptimum/mump2p-cli/releases) for the latest version.
 
 ---
 
 ### 2. Authenticate
 
-*mump2p-cli currently usage [auth0](https://auth0.com/) to manage authentication/authorization*.
+*mump2p-cli currently uses [auth0](https://auth0.com/) to manage authentication/authorization*.
 
 Login via device authorization flow:
 
 ```sh
 ./mump2p login
+```
+
+**Output:**
+```bash
+Initiating authentication...
+
+To complete authentication:
+1. Visit: https://your-auth-domain.auth0.com/activate?user_code=XXXX-XXXX
+2. Or go to https://your-auth-domain.auth0.com/activate and enter code: XXXX-XXXX
+3. This code expires in 15 minutes
+
+Waiting for you to complete authentication in the browser...
+
+✅ Successfully authenticated
+Token expires at: 18 Aug 25 13:15 IST
 ```
 
 1. CLI shows a URL and a code.
@@ -138,27 +155,24 @@ Login via device authorization flow:
 ./mump2p whoami
 ```
 
-You will see the response in terminal as following:
-
-```sh
+**Output:**
+```bash
 Authentication Status:
 ----------------------
-Client ID: USER_CLIENT_ID
-Expires: 11 Aug 25 19:12 CEST
+Client ID: google-oauth2|100677750055416883405
+Expires: 18 Aug 25 13:15 IST
 Valid for: 24h0m0s
 Is Active:  true
 
 Rate Limits:
 ------------
-Publish Rate:  2000 per hour
-Publish Rate:  12 per second
-Max Message Size:  10.00 MB
-Daily Quota:       10240.00 MB
+Publish Rate:  1000 per hour
+Publish Rate:  8 per second
+Max Message Size:  4.00 MB
+Daily Quota:       5120.00 MB
 ```
 
-<!-- TODO:: correct contact way -->
 **Important: By default `Is Active` is `false`. Contact us to activate your account.**
-
 
 #### Other auth commands
 
@@ -167,17 +181,31 @@ Daily Quota:       10240.00 MB
 ./mump2p logout    # Logout
 ```
 
+**Refresh Output:**
+```bash
+Current token status:
+Expires at: 18 Aug 25 13:15 IST
+Valid for:  23h56m0s
+Refreshing token...
+✅ Token refreshed successfully
+New expiration: 18 Aug 25 13:19 IST
+Valid for:      24h0m0s
+```
+
+**Logout Output:**
+```bash
+✅ Successfully logged out
+```
+
 ### 3. Choose a Proxy Location
 
 **Available Service URLs:**
-<!-- TODO:: map to dns -->
 
 | Location            | URL                 |
 | ------------------- | ------------------- |
 | **Tokyo (Default)** | 34.146.222.111:8080 |
 | **Tokyo**           | 35.221.118.95:8080  |
 | **Singapore**       | 34.142.205.26:8080  |
-
 
 Use a custom location
 
@@ -195,16 +223,53 @@ Use a custom location
 ./mump2p subscribe --topic=demo
 ```
 
+**Output:**
+```bash
+claims is &{google-oauth2|100677750055416883405 2025-08-17 13:15:07 +0530 IST 2025-08-18 13:15:07 +0530 IST true 4194304 1000 8 5368709120 google-oauth2|100677750055416883405 1755416706719}
+claims is google-oauth2|100677750055416883405
+Sending HTTP POST subscription request...
+HTTP POST subscription successful: {"status":"subscribed","topic":"demo"}
+Opening WebSocket connection...
+Listening for messages on topic 'demo'... Press Ctrl+C to exit
+```
+
 #### Save messages locally
 
 ```sh
 ./mump2p subscribe --topic=demo --persist=/path/to/
 ```
 
+**Output:**
+```bash
+Persisting data to: /path/to/messages.log
+claims is &{google-oauth2|100677750055416883405 2025-08-17 13:15:07 +0530 IST 2025-08-18 13:15:07 +0530 IST true 4194304 1000 8 5368709120 google-oauth2|100677750055416883405 1755416706719}
+claims is google-oauth2|100677750055416883405
+Sending HTTP POST subscription request...
+HTTP POST subscription successful: {"status":"subscribed","topic":"demo"}
+Opening WebSocket connection...
+Listening for messages on topic 'demo'... Press Ctrl+C to exit
+```
+
+**Persisted message format:**
+```bash
+[2025-08-17T13:19:08+05:30] Testing persistence!
+```
+
 #### Forward to webhook
 
 ```sh
 ./mump2p subscribe --topic=demo --webhook=https://your-server.com/webhook
+```
+
+**Output:**
+```bash
+Forwarding messages to webhook: https://your-server.com/webhook
+claims is &{google-oauth2|100677750055416883405 2025-08-17 13:15:07 +0530 IST 2025-08-18 13:15:07 +0530 IST true 4194304 1000 8 5368709120 google-oauth2|100677750055416883405 1755416706719}
+claims is google-oauth2|100677750055416883405
+Sending HTTP POST subscription request...
+HTTP POST subscription successful: {"status":"subscribed","topic":"demo"}
+Opening WebSocket connection...
+Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```
 
 ---
@@ -217,10 +282,22 @@ Use a custom location
 ./mump2p publish --topic=demo --message="Hello from CLI!"
 ```
 
+**Output:**
+```bash
+✅ Published inline message
+{"status":"published","topic":"demo"}
+```
+
 #### File
 
 ```sh
 ./mump2p publish --topic=demo --file=/path/to/file.json
+```
+
+**Output:**
+```bash
+✅ Published sample-data.json
+{"status":"published","topic":"demo"}
 ```
 
 #### With threshold
@@ -237,15 +314,14 @@ Use a custom location
 ./mump2p usage
 ```
 
-output:
-
-```sh
-  Publish (hour):     0 / 2000
-  Publish (second):   0 / 12
-  Data Used:          0.0000 MB / 10240.0000 MB
-  Next Reset:         11 Aug 25 21:10 CEST (24h0m0s from now)
-  Last Publish:       02 Jul 25 21:54 +0300
-  ```
+**Output:**
+```bash
+  Publish (hour):     0 / 1000
+  Publish (second):   0 / 8
+  Data Used:          0.0000 MB / 5120.0000 MB
+  Next Reset:         18 Aug 25 13:15 IST (24h0m0s from now)
+  Last Publish:       07 Aug 25 06:33 -0700
+```
 
 Shows:
 
@@ -282,12 +358,46 @@ Error: HTTP publish failed: dial tcp ...
 
 → Proxy not reachable. Check --service-url.
 
+#### Topic not assigned
+
+```sh
+Error: publish error: topic not assigned
+```
+
+→ Topic needs to be subscribed to first or doesn't exist.
+
+#### Missing message or file
+
+```sh
+Error: either --message or --file must be provided
+```
+
+→ Provide either --message or --file parameter.
+
+#### Conflicting parameters
+
+```sh
+Error: only one of --message or --file should be used at a time
+```
+
+→ Use only one of --message or --file, not both.
+
+#### Authentication required
+
+```sh
+Error: authentication required: token has expired, please login again
+```
+
+→ Run `./mump2p login` to authenticate.
+
 ### 8. Important Tips
 
 * Use descriptive topic names per team.
 * Keep `whoami` and `usage` handy.
 * For high-volume topics, increase webhook queue size.
 * Start with hosted proxy, then try local deployment for full control.
+* Subscribe to a topic before publishing to it.
+* Use the `--service-url` flag to connect to different gateways for better performance.
 
 ---
 
