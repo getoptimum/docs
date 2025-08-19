@@ -106,7 +106,8 @@ This script automatically:
 * Cleans up temporary files automatically
 
 **Expected Output:**
-```
+
+```bash
 [INFO] Generating P2P Bootstrap Identity...
 [INFO] Creating identity directory...
 [INFO] Creating key generator...
@@ -319,37 +320,132 @@ wscat -c "wss://xxx/api/ws?client_id=unique-client-id" \
   -H "Authorization: Bearer YOUR_JWT_TOKEN"
 ```
 
-### Use Proxy using gRPC Steam
+### Use Proxy using gRPC Stream
 
-TODO::
+For a complete working proxy client with both REST subscription and gRPC streaming, see the full implementation:
+
+**[Complete Proxy Client Example](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proxy_client.go)**
+
+The proxy client provides:
+
+* **REST API subscription** for topic registration and threshold configuration
+* **gRPC bidirectional streaming** for real-time message delivery
+* **Message publishing** via REST API endpoints
+* **Configurable parameters** for topic, threshold, and message count
+* **Flow control and keepalive** settings for robust connections
 
 ```go
-// proxy_client.go
+// Basic proxy client implementation (see full version in GitHub link above)
 package main
 
 import (
+  "bytes"
   "context"
+  "encoding/json"
   "fmt"
+  "io"
   "log"
+  "math"
+  "net/http"
+  "time"
 
   "google.golang.org/grpc"
   "google.golang.org/grpc/credentials/insecure"
+  "google.golang.org/grpc/keepalive"
+  
+  protobuf "proxy_client/grpc" // Generated from gateway_stream.proto
+)
+
+const (
+  proxyREST = "http://localhost:8081"  // REST API for subscription/publishing
+  proxyGRPC = "localhost:50051"        // gRPC endpoint for streaming
 )
 
 func main() {
-  conn, err := grpc.Dial("localhost:50051", grpc.WithTransportCredentials(insecure.NewCredentials()))
-  if err != nil { log.Fatal(err) }
+  clientID := "client_demo123"
+  topic := "demo"
+  threshold := 0.1
+
+  // 1. Subscribe via REST API
+  body := map[string]interface{}{
+    "client_id": clientID,
+    "topic":     topic,
+    "threshold": threshold,
+  }
+  data, _ := json.Marshal(body)
+  resp, err := http.Post(proxyREST+"/api/subscribe", "application/json", bytes.NewReader(data))
+  if err != nil {
+    log.Fatalf("subscription failed: %v", err)
+  }
+  resp.Body.Close()
+
+  // 2. Connect to gRPC stream
+  conn, err := grpc.NewClient(proxyGRPC,
+    grpc.WithTransportCredentials(insecure.NewCredentials()),
+    grpc.WithDefaultCallOptions(
+      grpc.MaxCallRecvMsgSize(math.MaxInt),
+      grpc.MaxCallSendMsgSize(math.MaxInt),
+    ),
+    grpc.WithKeepaliveParams(keepalive.ClientParameters{
+      Time:    2 * time.Minute,
+      Timeout: 20 * time.Second,
+    }),
+  )
+  if err != nil {
+    log.Fatalf("gRPC connection failed: %v", err)
+  }
   defer conn.Close()
 
-  // TODO: replace with your generated gRPC client for proxy stream.
-  // Example:
-  // client := pb.NewProxyStreamClient(conn)
-  // stream, _ := client.Stream(context.Background())
-  // stream.Send(&pb.Subscribe{Topic: "demo"})
-  // for { msg, _ := stream.Recv(); fmt.Println("MSG", msg) }
+  client := protobuf.NewProxyStreamClient(conn)
+  stream, err := client.ClientStream(context.Background())
+  if err != nil {
+    log.Fatalf("stream creation failed: %v", err)
+  }
 
-  fmt.Println("Connected to proxy gRPC at localhost:50051 (implement client logic here).")
-  <-context.Background().Done()
+  // 3. Send client ID to establish stream
+  if err := stream.Send(&protobuf.ProxyMessage{ClientId: clientID}); err != nil {
+    log.Fatalf("client ID send failed: %v", err)
+  }
+
+  // 4. Handle incoming messages
+  go func() {
+    for {
+      resp, err := stream.Recv()
+      if err == io.EOF {
+        log.Println("Stream closed by server")
+        return
+      }
+      if err != nil {
+        log.Printf("Stream receive error: %v", err)
+        return
+      }
+      log.Printf("Received: Topic=%s, Message=%s", resp.Topic, string(resp.Message))
+    }
+  }()
+
+  // 5. Publish messages via REST API
+  for i := 0; i < 3; i++ {
+    msg := fmt.Sprintf("Hello message %d @ %s", i+1, time.Now().Format("15:04:05"))
+    publishBody := map[string]interface{}{
+      "client_id": clientID,
+      "topic":     topic,
+      "message":   msg,
+    }
+    publishData, _ := json.Marshal(publishBody)
+    
+    log.Printf("Publishing: %s", msg)
+    resp, err := http.Post(proxyREST+"/api/publish", "application/json", bytes.NewReader(publishData))
+    if err != nil {
+      log.Printf("Publish error: %v", err)
+    } else {
+      resp.Body.Close()
+    }
+    
+    time.Sleep(2 * time.Second)
+  }
+
+  // Keep client running to receive messages
+  time.Sleep(10 * time.Second)
 }
 ```
 
@@ -438,10 +534,19 @@ curl -s http://localhost:9092/api/v1/health
 
 ### Minimal Direct P2P sidecar gRPC stream client
 
-TODO::
+For a complete working P2P client that connects directly to nodes, see the full implementation with trace handling:
+
+**[Complete P2P Client Example](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/p2p_client.go)**
+
+The client includes:
+
+* **Message publishing and subscribing** with gRPC streaming
+* **Protocol trace handling** for both GossipSub and OptimumP2P
+* **Metrics collection** via `MessageTraceGossipSub` and `MessageTraceOptimumP2P` responses
+* **Stress testing capabilities** with batch message publishing
 
 ```go
-// p2p_client.go (skeleton)
+// Basic client skeleton (see full implementation in GitHub link above)
 package main
 
 import (
@@ -453,11 +558,13 @@ import (
   "google.golang.org/grpc"
   "google.golang.org/grpc/credentials/insecure"
   "google.golang.org/grpc/keepalive"
+  
+  protobuf "p2p_client/grpc" // Generated from p2p_stream.proto
 )
 
 func main() {
   conn, err := grpc.Dial(
-    "localhost:33221",
+    "localhost:33221", // Connect to p2pnode-1
     grpc.WithTransportCredentials(insecure.NewCredentials()),
     grpc.WithKeepaliveParams(keepalive.ClientParameters{
       Time: 2*time.Minute, Timeout: 20*time.Second,
@@ -466,18 +573,31 @@ func main() {
   if err != nil { log.Fatal(err) }
   defer conn.Close()
 
-  // TODO: replace with your generated client and stream.
-  // client := pb.NewCommandStreamClient(conn)
-  // stream, _ := client.ListenCommands(context.Background())
-  // stream.Send(&pb.Request{Command: SubscribeCmd, Topic: "demo"})
-  // for { resp, _ := stream.Recv(); fmt.Printf("MSG: %s\n", resp.GetData()) }
-
-  fmt.Println("Connected to node sidecar at localhost:33221 (implement client logic here).")
-  <-context.Background().Done()
+  client := protobuf.NewCommandStreamClient(conn)
+  stream, _ := client.ListenCommands(context.Background())
+  
+  // Subscribe to topic
+  stream.Send(&protobuf.Request{
+    Command: int32(CommandSubscribeToTopic),
+    Topic: "demo",
+  })
+  
+  // Handle responses including trace data
+  for {
+    resp, _ := stream.Recv()
+    switch resp.GetCommand() {
+    case protobuf.ResponseType_Message:
+      fmt.Printf("MSG: %s\n", string(resp.GetData()))
+    case protobuf.ResponseType_MessageTraceGossipSub:
+      fmt.Printf("[TRACE] GossipSub trace: %d bytes\n", len(resp.GetData()))
+    case protobuf.ResponseType_MessageTraceOptimumP2P:
+      fmt.Printf("[TRACE] OptimumP2P trace: %d bytes\n", len(resp.GetData()))
+    }
+  }
 }
 ```
 
-See the example code in our GitHub repository(TODO::). For all available configuration variables, observability and validations check the [Parameters Section](./03-parameters.md).
+For all available configuration variables, observability and validations check the [Parameters Section](./03-parameters.md).
 
 ## Troubleshooting
 

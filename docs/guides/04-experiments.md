@@ -117,5 +117,26 @@ You can run them using:
 > * `MessageTraceGossipSub` for GossipSub mode.
 > * `MessageTraceOptimumP2P` for OptimumP2P mode.
 
-TODO:: github ref, and cite the gRPC client part.
-For metrics collection guidance, see [github sample implementations](github.com).
+## Metrics Collection
+
+For comprehensive metrics collection during experiments, use the gRPC P2P client with trace handling:
+
+**[P2P Client with Metrics Collection](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/p2p_client.go)**
+
+The client automatically captures and displays:
+
+* **GossipSub traces**: Peer routing, message delivery status, hop counts, latency
+* **OptimumP2P traces**: Shard encoding/decoding, reconstruction efficiency, redundancy metrics  
+* **Message-level data**: Delivery success rates, end-to-end latency, bandwidth usage
+
+**Key trace handlers:**
+
+```go
+case protobuf.ResponseType_MessageTraceGossipSub:
+    fmt.Printf("[TRACE] GossipSub trace received: %s\n", string(resp.GetData()))
+
+case protobuf.ResponseType_MessageTraceOptimumP2P:
+    fmt.Printf("[TRACE] OptimumP2P trace received: %s\n", string(resp.GetData()))
+```
+
+Use this client instead of the CLI for detailed performance analysis during experiments.
