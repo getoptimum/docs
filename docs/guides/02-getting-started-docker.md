@@ -96,30 +96,28 @@ OptimumP2P nodes need a **P2P identity** (cryptographic keypair) for peer-to-pee
 curl -sSL https://raw.githubusercontent.com/getoptimum/optimum-dev-setup-guide/main/script/generate-identity.sh | bash
 ```
 
-This script automatically:
+This script:
 
 * Creates `./identity/` directory
-* Generates P2P keypair using Go
-* Saves to `identity/p2p.key`
+* Generates P2P keypair using the existing keygen utility
+* Saves to `identity/p2p.key` with proper checksum format
 * Exports `BOOTSTRAP_PEER_ID` environment variable
 * Handles existing identity gracefully
-* Cleans up temporary files automatically
+* Uses the correct file format expected by OptimumP2P nodes
 
-**Expected Output:**
+**Output:**
 
 ```bash
 [INFO] Generating P2P Bootstrap Identity...
 [INFO] Creating identity directory...
-[INFO] Creating key generator...
-[INFO] Initializing Go module...
-[INFO] Downloading dependencies...
+[INFO] Using existing keygen script...
 [INFO] Generating P2P keypair...
 [SUCCESS] Generated P2P identity successfully!
 [SUCCESS] Identity saved to: ./identity/p2p.key
-[SUCCESS] Peer ID: 12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
+[SUCCESS] Peer ID: 12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
 [INFO] To use in docker-compose:
-export BOOTSTRAP_PEER_ID=12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
-[SUCCESS] Done! Your OptimumP2P peer ID: 12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
+export BOOTSTRAP_PEER_ID=12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
+[SUCCESS] Done! Your OptimumP2P peer ID: 12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
 ```
 
 **What this creates:**
