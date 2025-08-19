@@ -93,111 +93,32 @@ OptimumP2P nodes need a **P2P identity** (cryptographic keypair) for peer-to-pee
 ### Quick One-Command Setup
 
 ```bash
-# TODO: Update this URL once optimum-dev-setup-guide repo is public
-curl -sSL https://raw.githubusercontent.com/getoptimum/optimum-dev-setup-guide/main/scripts/generate-identity.sh | bash
+curl -sSL https://raw.githubusercontent.com/getoptimum/optimum-dev-setup-guide/main/script/generate-identity.sh | bash
 ```
 
 This script automatically:
 
 * Creates `./identity/` directory
-* Generates P2P keypair 
+* Generates P2P keypair using Go
 * Saves to `identity/p2p.key`
 * Exports `BOOTSTRAP_PEER_ID` environment variable
-
-### Manual Setup (Alternative)
-
-If you prefer to generate the key manually:
-
-#### Step 1: Create identity directory
-
-```bash
-mkdir -p ./identity
-```
-
-#### Step 2: Create the key generator
-
-```bash
-cat > ./generate_key.go << 'EOF'
-package main
-
-import (
-    "crypto/rand"
-    "encoding/json"
-    "fmt"
-    "os"
-    "path/filepath"
-
-    "github.com/libp2p/go-libp2p/core/crypto"
-    "github.com/libp2p/go-libp2p/core/peer"
-)
-
-type IdentityInfo struct {
-    Key []byte  `json:"Key"`
-    ID  peer.ID `json:"ID"`
-}
-
-func main() {
-    // Generate Ed25519 keypair
-    pk, _, err := crypto.GenerateEd25519Key(rand.Reader)
-    if err != nil {
-        fmt.Printf("Failed to generate key: %v\n", err)
-        os.Exit(1)
-    }
-
-    // Get peer ID from private key
-    id, err := peer.IDFromPrivateKey(pk)
-    if err != nil {
-        fmt.Printf("Failed to derive peer ID: %v\n", err)
-        os.Exit(1)
-    }
-
-    // Marshal private key to bytes
-    raw, err := crypto.MarshalPrivateKey(pk)
-    if err != nil {
-        fmt.Printf("Failed to marshal key: %v\n", err)
-        os.Exit(1)
-    }
-
-    // Save to identity/p2p.key
-    info := IdentityInfo{Key: raw, ID: id}
-    data, err := json.Marshal(info)
-    if err != nil {
-        fmt.Printf("Failed to marshal identity: %v\n", err)
-        os.Exit(1)
-    }
-
-    keyPath := filepath.Join("identity", "p2p.key")
-    if err := os.WriteFile(keyPath, data, 0600); err != nil {
-        fmt.Printf("Failed to write key file: %v\n", err)
-        os.Exit(1)
-    }
-
-    fmt.Printf("Peer ID: %s\n", id.String())
-}
-EOF
-```
-
-#### Step 3: Initialize and run
-
-```bash
-go mod init temp-keygen
-go get github.com/libp2p/go-libp2p@latest
-go run generate_key.go
-```
-
-#### Step 4: Export Peer ID and cleanup
-
-```bash
-export BOOTSTRAP_PEER_ID=$(cat identity/p2p.key | grep -o '"ID":"[^"]*"' | cut -d'"' -f4)
-echo "BOOTSTRAP_PEER_ID=${BOOTSTRAP_PEER_ID}"
-rm generate_key.go go.mod go.sum
-```
+* Handles existing identity gracefully
+* Cleans up temporary files automatically
 
 **Expected Output:**
-
-```sh
-Peer ID: 12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
-BOOTSTRAP_PEER_ID=12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
+```
+[INFO] Generating P2P Bootstrap Identity...
+[INFO] Creating identity directory...
+[INFO] Creating key generator...
+[INFO] Initializing Go module...
+[INFO] Downloading dependencies...
+[INFO] Generating P2P keypair...
+[SUCCESS] Generated P2P identity successfully!
+[SUCCESS] Identity saved to: ./identity/p2p.key
+[SUCCESS] Peer ID: 12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
+[INFO] To use in docker-compose:
+export BOOTSTRAP_PEER_ID=12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
+[SUCCESS] Done! Your OptimumP2P peer ID: 12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
 ```
 
 **What this creates:**
