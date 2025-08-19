@@ -38,11 +38,17 @@ local deployment offers:
 ## 1. Before You Start
 
 ### Requirements
-<!-- TODO:: make it better and refs -->
-* **Docker**  
-* **Docker Compose**
-* **Go v1.24+**  
-* At least **2 GB free RAM** for running multiple nodes locally  
+
+* **[Docker](https://docs.docker.com/engine/install/)** — Container runtime for running OptimumP2P components
+* **[Docker Compose](https://docs.docker.com/compose/install/)** — Tool for defining multi-container applications  
+* **[Go v1.24+](https://golang.org/dl/)** — Required for building custom gRPC clients
+* At least **2 GB free RAM** for running multiple nodes locally
+
+> **Quick Docker Install:**
+> 
+> * **Linux**: `curl -fsSL https://get.docker.com | sh`
+> * **macOS**: [Docker Desktop for Mac](https://docs.docker.com/desktop/install/mac-install/)
+> * **Windows**: [Docker Desktop for Windows](https://docs.docker.com/desktop/install/windows-install/)  
 
 ### Components
 
@@ -74,23 +80,132 @@ We’ll keep identity in `./identity` folder so you can reuse keys across restar
 | **Direct OptimumP2P**         | Fewer hops, you control connection/retry logic and node selection                         |
 
 
-### 3. Generate a Bootstrap Identity (once)
+## 3. Generate a Bootstrap Identity (once)
 
-For stable bootstrapping, generate a persistent identity:
+OptimumP2P nodes need a **P2P identity** (cryptographic keypair) for peer-to-peer communication. The bootstrap node needs a persistent identity so other nodes can discover it reliably.
 
-<!-- TODO:: we should add generate-key flag or check the correct process, it should be one command -->
-```sh
-# Create identity dir
-mkdir -p ./identity
+**What is P2P Identity?**
 
-# Generate a key (container provides the helper)
-docker run --rm -v $(pwd)/identity:/identity getoptimum/p2pnode:latest generate-key
-# Print the libp2p Peer ID from that key
-export BOOTSTRAP_PEER_ID=$(docker run --rm -v $(pwd)/identity:/identity getoptimum/p2pnode:latest peer-id)
-echo "BOOTSTRAP_PEER_ID=${BOOTSTRAP_PEER_ID}"
+* A cryptographic private key stored in `identity/p2p.key`
+* Used for peer authentication and discovery
+* Generates a unique **Peer ID** (like `12D3KooW...`) that other nodes use to connect
+
+### Quick One-Command Setup
+
+```bash
+# TODO: Update this URL once optimum-dev-setup-guide repo is public
+curl -sSL https://raw.githubusercontent.com/getoptimum/optimum-dev-setup-guide/main/scripts/generate-identity.sh | bash
 ```
 
-We’ll reference `${BOOTSTRAP_PEER_ID}` in `docker-compose` files so all peers can discover the bootstrap node.
+This script automatically:
+
+* Creates `./identity/` directory
+* Generates P2P keypair 
+* Saves to `identity/p2p.key`
+* Exports `BOOTSTRAP_PEER_ID` environment variable
+
+### Manual Setup (Alternative)
+
+If you prefer to generate the key manually:
+
+#### Step 1: Create identity directory
+
+```bash
+mkdir -p ./identity
+```
+
+#### Step 2: Create the key generator
+
+```bash
+cat > ./generate_key.go << 'EOF'
+package main
+
+import (
+    "crypto/rand"
+    "encoding/json"
+    "fmt"
+    "os"
+    "path/filepath"
+
+    "github.com/libp2p/go-libp2p/core/crypto"
+    "github.com/libp2p/go-libp2p/core/peer"
+)
+
+type IdentityInfo struct {
+    Key []byte  `json:"Key"`
+    ID  peer.ID `json:"ID"`
+}
+
+func main() {
+    // Generate Ed25519 keypair
+    pk, _, err := crypto.GenerateEd25519Key(rand.Reader)
+    if err != nil {
+        fmt.Printf("Failed to generate key: %v\n", err)
+        os.Exit(1)
+    }
+
+    // Get peer ID from private key
+    id, err := peer.IDFromPrivateKey(pk)
+    if err != nil {
+        fmt.Printf("Failed to derive peer ID: %v\n", err)
+        os.Exit(1)
+    }
+
+    // Marshal private key to bytes
+    raw, err := crypto.MarshalPrivateKey(pk)
+    if err != nil {
+        fmt.Printf("Failed to marshal key: %v\n", err)
+        os.Exit(1)
+    }
+
+    // Save to identity/p2p.key
+    info := IdentityInfo{Key: raw, ID: id}
+    data, err := json.Marshal(info)
+    if err != nil {
+        fmt.Printf("Failed to marshal identity: %v\n", err)
+        os.Exit(1)
+    }
+
+    keyPath := filepath.Join("identity", "p2p.key")
+    if err := os.WriteFile(keyPath, data, 0600); err != nil {
+        fmt.Printf("Failed to write key file: %v\n", err)
+        os.Exit(1)
+    }
+
+    fmt.Printf("Peer ID: %s\n", id.String())
+}
+EOF
+```
+
+#### Step 3: Initialize and run
+
+```bash
+go mod init temp-keygen
+go get github.com/libp2p/go-libp2p@latest
+go run generate_key.go
+```
+
+#### Step 4: Export Peer ID and cleanup
+
+```bash
+export BOOTSTRAP_PEER_ID=$(cat identity/p2p.key | grep -o '"ID":"[^"]*"' | cut -d'"' -f4)
+echo "BOOTSTRAP_PEER_ID=${BOOTSTRAP_PEER_ID}"
+rm generate_key.go go.mod go.sum
+```
+
+**Expected Output:**
+
+```sh
+Peer ID: 12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
+BOOTSTRAP_PEER_ID=12D3KooWJ5wcJWsfPmy6ssqonno14baQMozmteSkRGKxAzB3k2t8
+```
+
+**What this creates:**
+
+* `./identity/p2p.key` — JSON file containing the private key and peer ID
+* `BOOTSTRAP_PEER_ID` environment variable for use in docker-compose files
+
+> **Note:** This process creates a persistent identity that will be reused across container restarts. The `identity/` folder is mounted into containers so the same keypair is shared by the bootstrap node.
 
 This guide covers:
 
@@ -99,7 +214,7 @@ This guide covers:
 * Connecting via CLI (`mump2p-cli`) or `gRPC clients` (Go examples included).
 * Adjusting key parameters for your environment.
 
-## 3 Mode A — OptimumProxy + OptimumP2P (Recommended)
+## 4. Mode A — OptimumProxy + OptimumP2P (Recommended)
 
 ### Create the docker-compose file
 
@@ -317,7 +432,7 @@ func main() {
 }
 ```
 
-## 4 Mode B —  Direct OptimumP2P (Advanced / Low Latency)
+## 5. Mode B — Direct OptimumP2P (Advanced / Low Latency)
 
 In this mode, clients connect `straight to node sidecar gRPC`. You’ll manage client-side reconnection, backoff, and which node to hit.
 

@@ -132,6 +132,80 @@ proxy-1:
 | `P2P_NODES`                       | (none)  | Comma-separated list of host:port for sidecar connections. |
 | `SUBSCRIBER_THRESHOLD`            | 0.1     | % of connected subscribers needed to forward a message.    |
 
+## Recommended Default Configuration
+
+The following table shows the **production defaults**, which are optimized for typical deployment scenarios:
+
+### For Quick Start (Copy-Paste Ready)
+
+**OptimumP2P Mode (`NODE_MODE=optimum`):**
+
+```yaml
+environment:
+  - NODE_MODE=optimum
+  - LOG_LEVEL=production
+  - CLUSTER_ID=my-cluster
+  - SIDECAR_PORT=33212
+  - API_PORT=8081
+  - IDENTITY_DIR=/identity
+  - OPTIMUM_PORT=7070
+  - OPTIMUM_MAX_MSG_SIZE=1048576
+  - OPTIMUM_RANDOM_MSG_SIZE=512
+  - OPTIMUM_MESH_TARGET=6
+  - OPTIMUM_MESH_MIN=4
+  - OPTIMUM_MESH_MAX=12
+  - OPTIMUM_SHARD_FACTOR=4
+  - OPTIMUM_SHARD_MULT=1.5
+  - OPTIMUM_THRESHOLD=0.75
+  - BOOTSTRAP_PEERS=""
+```
+
+**GossipSub Mode (`NODE_MODE=gossipsub`):**
+
+```yaml
+environment:
+  - NODE_MODE=gossipsub
+  - LOG_LEVEL=production
+  - CLUSTER_ID=my-cluster
+  - SIDECAR_PORT=33212
+  - API_PORT=8081
+  - IDENTITY_DIR=/identity
+  - GOSSIPSUB_PORT=6060
+  - GOSSIPSUB_MAX_MSG_SIZE=1048576
+  - GOSSIPSUB_MESH_TARGET=6
+  - GOSSIPSUB_MESH_MIN=4
+  - GOSSIPSUB_MESH_MAX=12
+  - BOOTSTRAP_PEERS=""
+```
+
+### Complete Defaults Reference
+
+| Parameter                    | Default Value | Used In Mode | Description                                    |
+| ---------------------------- | ------------- | ------------ | ---------------------------------------------- |
+| `LOG_LEVEL`                  | production    | Both         | Log verbosity (production/debug/info/warn/error) |
+| `CLUSTER_ID`                 | ""            | Both         | Logical group name for metrics                 |
+| `NODE_MODE`                  | ""            | Both         | Protocol mode (optimum/gossipsub)             |
+| `SIDECAR_PORT`               | 33212         | Both         | gRPC sidecar port                              |
+| `API_PORT`                   | 8081          | Both         | HTTP API port                                  |
+| `IDENTITY_DIR`               | /tmp          | Both         | Directory for node private key                 |
+| `OPTIMUM_PORT`               | 7070          | optimum      | TCP port for RLNC gossip                      |
+| `OPTIMUM_MAX_MSG_SIZE`       | 1048576       | optimum      | Max message size (1MB)                         |
+| `OPTIMUM_RANDOM_MSG_SIZE`    | 512           | optimum      | Random message size for testing                |
+| `OPTIMUM_MESH_TARGET`        | 6             | optimum      | Desired peers in mesh                          |
+| `OPTIMUM_MESH_MIN`           | 4             | optimum      | Minimum peers before adding more               |
+| `OPTIMUM_MESH_MAX`           | 12            | optimum      | Max peers before pruning                       |
+| `OPTIMUM_SHARD_FACTOR`       | 4             | optimum      | Number of shards per message                   |
+| `OPTIMUM_SHARD_MULT`         | 1.5           | optimum      | Redundancy multiplier (extra shards)          |
+| `OPTIMUM_THRESHOLD`          | 0.75          | optimum      | Forward/decode threshold (75%)                 |
+| `GOSSIPSUB_PORT`             | 6060          | gossipsub    | TCP port for standard gossip                   |
+| `GOSSIPSUB_MAX_MSG_SIZE`     | 1048576       | gossipsub    | Max message size (1MB)                         |
+| `GOSSIPSUB_MESH_TARGET`      | 6             | gossipsub    | Desired peers in mesh                          |
+| `GOSSIPSUB_MESH_MIN`         | 4             | gossipsub    | Minimum peers before adding more               |
+| `GOSSIPSUB_MESH_MAX`         | 12            | gossipsub    | Max peers before pruning                       |
+| `BOOTSTRAP_PEERS`            | []            | Both         | List of peer multiaddrs for bootstrap         |
+
+> **Note:** These are the production defaults used by OptimumP2P nodes. For experimental tuning, see [Common Experiments](./04-experiments.md).
+
 ## Parameter Impact in Deployment Modes
 
 <!-- TODO:: take kishori help -->
