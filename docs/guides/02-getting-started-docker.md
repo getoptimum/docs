@@ -5,10 +5,7 @@ You can run the network in two primary ways:
 
 **1. OptimumProxy + OptimumP2P** — Clients connect to an **Optimum Proxy**, which manages P2P connections for them.
 
-<!-- TODO:: diagram -->
-```plaintext
-[Client (CLI / gRPC)] → [Optimum Proxy] → [OptimumP2P Mesh]
-```
+![OptimumProxy + OptimumP2P Architecture](../../static/img/docker_1.png)
 
 * Simplifies client configuration — only the Proxy address is needed.
 * Proxy handles shard reassembly, threshold logic, and node selection.
@@ -16,11 +13,7 @@ You can run the network in two primary ways:
 
 **2. Direct OptimumP2P** — Clients connect directly to **OptimumP2P nodes** (each node must run the gRPC API).
 
-
-<!-- TODO:: diagram -->
-```plaintext
-[Client (gRPC)] → [OptimumP2P Node] ↔ [OptimumP2P Mesh]
-```
+![Direct OptimumP2P Architecture](../../static/img/docker_2.png)
 
 * Fewer network hops = potentially lower latency.
 * Clients must know node addresses and manage failover.

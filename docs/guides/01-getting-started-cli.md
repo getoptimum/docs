@@ -51,28 +51,7 @@ Without authentication, you can only use **open/public topics** with strict limi
 
 ## How It Fits into the Network
 
-```plaintext
-┌──────────────┐      ┌────────────────┐      ┌─────────────────────────────┐
-│ mump2p CLI   │───▶  │ Optimum Proxy  │───▶  │     OptimumP2P Network      │
-└──────────────┘      └────────────────┘      └─────────────┬───────────────┘
-                                                           /   │   \
-                                                          /    │    \
-                                                 ┌────────▼─┐  │  ┌──────────┐
-                                                 │ P1:Tokyo │──┼──│P2:Singapore│
-                                                 └─────┬────┘  │  └──────┬─────┘
-                                                       │       │         │
-                                                 ┌─────▼────┐  │  ┌──────▼─────┐
-                                                 │P3:Frankf │──┼──│P4:New York │
-                                                 └──────────┘  │  └────────────┘
-                                                               │
-                                                         ┌─────▼─────┐
-                                                         │P5:Sydney  │
-                                                         └─────┬─────┘
-                                                               │
-                                                        ┌──────▼──────┐
-                                                        │ Other Peers │
-                                                        └─────────────┘
-```
+![mump2p CLI Architecture](../../static/img/mump2p.png)
 
 * CLI talks to the Proxy via gRPC/WebSocket.
 * Proxy connects to the P2P Mesh (multiple nodes across regions).
