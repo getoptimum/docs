@@ -48,7 +48,7 @@ This guide is organized into self-contained chapters:
 3. **[Understanding Key Parameters](03-parameters.md)** — Tune thresholds, shards, and mesh settings for your workload.
 4. **[Common Experiments](04-experiments.md)** — Test performance and reliability under different conditions.
 5. **[FAQ & Glossary](05-faq-glossary.md)** — Quick answers and key term definitions.
-6. **[Next Steps](06-next-steps.md)** — Ideas for integration and advanced usage.
+
 
 
 ## Who This Guide Is For
