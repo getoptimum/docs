@@ -261,10 +261,7 @@ function sidebarHome() {
           text: "FAQ Glossary",
           link: "/docs/guides/05-faq-glossary",
         },
-        {
-          text: "Next Steps",
-          link: "/docs/guides/06-next-steps",
-        },
+        
       ],
     },
     {

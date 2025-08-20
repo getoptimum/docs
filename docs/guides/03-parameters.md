@@ -206,13 +206,3 @@ environment:
 
 > **Note:** These are the production defaults used by OptimumP2P nodes. For experimental tuning, see [Common Experiments](./04-experiments.md).
 
-## Parameter Impact in Deployment Modes
-
-<!-- TODO:: take kishori help -->
-| Parameter                             | Proxy + P2P | Direct P2P |
-| ------------------------------------- | ----------- | ---------- |
-| Mesh Size (`*_MESH_TARGET`)           | explainer   | explainer  |
-| Shard Factor (`OPTIMUM_SHARD_FACTOR)` | explainer   | explainer  |
-| Threshold (`OPTIMUM_THRESHOLD`)       | explainer   | explainer  |
-| Max Message Size (`*_MAX_MSG_SIZE`)   | explainer   | explainer  |
-| Bootstrap Peers (`BOOTSTRAP_PEERS`)   | explainer   | explainer  |
