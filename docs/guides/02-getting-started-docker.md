@@ -246,9 +246,8 @@ docker compose logs -f proxy | sed -n '1,120p
 
 ```sh
 # Proxy
-curl -s http://localhost:8081/api/version
-
-TODO:: update with the correct version and health endpoint after fixing https://github.com/getoptimum/optimum-proxy/issues/145
+curl -s http://localhost:8081/api/v1/version
+curl -s http://localhost:8081/api/v1/health
 
 # Nodes
 curl -s http://localhost:9091/api/v1/health
@@ -282,11 +281,10 @@ You should see your subscriber print the message immediately.
 
 ### Use Proxy using REST API and WebSocket (optional)
 
-TODO::
+**Publish a message:**
 
 ```sh
-curl -X POST https://xxx/api/publish \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+curl -X POST http://localhost:8081/api/v1/publish \
   -H "Content-Type: application/json" \
   -d '{
     "client_id": "your-client-id",
@@ -295,9 +293,18 @@ curl -X POST https://xxx/api/publish \
 }'
 ```
 
+**Parameters:**
+
+- `client_id` – Unique identifier for the client (required)
+- `topic` – The topic to publish the message to
+- `message` – The content to broadcast to subscribers
+
+> **Important:** The `client_id` field is required for all publish requests. This should be the same ID used when subscribing to topics. If you're using WebSocket connections, use the same `client_id` for consistency.
+
+**Subscribe to a topic:**
+
 ```sh
-curl -X POST https://xxx/api/subscribe \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN" \
+curl -X POST http://localhost:8081/api/v1/subscribe \
   -H "Content-Type: application/json" \
   -d '{
     "client_id": "unique-client-id",
@@ -306,10 +313,26 @@ curl -X POST https://xxx/api/subscribe \
 }'
 ```
 
+**Parameters:**
+
+- `client_id` – Unique identifier for the client (required)
+- `topic` – The topic to subscribe to
+- `threshold` (optional, float) – Minimum percentage (0.1–1.0) of active nodes that must report a message before it's forwarded to this client
+  - Default: 0.1 (10% confirmation)
+
+**Connect via WebSocket:**
+
 ```sh
-wscat -c "wss://xxx/api/ws?client_id=unique-client-id" \
-  -H "Authorization: Bearer YOUR_JWT_TOKEN"
+wscat -c "ws://localhost:8081/api/v1/ws?client_id=unique-client-id"
 ```
+
+> **Important:** WebSocket has limitations, and you may experience unreliable delivery when publishing message bursts. A gRPC connection (shown below) provides more reliable streaming.
+
+**Rate Limits:**
+
+Rate limits are enforced based on client configuration. Exceeding limits results in 429 responses.
+
+> **Note:** Since authentication is disabled in our local setup (`ENABLE_AUTH=false`), no JWT tokens are required for these requests.
 
 ### Use Proxy using gRPC Stream
 
