@@ -53,7 +53,7 @@ Without authentication, you can only use **open/public topics** with strict limi
 
 ![mump2p CLI Architecture](../../static/img/mump2p.png)
 
-* CLI talks to the Proxy via gRPC/WebSocket.
+* CLI talks to the Proxy via HTTP/WebSocket or gRPC.
 * Proxy connects to the P2P Mesh (multiple nodes across regions).
 * Mesh uses RLNC for efficient message delivery and reconstruction.
 * Your client receives fully decoded messages in real-time.
@@ -91,8 +91,8 @@ If you prefer manual installation:
 **Output:**
 
 ```bash
-Version: v0.0.1-rc3-rc
-Commit:  5962e6a
+Version: v0.0.1-rc4
+Commit:  fdbee67
 ```
 
 You can visit [mump2p-cli release page](https://github.com/getoptimum/mump2p-cli/releases) for the latest version.
@@ -260,6 +260,24 @@ Opening WebSocket connection...
 Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```
 
+#### gRPC Subscription
+
+For high-performance streaming, use gRPC mode:
+
+```sh
+./mump2p subscribe --topic=demo --grpc
+```
+
+**Output:**
+
+```bash
+claims is &{google-oauth2|100677750055416883405 2025-08-21 16:01:29 +0530 IST 2025-08-22 16:01:29 +0530 IST true 4194304 1000 8 5368709120 google-oauth2|100677750055416883405 1755772288994}
+claims is google-oauth2|100677750055416883405
+Sending HTTP POST subscription request...
+HTTP POST subscription successful: {"client":"google-oauth2|100677750055416883405","status":"subscribed"}
+Listening for messages on topic 'demo' via gRPC... Press Ctrl+C to exit
+```
+
 ---
 
 ### 5. Publish a Message
@@ -288,6 +306,20 @@ Listening for messages on topic 'demo'... Press Ctrl+C to exit
 ```bash
 ✅ Published sample-data.json
 {"status":"published","topic":"demo"}
+```
+
+#### gRPC Publishing
+
+For high-performance publishing, use gRPC mode:
+
+```sh
+./mump2p publish --topic=demo --message="Hello via gRPC!" --grpc
+```
+
+**Output:**
+
+```bash
+✅ Published via gRPC inline message
 ```
 
 #### With threshold
@@ -323,7 +355,34 @@ Shows:
 
 ---
 
-### 7. Common Issues
+### 7. Check Proxy Health
+
+Monitor the health and system metrics of the proxy server:
+
+```sh
+./mump2p health
+```
+
+**Output:**
+
+```bash
+Proxy Health Status:
+-------------------
+Status:      ok
+Memory Used: 7.06%
+CPU Used:    0.30%
+Disk Used:   44.91%
+```
+
+#### Check specific proxy
+
+```sh
+./mump2p health --service-url="http://35.221.118.95:8080"
+```
+
+---
+
+### 8. Common Issues
 
 #### Unauthorized
 
@@ -381,7 +440,7 @@ Error: authentication required: token has expired, please login again
 
 → Run `./mump2p login` to authenticate.
 
-### 8. Important Tips
+### 9. Important Tips
 
 * Use descriptive topic names per team.
 * Keep `whoami` and `usage` handy.
@@ -389,6 +448,8 @@ Error: authentication required: token has expired, please login again
 * Start with hosted proxy, then try local deployment for full control.
 * Subscribe to a topic before publishing to it.
 * Use the `--service-url` flag to connect to different gateways for better performance.
+* Use `--grpc` flag for high-performance streaming and publishing.
+* Monitor proxy health with `./mump2p health` for troubleshooting.
 
 ---
 
