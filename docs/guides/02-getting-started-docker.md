@@ -295,9 +295,9 @@ curl -X POST http://localhost:8081/api/v1/publish \
 
 **Parameters:**
 
-- `client_id` – Unique identifier for the client (required)
-- `topic` – The topic to publish the message to
-- `message` – The content to broadcast to subscribers
+* `client_id` – Unique identifier for the client (required)
+* `topic` – The topic to publish the message to
+* `message` – The content to broadcast to subscribers
 
 > **Important:** The `client_id` field is required for all publish requests. This should be the same ID used when subscribing to topics. If you're using WebSocket connections, use the same `client_id` for consistency.
 
@@ -315,10 +315,10 @@ curl -X POST http://localhost:8081/api/v1/subscribe \
 
 **Parameters:**
 
-- `client_id` – Unique identifier for the client (required)
-- `topic` – The topic to subscribe to
-- `threshold` (optional, float) – Minimum percentage (0.1–1.0) of active nodes that must report a message before it's forwarded to this client
-  - Default: 0.1 (10% confirmation)
+* `client_id` – Unique identifier for the client (required)
+* `topic` – The topic to subscribe to
+* `threshold` (optional, float) – Minimum percentage (0.1–1.0) of active nodes that must report a message before it's forwarded to this client
+    * Default: 0.1 (10% confirmation)
 
 **Connect via WebSocket:**
 
