@@ -258,7 +258,7 @@ function sidebarHome() {
           link: "/docs/guides/04-experiments",
         },
         {
-          text: "FAQ Glossary",
+          text: "FAQs",
           link: "/docs/guides/05-faq-glossary",
         },
         
