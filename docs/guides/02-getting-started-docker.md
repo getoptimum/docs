@@ -346,7 +346,7 @@ The proxy client provides:
 * **gRPC bidirectional streaming** for real-time message delivery
 * **Message publishing** via REST API endpoints
 * **Configurable parameters** for topic, threshold, and message count
-* **Flow control and keepalive** settings for robust connections
+* **Flow control settings** for robust connections
 
 ```go
 // Basic proxy client implementation (see full version in GitHub link above)
@@ -365,7 +365,6 @@ import (
 
   "google.golang.org/grpc"
   "google.golang.org/grpc/credentials/insecure"
-  "google.golang.org/grpc/keepalive"
   
   protobuf "proxy_client/grpc" // Generated from gateway_stream.proto
 )
@@ -387,7 +386,7 @@ func main() {
     "threshold": threshold,
   }
   data, _ := json.Marshal(body)
-  resp, err := http.Post(proxyREST+"/api/subscribe", "application/json", bytes.NewReader(data))
+  resp, err := http.Post(proxyREST+"/api/v1/subscribe", "application/json", bytes.NewReader(data))
   if err != nil {
     log.Fatalf("subscription failed: %v", err)
   }
@@ -396,14 +395,12 @@ func main() {
   // 2. Connect to gRPC stream
   conn, err := grpc.NewClient(proxyGRPC,
     grpc.WithTransportCredentials(insecure.NewCredentials()),
+    grpc.WithInitialWindowSize(1024*1024*1024),     // 1GB per-stream receive window
+    grpc.WithInitialConnWindowSize(1024*1024*1024), // 1GB connection-level receive window
     grpc.WithDefaultCallOptions(
       grpc.MaxCallRecvMsgSize(math.MaxInt),
       grpc.MaxCallSendMsgSize(math.MaxInt),
     ),
-    grpc.WithKeepaliveParams(keepalive.ClientParameters{
-      Time:    2 * time.Minute,
-      Timeout: 20 * time.Second,
-    }),
   )
   if err != nil {
     log.Fatalf("gRPC connection failed: %v", err)
@@ -448,7 +445,7 @@ func main() {
     publishData, _ := json.Marshal(publishBody)
     
     log.Printf("Publishing: %s", msg)
-    resp, err := http.Post(proxyREST+"/api/publish", "application/json", bytes.NewReader(publishData))
+    resp, err := http.Post(proxyREST+"/api/v1/publish", "application/json", bytes.NewReader(publishData))
     if err != nil {
       log.Printf("Publish error: %v", err)
     } else {
@@ -567,22 +564,21 @@ import (
   "context"
   "fmt"
   "log"
-  "time"
+  "math"
 
   "google.golang.org/grpc"
   "google.golang.org/grpc/credentials/insecure"
-  "google.golang.org/grpc/keepalive"
   
   protobuf "p2p_client/grpc" // Generated from p2p_stream.proto
 )
 
 func main() {
-  conn, err := grpc.Dial(
-    "localhost:33221", // Connect to p2pnode-1
+  conn, err := grpc.NewClient("localhost:33221",
     grpc.WithTransportCredentials(insecure.NewCredentials()),
-    grpc.WithKeepaliveParams(keepalive.ClientParameters{
-      Time: 2*time.Minute, Timeout: 20*time.Second,
-    }),
+    grpc.WithDefaultCallOptions(
+      grpc.MaxCallRecvMsgSize(math.MaxInt),
+      grpc.MaxCallSendMsgSize(math.MaxInt),
+    ),
   )
   if err != nil { log.Fatal(err) }
   defer conn.Close()
