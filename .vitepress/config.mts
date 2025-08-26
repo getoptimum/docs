@@ -157,7 +157,7 @@ function nav() {
     {
       text: "Menu",
       items: [
-        { text: "Get Started", link: "/docs/how-to-guides/overview" },
+        // { text: "Get Started", link: "/docs/how-to-guides/overview" },
         { text: "Learn", link: "/docs/learn/overview/intro" },
         {
           text: "Resources",
@@ -227,10 +227,42 @@ function sidebarHome() {
         // },
       ],
     },
-    {
-      text: "How-to Guides (Under Construction 🚧)",
-      collapsed: true,
-      items: [],
+        {
+      text: "Quick Start",
+      collapsed: false,
+      items: [
+        {
+          text: "Overview",
+          link: "/docs/guides/overview",
+        },
+        {
+          text: "Getting Started",
+          collapsed: true,
+          items: [
+            {
+              text: "Using mump2p-cli",
+              link: "/docs/guides/01-getting-started-cli",
+            },
+            {
+              text: "Local Setup with Docker",
+              link: "/docs/guides/02-getting-started-docker",
+            },
+          ],
+        },
+        {
+          text: "Parameters",
+          link: "/docs/guides/03-parameters",
+        },
+        {
+          text: "Common Experiments",
+          link: "/docs/guides/04-experiments",
+        },
+        {
+          text: "FAQs",
+          link: "/docs/guides/05-faq-glossary",
+        },
+        
+      ],
     },
     {
       text: "Research",

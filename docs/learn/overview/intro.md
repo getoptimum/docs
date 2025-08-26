@@ -4,29 +4,31 @@ description: Get a quick primer on the constituent components of the Optimum pro
 
 # Introduction to Optimum
 
-Optimum is the world’s first decentralized, high-performance memory infrastructure
-for any blockchain — designed to scale data access, reduce network strain, and
-power the next generation of dApps. Powered by Random Linear Network Coding (RLNC)
-— a proven, MIT-developed data encoding technique — Optimum turns sluggish,
-redundant networks into fast, efficient, scalable systems.
+**Optimum** is the world’s first decentralized, high-performance memory infrastructure
+for any blockchain — build to scale data access, reduce network congestion, and
+power the next generation of decentralized applications (dApps). 
+Powered by **Random Linear Network Coding (RLNC)** — a cutting-edge data encoding technique developed at MIT. 
+By leveraging RLNC, Optimum transforms slow, redundant peer-to-peer networks into fast, efficient, and scalable communication layers.
 
-Optimum is a decentralized network of flexnodes that can be run by anyone and
+Optimum is a decentralized network of **flexnodes** that can be run by anyone and
 permissionlessly connect to any blockchain.
 
-With Optimum, blockchains gain a memory bus and RAM that rivals the performance
+With Optimum, blockchains gain a **memory bus and RAM** that rivals the performance
 of modern computing. At its core, Optimum is building a provably optimal memory
 infrastructure that transforms blockchains into high-speed, scalable computing
 networks. The architecture is modular, permissionless, and easy to integrate via
-APIs.
+developer-friendly APIs.
 
-Optimum's products include Optimum P2P and decentralized Random Access Memory -
-DeRAM that deliver benefits across the entire blockchain ecosystem:
+## Optimum Products
 
-* **For validators**: Accelerated data propagation, lower operational costs,
-  higher APY and MEV income
-* **For L1 and L2 blockchains**: Faster block propagation, reduced bandwidth
-  consumption, and optimized storage
-* **For dApp developers**: Improved transaction relay and prioritization,
-  enabling latency, throughput, and cost-sensitive apps
-* **For end users**: Faster transactions and more responsive interfaces, improve
-  user experience
+Optimum's products include [**Optimum P2P**](./p2p.md) and [**DeRAM** (Decentralized Random Access Memory)](./deram.md) - bring measurable improvements across the entire blockchain stack:
+
+* **For L1 and L2 blockchains**: 
+  Accelerated block propagation, reduced bandwidth usage, and optimized on-chain storage.
+* **For Validators**:
+   Faster data propagation, reduced operational overhead, and increased rewards through higher APY and MEV.  
+* **For dApp developers**: 
+  Improved transaction relay and prioritization — enabling latency-sensitive, high-throughput, and cost-aware applications.
+* **For end users**: 
+  Faster transactions, faster confirmations, and smoother interfaces — enhancing overall user experience.
+
