@@ -81,9 +81,13 @@ OptimumP2P provides several configurable parameters to tune performance for diff
 
 ### Mesh Topology Parameters
 
-* **MeshDegreeTarget**: Target number of peers to maintain in the mesh overlay.
-* **MeshDegreeMin**: Minimum number of mesh peers before triggering grafting.
-* **MeshDegreeMax**: Maximum number of mesh peers before triggering pruning.
+OptimumP2P builds upon libp2p's [GossipSub mesh topology](https://docs.libp2p.io/concepts/pubsub/overview/#full-message), where peers maintain **full-message peerings** for reliable data transmission and **metadata-only peerings** for gossip and network maintenance.
+
+* **MeshDegreeTarget**: Target number of peers to maintain in the mesh overlay. This controls the trade-off between speed, reliability, resilience and efficiency of the network. A higher peering degree helps messages get delivered faster with better reliability, but increases bandwidth usage due to redundant message copies.
+* **MeshDegreeMin**: Minimum number of mesh peers before triggering [grafting](https://docs.libp2p.io/concepts/pubsub/overview/#grafting-and-pruning) (converting metadata-only connections to full-message).
+* **MeshDegreeMax**: Maximum number of mesh peers before triggering [pruning](https://docs.libp2p.io/concepts/pubsub/overview/#grafting-and-pruning) (converting full-message peerings back to metadata-only).
+
+In libp2p's default implementation, the ideal network peering degree is 6 with anywhere from 4–12 being acceptable. OptimumP2P inherits these mesh management mechanisms while optimizing shard propagation through the established topology.
 
 ## Use Cases
 
