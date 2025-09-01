@@ -47,8 +47,8 @@ local deployment offers:
 
 | Component           | Purpose                                                                                                                                 | Docker Images               |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| **OptimumP2P Node** | RLNC-enabled mesh peer, encodes/decodes message shards, handles peer discovery and subscriptions. Optional gRPC API for direct clients. | `getoptimum/p2pnode:latest` |
-| **Optimum Proxy**   | Bridges clients and the mesh, manages subscriptions, shard reassembly, threshold logic, and node selection.                             | `getoptimum/proxy:latest`   |
+| **OptimumP2P Node** | RLNC-enabled mesh peer, encodes/decodes message shards, handles peer discovery and subscriptions. Optional gRPC API for direct clients. | `getoptimum/p2pnode:v0.0.1-rc2` |
+| **Optimum Proxy**   | Bridges clients and the mesh, manages subscriptions, shard reassembly, threshold logic, and node selection.                             | `getoptimum/proxy:v0.0.1-rc3`   |
 
 
 
@@ -136,7 +136,7 @@ Save as `./proxy-p2p/docker-compose.yml`:
 ```yaml
 services:
   proxy:
-    image: 'getoptimum/proxy:latest'
+    image: 'getoptimum/proxy:v0.0.1-rc3'
     platform: linux/amd64
     environment:
       - PROXY_PORT=:8080                 # internal port, mapped below
@@ -156,7 +156,7 @@ services:
         ipv4_address: 172.28.0.10
 
   p2pnode-1:
-    image: 'getoptimum/p2pnode:latest'
+    image: 'getoptimum/p2pnode:v0.0.1-rc2'
     platform: linux/amd64
     volumes:
       - ../identity:/identity

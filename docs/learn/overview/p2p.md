@@ -60,7 +60,7 @@ When a node receives a shard:
 
 ### Control Messages
 
-OptimumP2P usages and extends [GossipSub's](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md#control-messages) control messages for optimized mesh performance:
+OptimumP2P uses and extends [GossipSub's](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md#control-messages) control messages for optimized mesh performance:
 
 | Message     | Purpose                                                                 |
 |-------------|-------------------------------------------------------------------------|
