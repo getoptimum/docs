@@ -240,17 +240,17 @@ function sidebarHome() {
           collapsed: true,
           items: [
             {
-              text: "Using mump2p-cli",
+              text: "Getting Started with CLI",
               link: "/docs/guides/01-getting-started-cli",
             },
             {
-              text: "Local Setup with Docker",
+              text: "Getting Started with Docker",
               link: "/docs/guides/02-getting-started-docker",
             },
           ],
         },
         {
-          text: "Parameters",
+          text: "Understanding Key Parameters",
           link: "/docs/guides/03-parameters",
         },
         {

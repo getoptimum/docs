@@ -147,9 +147,9 @@ OptimumP2P inherits libp2p’s robust security foundation, and adds safeguards s
 
 For a full overview of these protections, refer to the [libp2p security considerations](https://docs.libp2p.io/concepts/security/security-considerations/).
 
-### Network Coding-Specific Security: Pollution Attacks
+### OptimumP2P avoids Pollution Attacks
 
-The primary security challenge unique to network coding is the risk of **pollution attacks**. In such an attack, a malicious actor injects corrupted or invalid coded shards into the network, with the goal of preventing honest nodes from successfully decoding the original message.
+In **pollution attacks** attack, a malicious actor injects corrupted or invalid coded shards into the network, with the goal of preventing honest nodes from successfully decoding the original message.
 
 OptimumP2P mitigates this risk through a multi-layered approach centered on **source authentication**.
 

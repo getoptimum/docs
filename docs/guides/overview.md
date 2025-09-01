@@ -5,7 +5,7 @@ This developer guide is your complete reference for installing, configuring, and
 This guide walks you through everything you need to **understand**, **deploy**, **run**, and **experiment** with OptimumP2P.
 It’s designed for beginners but complete enough for advanced developers to jump in and integrate.
 
-If you want deep technical theory, see the **[OptimumP2P Technical Overview](../learn/overview/p2p.md)** — this guide stays hands-on.
+For more details pelase see the **[OptimumP2P Technical Overview](../learn/overview/p2p.md)** — this guide stays hands-on.
 
 Whether you are an application developer, or a systems engineer or a hackathon participant, this guide will help you:
 
@@ -27,8 +27,8 @@ Before diving in, you should be familiar with these terms and how they relate to
 | **Threshold**| The fraction of shards required to successfully decode a message. For example, a threshold of 0.7 means only 70% of shards are needed. |
 | **RLNC**     | Random Linear Network Coding — a technique that mixes message fragments mathematically for redundancy and efficiency. |
 | **Mesh**     | The set of directly connected peers in a topic. The mesh topology affects redundancy, latency, and fault tolerance. |
-| **Bootstrap Node** | A known peer address used to join the P2P network. Without one, a new node cannot discover other peers. |
-| **Optimum Proxy** | A bridge between clients and the P2P mesh. It manages subscriptions, publications, and threshold logic on behalf of clients. |
+| **Bootstrap Node** | A known peer address used to join the P2P network and discover other peers. |
+| **Optimum Proxy** | Bridge nodes between clients and the P2P mesh. It manages subscriptions, publications, and threshold logic on behalf of clients. |
 | **Direct P2P Mode** | Clients connect directly to P2P nodes via gRPC without going through a proxy. This can reduce latency but requires more configuration. |
 | **Mesh Parameters** | Settings such as `MESH_TARGET` that define how many peers a node tries to keep in its topic mesh. |
 | **Fanout**   | A temporary set of peers a publisher sends messages to when it is not part of the topic mesh. |
@@ -41,7 +41,7 @@ Before diving in, you should be familiar with these terms and how they relate to
 
 ## What This Guide Covers
 
-This guide is organized into self-contained chapters:
+This guide is organized into self-contained section:
 
 1. **[Getting Started with CLI](01-getting-started-cli.md)** — Use `mump2p-cli` to connect to a hosted Optimum Proxy with no setup required.
 2. **[Getting Started with Docker](02-getting-started-docker.md)** — Run your own local proxy and P2P nodes for full control.
