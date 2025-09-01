@@ -28,11 +28,10 @@ If you connect directly to a P2P node, you need to:
 * Handle peer discovery.
 * Many more complex configuration operations.
 
-The **Optimum Proxy** removes that complexity:
+The **Optimum Proxies** removes that complexity:
 
-* Acts as your **single point of entry**.
+* Acts as **points of entry**.
 * Maintains connections to multiple OptimumP2P nodes.
-* Reassembles messages from shards using RLNC.
 * Enforces thresholds and applies filters.
 * Tracks usage and applies fair rate limits.
 

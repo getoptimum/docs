@@ -460,7 +460,7 @@ func main() {
 }
 ```
 
-## 5. Mode B — Direct OptimumP2P (Advanced / Low Latency)
+## 5. Mode B — Direct OptimumP2P (Advanced / Lower Latency)
 
 In this mode, clients connect `straight to node sidecar gRPC`. You’ll manage client-side reconnection, backoff, and which node to hit.
 
