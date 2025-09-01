@@ -101,8 +101,9 @@ OptimumP2P supercharges validator and full node performance in bandwidth-constra
 * **[Solana](https://solana.com/)**: Enhances Turbine-style data sharding with fault-tolerant packet loss recovery.  
 * **[Cosmos](https://cosmos.network/) & IBC networks**: Low-latency interchain packet routing and zone-to-zone messaging.
 
-### DeFi Chains
+### DeFi, AI, DePIN, Gaming & Social Chains
 
+<!--
 High-frequency trading chains rely on fast, reliable state propagation:
 
 * RLNC-based propagation keeps order books consistent across nodes
@@ -132,6 +133,8 @@ These chains rely on fast event propagation for user interactions:
 * OptimumP2P delivers low-latency, real-time interactions (game state syncs, social updates)
 * Improves experience for multiplayer, onchain games and social dApps
 * Reduces costs of redundant relay infra through efficient data spreading
+
+-->
 
 ## Security Model
 
