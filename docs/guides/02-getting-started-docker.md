@@ -28,6 +28,21 @@ local deployment offers:
 * **Private Testing** — Run in isolated networks without using public proxies.
 * **Advanced Experiments** — Simulate network conditions, failure scenarios, and scaling.
 
+## Which mode should I use?
+
+Choose the deployment mode that best fits your use case:
+
+| **Mode A: Proxy + OptimumP2P** | **Mode B: Direct OptimumP2P** |
+|---|---|
+| **One endpoint** — simpler client config | **Lowest latency** — fewer network hops |
+| **Policy control** — rate limiting, auth | **Direct control** — no proxy overhead |
+| **Auto failover** — proxy handles node selection | **Manual failover** — clients manage addresses |
+
+**Quick Decision:**
+
+* **Want simpler setup and client code?** → **[Start with Mode A](#4-mode-a--optimumproxy--optimump2p-recommended)**  
+* **Need maximum performance and control?** → **[Jump to Mode B](#5-mode-b--direct-optimump2p-advanced--lower-latency)**
+
 ## 1. Before You Start
 
 ### Requirements
@@ -262,7 +277,7 @@ You should see the mesh forming and node-2 discovering node-1 via the bootstrap 
 
 ### Send & receive (Proxy mode) using mump2p-cli
 
-If you haven’t already installed `mump2p`, see the [**Getting Started with mump2p-cli**](./01-getting-started-cli.md) chapter.
+If you haven't already installed `mump2p-cli`, see the [**Getting Started with mump2p-cli**](./01-getting-started-cli.md) chapter.
 
 **Subscribe:**
 

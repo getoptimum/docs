@@ -1,23 +1,68 @@
-# Overview
+# Quick Start
 
 This developer guide is your complete reference for installing, configuring, and operating **OptimumP2P**.
 
-This guide walks you through everything you need to **understand**, **deploy**, **run**, and **experiment** with OptimumP2P.
-It’s designed for beginners but complete enough for advanced developers to jump in and integrate.
+This guide walks you through everything you need to **understand**, **deploy**, **run**, and **experiment** with OptimumP2P. It's designed for beginners but complete enough for advanced developers to jump in and integrate.
 
-For more details pelase see the **[OptimumP2P Technical Overview](../learn/overview/p2p.md)** — this guide stays hands-on.
+Whether you are an application developer, systems engineer, or hackathon participant, this guide will help you:
 
-Whether you are an application developer, or a systems engineer or a hackathon participant, this guide will help you:
+1. **Install and run** OptimumP2P in different environments
+2. **Connect clients** via gRPC, REST, or CLI
+3. **Tune parameters** for performance or reliability
+4. **Run experiments** to validate system behavior
+5. **Monitor and debug** your deployment
 
-1. **Install and run** OptimumP2P in different environments.
-2. **Connect clients** via gRPC, REST, or CLI.
-3. **Tune parameters** for performance or reliability.
-4. **Run experiments** to validate system behavior.
-5. **Monitor and debug** your deployment.
+## Start Building
+
+Choose your path to get started with OptimumP2P:
+
+### **Try OptimumP2P (≤5 min)**
+
+**[Using mump2p-cli](01-getting-started-cli.md)** — Connect to hosted proxy, no setup required
+
+* One-command installation
+* Instant messaging with hosted infrastructure
+* Perfect for testing and prototyping
+
+### **Run Locally**
+
+**[Local Setup with Docker](02-getting-started-docker.md)** — Full control over configuration
+
+* Complete local network deployment
+* Experiment with different parameters
+* Compare OptimumP2P vs GossipSub performance
+
+### **Understanding & Experimenting**
+
+Essential for hackathon success:
+
+* **[Understanding Key Parameters](03-parameters.md)** — Tune thresholds, shards, and mesh settings
+* **[Common Experiments](04-experiments.md)** — Test performance under different conditions
+* **[FAQ](05-faq-glossary.md)** — Quick answers and debugging help
+
+
+## What This Guide Covers
+
+This guide is organized into self-contained sections:
+
+1. **[Using mump2p-cli](01-getting-started-cli.md)** — Connect to hosted proxy with no setup required.
+2. **[Local Setup with Docker](02-getting-started-docker.md)** — Run your own local proxy and P2P nodes for full control.
+3. **[Understanding Key Parameters](03-parameters.md)** — Tune thresholds, shards, and mesh settings for your workload.
+4. **[Common Experiments](04-experiments.md)** — Test performance and reliability under different conditions.
+5. **[FAQ](05-faq-glossary.md)** — Quick answers and debugging help.
+
+
+## Who This Guide Is For
+
+* **Application developers** who want to integrate fast, resilient messaging.
+* **Infrastructure engineers** deploying distributed systems.
+* **Hackathon teams** experimenting with real-time messaging.
+* **Researchers** testing RLNC in real-world scenarios.
+
 
 ## Key Concepts
 
-Before diving in, you should be familiar with these terms and how they relate to OptimumP2P’s architecture:
+Before diving deep, familiarize yourself with these terms and how they relate to OptimumP2P's architecture:
 
 | Term         | Description |
 |--------------|-------------|
@@ -36,25 +81,5 @@ Before diving in, you should be familiar with these terms and how they relate to
 | **Node Discovery** | The process by which proxies or nodes automatically learn about other nodes to connect to. |
 | **gRPC API** | The RPC interface provided by either a P2P node or a proxy for client communication. |
 
----
-
-
-## What This Guide Covers
-
-This guide is organized into self-contained section:
-
-1. **[Getting Started with CLI](01-getting-started-cli.md)** — Use `mump2p-cli` to connect to a hosted Optimum Proxy with no setup required.
-2. **[Getting Started with Docker](02-getting-started-docker.md)** — Run your own local proxy and P2P nodes for full control.
-3. **[Understanding Key Parameters](03-parameters.md)** — Tune thresholds, shards, and mesh settings for your workload.
-4. **[Common Experiments](04-experiments.md)** — Test performance and reliability under different conditions.
-5. **[FAQ & Glossary](05-faq-glossary.md)** — Quick answers and key term definitions.
-
-
-
-## Who This Guide Is For
-
-* **Application developers** who want to integrate fast, resilient messaging.
-* **Infrastructure engineers** deploying distributed systems.
-* **Hackathon teams** experimenting with real-time messaging.
-* **Researchers** testing RLNC in real-world scenarios.
+For more technical details, see the **[OptimumP2P Technical Overview](../learn/overview/p2p.md)**.
 
