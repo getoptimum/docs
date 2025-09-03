@@ -157,7 +157,7 @@ function nav() {
     {
       text: "Menu",
       items: [
-        { text: "Get Started", link: "/docs/how-to-guides/overview" },
+        // { text: "Get Started", link: "/docs/how-to-guides/overview" },
         { text: "Learn", link: "/docs/learn/overview/intro" },
         {
           text: "Resources",
@@ -184,53 +184,52 @@ function nav() {
 function sidebarHome() {
   return [
     {
-      text: "Learn",
+      text: "Overview of Optimum",
       collapsed: false,
       items: [
         {
-          text: "Overview of Optimum",
-          collapsed: true,
-          items: [
-            {
-              text: "Introduction",
-              link: "/docs/learn/overview/intro",
-            },
-            {
-              text: "OptimumP2P",
-              link: "/docs/learn/overview/p2p.md",
-            },
-            {
-              text: "Optimum DeRAM",
-              link: "/docs/learn/overview/deram.md",
-            },
-          ],
+          text: "Introduction",
+          link: "/docs/learn/overview/intro",
         },
-        // {
-        //   text: "OptimumP2P",
-        //   collapsed: true,
-        //   items: [
-        //   ],
-        // },
-        // {
-        //   text: "MUM",
-        //   collapsed: true,
-        //   items: [
-        //     {
-        //       text: "Overview of MUM",
-        //       link: "/docs/learn/mum",
-        //     },
-        //     {
-        //       text: "How to stake MUM",
-        //       link: "/docs/learn/how-to-stake-mum",
-        //     },
-        //   ],
-        // },
+        {
+          text: "OptimumP2P",
+          link: "/docs/learn/overview/p2p.md",
+        },
+        {
+          text: "Optimum DeRAM",
+          link: "/docs/learn/overview/deram.md",
+        },
       ],
     },
     {
-      text: "How-to Guides (Under Construction 🚧)",
-      collapsed: true,
-      items: [],
+      text: "Getting Started",
+      collapsed: false,
+      items: [
+        {
+          text: "Quick Start",
+          link: "/docs/guides/overview",
+        },
+        {
+          text: "Getting Started with CLI",
+          link: "/docs/guides/01-getting-started-cli",
+        },
+        {
+          text: "Getting Started with Docker",
+          link: "/docs/guides/02-getting-started-docker",
+        },
+        {
+          text: "Understanding Key Parameters",
+          link: "/docs/guides/03-parameters",
+        },
+        {
+          text: "Common Experiments",
+          link: "/docs/guides/04-experiments",
+        },
+        {
+          text: "FAQ",
+          link: "/docs/guides/05-faq-glossary",
+        },
+      ],
     },
     {
       text: "Research",

@@ -13,20 +13,17 @@ hero:
   actions:
     - theme: brand
       text: Get Started
-      link: /docs/how-to-guides/overview
-    - theme: alt
-      text: Introduction
       link: /docs/learn/overview/intro
 
 features:
-  - title: Overview
+  - title: Learn Optimum
     details: Learn more about Optimum, the various components involved, and how it could benefit your project.
     link: /docs/learn/overview/intro
     icon: 🎓
-  - title: How-to Guides (Under Construction 🚧)
-    details: Explore step-by-step guides for running and integrating with various types of nodes, how to read and write data, and how to gossip.
-    # link: /docs/how-to-guides/overview
-    icon: ⚙️
+  - title: Quickstart & Developer Guide
+    details: Complete guide for building applications on OptimumP2P with deployment options, client examples, and configuration.
+    link: /docs/guides/overview
+    icon: 🚀
   - title: Research
     details: Access resources for understanding the inner workings of Optimum and the research behind the technology.
     link: /docs/research/overview

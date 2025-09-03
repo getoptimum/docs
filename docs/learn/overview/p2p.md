@@ -1,86 +1,93 @@
 # OptimumP2P
 
-OptimumP2P is a novel gossip algorithm that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to enhance message dissemination in peer-to-peer networks. It is built on top of [libp2p](https://docs.libp2p.io/) and serves as an enhanced alternative to traditional gossip protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), providing faster data propagation, improved bandwidth efficiency, and better fault tolerance through network coding techniques.
+**OptimumP2P** is a next-generation gossip protocol that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to revolutionize message dissemination in peer-to-peer networks. Built on [libp2p](https://docs.libp2p.io/), it offers a high-performance alternative to traditional protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), delivering faster propagation, better bandwidth efficiency, and better fault tolerance using network coding.
+
 
 ## How OptimumP2P Works
 
-OptimumP2P is a gossip mechanism based on RLNC, also known as Galois Gossip, that builds upon [libp2p](https://docs.libp2p.io/)'s [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) protocol. Instead of transmitting complete messages between peers, OptimumP2P breaks messages into coded shards that can be independently forwarded and mathematically recombined to reconstruct the original data.
+OptimumP2P is a gossip mechanism based on RLNC, also known as **Galois Gossip**, that builds upon [libp2p](https://docs.libp2p.io/)'s [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) protocol. Instead of transmitting complete messages between peers, OptimumP2P breaks messages into coded shards that can be independently forwarded and mathematically recombined to reconstruct the original data.
 
 ### Node Architecture
 
-OptimumP2P is implemented as a P2P node that enhances traditional gossip protocols with RLNC capabilities. The node maintains:
+Each OptimumP2P node is a standard libp2p host enhanced with RLNC logic. Core components include:
 
-* **[libp2p](https://docs.libp2p.io/) Host**: The underlying network layer for peer connections
-* **Mesh Topology**: Maintains peer connections similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) with configurable mesh degrees
-* **RLNC Parameters**: Configurable parameters for encoding and forwarding behavior (see [Configuration Parameters](#configuration-parameters))
+* **libp2p Host** – Provides peer discovery, secure communication, and network transport.
+* **Mesh Topology** – Maintains a configurable gossip mesh with peer degrees similar to GossipSub.
+* **RLNC** – Manages encoding, recoding, and decoding of shards based on tunable parameters.
+  
+> See [Configuration Parameters](#configuration-parameters) for details.
 
 ### Random Linear Network Coding (RLNC) Fundamentals
 
-RLNC is the core technology that provides OptimumP2P its performance advantages. The process transforms a single large message into a set of smaller, mathematically-related pieces.
+RLNC enables performance gains by dividing messages into linearly coded shards. These shards can be forwarded, recombined, and decoded efficiently without requiring complete message delivery.
 
 ![RLNC Coding and Composability](/static/img/rlnc.png)
 
-**Key Principles:**
+#### Key Concepts
 
-* **Encoding**: Original data is divided into `k` pieces. These pieces are then used to generate a larger set of `n` coded shards by creating random linear combinations of the original pieces. The coefficients for these combinations are chosen from a finite field to ensure linear independence.
-* **Early Forwarding & Composability**: A key feature of RLNC is that nodes do not need to wait to receive all `k` pieces to contribute to the network. As soon as a node receives a shard, it can be combined with other received shards to create and forward a *new, unique* coded shard (a process called recoding). This continuous "mixing" of information allows data to propagate fluidly and rapidly.
-* **Decoding**: A receiver only needs to collect *any* `k` linearly independent shards to reconstruct the original message by solving a system of linear equations. This makes the system highly resilient to packet loss, as the specific shards that arrive do not matter, only the total number of unique shards.
+* **Encoding**: The original message is split into `k` fragments. These are used to produce `n` coded shards via random linear combinations over a finite field, ensuring uniqueness and redundancy.
+* **Recoding (Composability)**: Any node that receives a shard can immediately create a new coded shard from its current shard set — without waiting for the full message. This enables continuous, fast, and fault-tolerant propagation.
+* **Decoding**: Nodes only need `k` linearly independent shards to reconstruct the original message using linear algebra (matrix inversion). This ensures high resilience to data loss.
 
-This approach offers several advantages:
+#### Benefits
 
 * **Lower Latency**: Messages are broken into coded shards, which can be forwarded to the next node before the whole message is received.
-* **Loss Tolerance**: Messages can be decoded with any combination of shards, as long as a sufficient number reach the destination.
+* **High Loss Tolerance**: Messages can be decoded with any combination of shards, as long as a sufficient number reach the destination.
 * **Bandwidth Efficiency**: Sharding and recoding reduce the amount of redundant data transmission, lowering overall bandwidth usage.
 
-### Protocol Operation
+## Protocol Operation
 
-When a node publishes a message in OptimumP2P:
-
-1. **Message Preparation**: The original message is prepared for coding by adding length prefixes and padding if necessary
-2. **RLNC Encoding**: The message is divided into `k` fragments and encoded using RLNC into multiple shards using configurable parameters:
-   * `ShredFactor`: Controls how the data is fragmented  
-   * `PublisherShardMultiplier`: Determines how many shards to create initially
-3. **Coded Shard Distribution**: The publisher sends different coded shards to different peers in round-robin fashion
+### When Publishing
 
 When a node receives a shard:
 
-1. **Validation**: The node checks if the shard provides new degrees of freedom (linearly independent information)
-2. **Storage**: Valid shards are added to the node's shard set for that message  
-3. **Decoding Attempt**: If the node has collected `k` or more linearly independent shards, it attempts to decode the original message
-4. **Forwarding Logic**: 
-   * **From Publisher**: Coded shards received directly from the publisher are forwarded immediately to all mesh peers
-   * **From Intermediate Nodes**: If the node has more than a threshold number of shards (`ForwardShardThreshold`), it creates a new recoded shard and forwards it to mesh peers
+1. **Message Preparation**: Add length prefix and pad if necessary.
+2. **Encoding**:
+   * Fragment the message using `ShredFactor`
+   * Generate coded shards: `num_shards = ShredFactor * PublisherShardMultiplier`
+3. **Shard Distribution**: Send different coded shards to different peers in round-robin fashion.
+
+### When Receiving a Shard
+
+1. **Validation**: Check for linear independence; discard redundant shards.
+2. **Storage**: Add to shard set for that message.
+3. **Decoding**: Attempt decoding once `k` unique shards are available.
+4. **Forwarding**:
+   * `From Publisher`: Shards are immediately forwarded to all mesh peers.
+   * `From Peers`: If shard count exceeds `ForwardShardThreshold`, generate and forward a recoded shard.
+
+---
 
 ### Control Messages
 
-OptimumP2P uses control messages similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) to optimize traffic:
+OptimumP2P uses and extends [GossipSub's](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md#control-messages) control messages for optimized mesh performance:
 
-* **IDONTWANT**: Announced when a node has successfully decoded a message, preventing peers from sending more coded shards for that message
-* **IHAVE**: Announces that a node has a complete message and can provide coded shards to other nodes  
-* **IWANT**: Requests additional coded shards for a message that hasn't been fully decoded
-* **GRAFT/PRUNE**: Manages mesh topology similar to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub)
+| Message     | Purpose                                                                 |
+|-------------|-------------------------------------------------------------------------|
+| `IDONTWANT` | Informs peers not to send more shards for a decoded message             |
+| `IHAVE`     | Advertises that a node holds coded shards for a message                 |
+| `IWANT`     | Requests additional shards for an undecoded message                     |
+| `GRAFT`/`PRUNE` | Maintains optimal mesh size by adding/removing peers dynamically |
 
 ## Configuration Parameters
 
 OptimumP2P provides several configurable parameters to tune performance for different network conditions and requirements:
 
-### RLNC Encoding Parameters
+### RLNC Encoding
 
-* **ShredFactor**: Controls how the data is fragmented into pieces before encoding. Higher values provide more granular sharding but increase computational overhead.
-* **PublisherShardMultiplier**: Determines how many coded shards to create initially when publishing a message. Formula: `coded_shards_created = ShredFactor * PublisherShardMultiplier`
-* **ForwardShardThreshold**: Sets the threshold for intermediate nodes to create and forward new recoded shards. Nodes forward when they have more than `ShredFactor * ForwardShardThreshold` shards
+* **ShredFactor**: Number of base fragments to split a message into before encoding. Higher values provide more granular sharding but increase computational overhead.
+* **PublisherShardMultiplier**: Determines how many coded shards to create initially when publishing a message. Formula: `coded_shards_created = ShredFactor * PublisherShardMultiplier`.
+* **ForwardShardThreshold**: Sets the threshold for intermediate nodes to create and forward new recoded shards. Nodes forward when they have more than `ShredFactor * ForwardShardThreshold` shards.
 
 ### Mesh Topology Parameters
 
-* **MeshDegreeTarget**: Target number of peers to maintain in the mesh overlay
-* **MeshDegreeMin**: Minimum number of mesh peers before triggering grafting
-* **MeshDegreeMax**: Maximum number of mesh peers before triggering pruning
+OptimumP2P builds upon libp2p's [GossipSub mesh topology](https://docs.libp2p.io/concepts/pubsub/overview/#full-message), where peers maintain **full-message peerings** for reliable data transmission and **metadata-only peerings** for gossip and network maintenance.
 
-### Performance Tuning
+* **MeshDegreeTarget**: Target number of peers to maintain in the mesh overlay. This controls the trade-off between speed, reliability, resilience and efficiency of the network. A higher peering degree helps messages get delivered faster with better reliability, but increases bandwidth usage due to redundant message copies.
+* **MeshDegreeMin**: Minimum number of mesh peers before triggering [grafting](https://docs.libp2p.io/concepts/pubsub/overview/#grafting-and-pruning) (converting metadata-only connections to full-message).
+* **MeshDegreeMax**: Maximum number of mesh peers before triggering [pruning](https://docs.libp2p.io/concepts/pubsub/overview/#grafting-and-pruning) (converting full-message peerings back to metadata-only).
 
-* **RandomMessageSize**: Default message size used for testing and benchmarking (in bytes)
-
-These parameters can be adjusted based on network conditions, bandwidth constraints, and latency requirements to optimize OptimumP2P performance for specific use cases.
+In libp2p's default implementation, the ideal network peering degree is 6 with anywhere from 4–12 being acceptable. OptimumP2P inherits these mesh management mechanisms while optimizing shard propagation through the established topology.
 
 ## Use Cases
 
@@ -90,12 +97,13 @@ OptimumP2P serves as a foundational, general-purpose data propagation protocol w
 
 OptimumP2P supercharges validator and full node performance in bandwidth-constrained and latency-sensitive networks:
 
-* **[Ethereum](https://ethereum.org/)**: Faster mempool propagation, lower uncle rates, and potential integration into both execution and consensus paths
-* **[Solana](https://solana.com/)**: Enhances Turbine-style data sharding with fault-tolerant packet loss recovery  
-* **[Cosmos](https://cosmos.network/) & IBC networks**: Strengthens interchain relaying with lower-latency packet delivery and cross-zone message reliability
+* **[Ethereum](https://ethereum.org/)**: Faster mempool propagation, lower uncle rates, and potential integration into both execution and consensus layers.
+* **[Solana](https://solana.com/)**: Enhances Turbine-style data sharding with fault-tolerant packet loss recovery.  
+* **[Cosmos](https://cosmos.network/) & IBC networks**: Low-latency interchain packet routing and zone-to-zone messaging.
 
-### DeFi Chains
+### DeFi, AI, DePIN, Gaming & Social Chains
 
+<!--
 High-frequency trading chains rely on fast, reliable state propagation:
 
 * RLNC-based propagation keeps order books consistent across nodes
@@ -126,18 +134,22 @@ These chains rely on fast event propagation for user interactions:
 * Improves experience for multiplayer, onchain games and social dApps
 * Reduces costs of redundant relay infra through efficient data spreading
 
+-->
+
 ## Security Model
 
-OptimumP2P's security model is built upon the robust foundations of **[libp2p](https://docs.libp2p.io/)**. As such, it inherits a comprehensive suite of security features designed for hostile peer-to-peer environments. For a full overview of these protections, refer to the [libp2p security considerations](https://docs.libp2p.io/concepts/security/security-considerations/).
+OptimumP2P inherits libp2p’s robust security foundation, and adds safeguards specific to network coding.
 
-Key inherited security features include:
+### Inherited from libp2p
 
 *   **Authenticated and Encrypted Channels**: All peer-to-peer communication is secured using [Noise](https://noiseprotocol.org/) or [TLS](https://tools.ietf.org/html/rfc8446), preventing eavesdropping and tampering.
 *   **Sybil and Eclipse Attack Mitigation**: The protocol uses [libp2p](https://docs.libp2p.io/)'s peer discovery and management systems, which include defenses against an attacker flooding the network with malicious nodes to gain control or isolate honest peers.
 
-### Network Coding-Specific Security: Pollution Attacks
+For a full overview of these protections, refer to the [libp2p security considerations](https://docs.libp2p.io/concepts/security/security-considerations/).
 
-The primary security challenge unique to network coding is the risk of **pollution attacks**. In such an attack, a malicious actor injects corrupted or invalid coded shards into the network, with the goal of preventing honest nodes from successfully decoding the original message.
+### OptimumP2P avoids Pollution Attacks
+
+In **pollution attacks** attack, a malicious actor injects corrupted or invalid coded shards into the network, with the goal of preventing honest nodes from successfully decoding the original message.
 
 OptimumP2P mitigates this risk through a multi-layered approach centered on **source authentication**.
 
