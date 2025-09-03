@@ -42,7 +42,7 @@ A **flexnode** is an operator-run node that participates in Optimum's coded goss
 
 * **Try OptimumP2P (≤5 min):** [Using mump2p-cli](../../guides/01-getting-started-cli.md)
 * **Run locally:** [Local Setup with Docker](../../guides/02-getting-started-docker.md)
-* **Integrate:** [Publish/Subscribe via Optimum Proxy endpoints](https://github.com/getoptimum/optimum-dev-setup-guide)
+* **Integrate:** [Publish/Subscribe via Optimum Proxy endpoints](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#proxy-api)
 
 ### Intended users
 
