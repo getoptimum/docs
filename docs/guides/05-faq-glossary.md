@@ -57,14 +57,16 @@ This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
 
 1. **Containers are running**: `docker ps` to verify proxy and p2pnode containers are up
 2. **Correct ports**: Proxy gRPC on `localhost:50051`, P2P sidecar on `localhost:33221`
-3. **Use latest client examples**: Reference [`optimum-dev-setup-guide/docs/guide.md#grpc-proxy-client-implementation`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation)
+3. **Use latest client examples**: Reference [`optimum-dev-setup-guide/docs/guide.md#grpc-proxy-client-implementation`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation) ([Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proxy_client.go))
 
 ### Q: Getting "method not found" or protobuf errors
 
 **A:** Use the correct protobuf definitions from [`optimum-dev-setup-guide/docs/guide.md`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#api-reference):
 
 * See the [API Reference section](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#api-reference) for complete protobuf definitions
-* All proto files are available in the repository's `grpc_*_client/proto/` directories
+* All proto files are available in the repository's `grpc_*_client/proto/` directories:
+  * [`grpc_proxy_client/proto/gateway_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proto/gateway_stream.proto)
+  * [`grpc_p2p_client/proto/p2p_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/proto/p2p_stream.proto)
 
 
 
@@ -75,7 +77,9 @@ This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
 **A:** Use the exact Go versions and dependencies from [`optimum-dev-setup-guide/docs/guide.md`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#client-tools):
 
 * See the [Client Tools section](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#client-tools) for complete examples
-* All go.mod files and dependencies are available in the repository's `grpc_*_client/` directories
+* All go.mod files and dependencies are available in the repository's `grpc_*_client/` directories:
+  * [`grpc_proxy_client/go.mod`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/go.mod)
+  * [`grpc_p2p_client/go.mod`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/go.mod)
 
 ### Q: Code examples don't work as expected
 

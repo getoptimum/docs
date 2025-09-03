@@ -353,7 +353,7 @@ Rate limits are enforced based on client configuration. Exceeding limits results
 
 For a complete working proxy client with both REST subscription and gRPC streaming, see the full implementation:
 
-**[Complete Proxy Client Example](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation)**
+**[Complete Proxy Client Example](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation)** ([Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proxy_client.go))
 
 The proxy client provides:
 
@@ -562,7 +562,7 @@ curl -s http://localhost:9092/api/v1/health
 
 For a complete working P2P client that connects directly to nodes, see the full implementation with trace handling:
 
-**[Complete P2P Client Example](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#using-p2p-nodes-directly-optional--no-proxy)**
+**[Complete P2P Client Example](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#using-p2p-nodes-directly-optional--no-proxy)** ([Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/p2p_client.go))
 
 The client includes:
 

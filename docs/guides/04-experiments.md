@@ -121,7 +121,7 @@ You can run them using:
 
 For comprehensive metrics collection during experiments, use the gRPC P2P client with trace handling:
 
-**[P2P Client with Metrics Collection](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#collecting-trace-data-for-experiments)**
+**[P2P Client with Metrics Collection](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#collecting-trace-data-for-experiments)** ([Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/p2p_client.go))
 
 The client automatically captures and displays:
 
