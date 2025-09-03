@@ -90,8 +90,8 @@ If you prefer manual installation:
 **Output:**
 
 ```bash
-Version: v0.0.1-rc4
-Commit:  fdbee67
+Version: v0.0.1-rc5
+Commit:  d5b774a
 ```
 
 You can visit [mump2p-cli release page](https://github.com/getoptimum/mump2p-cli/releases) for the latest version.

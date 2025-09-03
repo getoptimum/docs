@@ -57,14 +57,18 @@ This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
 
 1. **Containers are running**: `docker ps` to verify proxy and p2pnode containers are up
 2. **Correct ports**: Proxy gRPC on `localhost:50051`, P2P sidecar on `localhost:33221`
-3. **Use latest client examples**: Reference [`optimum-dev-setup-guide/grpc_proxy_client/proxy_client.go`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proxy_client.go)
+3. **Use latest client examples**: Reference [`optimum-dev-setup-guide/docs/guide.md#grpc-proxy-client-implementation`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation)
+
+   **[Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proxy_client.go)**
 
 ### Q: Getting "method not found" or protobuf errors
 
-**A:** Use the correct protobuf definitions from [`optimum-dev-setup-guide`](https://github.com/getoptimum/optimum-dev-setup-guide):
+**A:** Use the correct protobuf definitions from [`optimum-dev-setup-guide/docs/guide.md`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#api-reference):
 
-* [`grpc_proxy_client/proto/gateway_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proto/gateway_stream.proto)
-* [`grpc_p2p_client/proto/p2p_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/proto/p2p_stream.proto)
+* See the [API Reference section](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#api-reference) for complete protobuf definitions
+* All proto files are available in the repository's `grpc_*_client/proto/` directories:
+    * [`grpc_proxy_client/proto/gateway_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proto/gateway_stream.proto)
+    * [`grpc_p2p_client/proto/p2p_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/proto/p2p_stream.proto)
 
 
 
@@ -72,14 +76,16 @@ This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
 
 ### Q: Go client code compilation errors
 
-**A:** Use the exact Go versions and dependencies from [`optimum-dev-setup-guide`](https://github.com/getoptimum/optimum-dev-setup-guide):
+**A:** Use the exact Go versions and dependencies from [`optimum-dev-setup-guide/docs/guide.md`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#client-tools):
 
-* [`grpc_proxy_client/go.mod`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/go.mod)
-* [`grpc_p2p_client/go.mod`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/go.mod)
+* See the [Client Tools section](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#client-tools) for complete examples
+* All go.mod files and dependencies are available in the repository's `grpc_*_client/` directories:
+    * [`grpc_proxy_client/go.mod`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/go.mod)
+    * [`grpc_p2p_client/go.mod`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/go.mod)
 
 ### Q: Code examples don't work as expected
 
-**A:** All examples are tested against [`optimum-dev-setup-guide`](https://github.com/getoptimum/optimum-dev-setup-guide). Check:
+**A:** All examples are tested against [`optimum-dev-setup-guide/docs/guide.md`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md). Check:
 
 1. Environment variables are set correctly  
 2. Docker containers are running
@@ -100,5 +106,5 @@ When something doesn't work:
 ### Getting Help
 
 * **CLI Issues**: [mump2p-cli FAQ](https://github.com/getoptimum/mump2p-cli#faq---common-issues--troubleshooting)
-* **Setup Issues**: Check [`optimum-dev-setup-guide`](https://github.com/getoptimum/optimum-dev-setup-guide)
+* **Setup Issues**: Check [`optimum-dev-setup-guide/docs/guide.md`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md)
 * **Protocol Questions**: See [OptimumP2P Documentation](./p2p.md)
