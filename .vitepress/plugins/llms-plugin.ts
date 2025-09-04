@@ -46,7 +46,7 @@ export function llmsPlugin(options: LLMsPluginOptions = {}): VitePlugin {
     exclude = ['**/node_modules/**', '**/.*/**', '**/README.md']
   } = options
 
-  let viteConfig: any
+  let viteConfig: { build?: { outDir?: string } }
 
   return {
     name: 'vitepress-llms-plugin',
@@ -64,7 +64,7 @@ export function llmsPlugin(options: LLMsPluginOptions = {}): VitePlugin {
     },
     configureServer(server) {
       // Serve llms.txt files in dev mode
-      server.middlewares.use('/llms.txt', (req, res, next) => {
+      server.middlewares.use('/llms.txt', (req, res) => {
         const llmsPath = resolve(process.cwd(), 'dist', 'llms.txt')
         if (existsSync(llmsPath)) {
           res.setHeader('Content-Type', 'text/plain')
@@ -75,7 +75,7 @@ export function llmsPlugin(options: LLMsPluginOptions = {}): VitePlugin {
         }
       })
       
-      server.middlewares.use('/llms-full.txt', (req, res, next) => {
+      server.middlewares.use('/llms-full.txt', (req, res) => {
         const llmsPath = resolve(process.cwd(), 'dist', 'llms-full.txt')
         if (existsSync(llmsPath)) {
           res.setHeader('Content-Type', 'text/plain')
@@ -168,10 +168,10 @@ export function llmsPlugin(options: LLMsPluginOptions = {}): VitePlugin {
           const fullUrl = basePath === '/' ? `/${urlPath}` : `${basePath}/${urlPath}`
           
           // Extract title from frontmatter or first heading
-          let pageTitle = frontmatter.title || extractTitleFromMarkdown(markdownContent) || 'Untitled'
+          const pageTitle = frontmatter.title || extractTitleFromMarkdown(markdownContent) || 'Untitled'
           
           // Extract description
-          let pageDescription = frontmatter.description || extractDescriptionFromMarkdown(markdownContent)
+          const pageDescription = frontmatter.description || extractDescriptionFromMarkdown(markdownContent)
           
           // Add to index format (llms.txt)
           const indexEntry = pageDescription 
