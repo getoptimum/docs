@@ -1,4 +1,5 @@
 import { defineConfig } from 'vitepress'
+import { llmsPlugin } from './plugins/llms-plugin'
 
 const { BASE: base = "/" } = process.env;
 
@@ -11,6 +12,16 @@ export default defineConfig({
   cleanUrls: true,
   ignoreDeadLinks: true,
   base: base,
+  vite: {
+    plugins: [
+      llmsPlugin({
+        title: 'Optimum Docs',
+        description: 'The world\'s first high-performance memory infrastructure for any blockchain.',
+        basePath: base,
+        rootDir: process.cwd()
+      })
+    ]
+  },
   markdown: {
     math: true,
   },
@@ -153,32 +164,7 @@ export default defineConfig({
 })
 
 function nav() {
-  return [
-    {
-      text: "Menu",
-      items: [
-        // { text: "Get Started", link: "/docs/how-to-guides/overview" },
-        { text: "Learn", link: "/docs/learn/overview/intro" },
-        {
-          text: "Resources",
-          items: [
-            // {
-            //   text: "Optimum Improvement Proposals (OIPs)",
-            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            // },
-            {
-              text: "Optimum ADRs",
-              link: "https://github.com/getoptimum/optimum/tree/main/docs/architecture#adr-table-of-contents",
-            },
-            // {
-            //   text: "Flexnode API Docs",
-            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            // },
-          ],
-        },
-      ],
-    },
-  ];
+  return [];
 }
 
 function sidebarHome() {
