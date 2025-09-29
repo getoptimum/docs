@@ -1,6 +1,6 @@
 # Getting Started with mump2p CLI
 
-The `mump2p` CLI is the quickest way to interact with [OptimumP2P](https://github.com/getoptimum/optimum-p2p) without running your own infrastructure.
+The `mump2p` CLI is the quickest way to interact with [Optimum Network](https://github.com/getoptimum/optimum-p2p) without running your own infrastructure.
 
 In the next 5 minutes, you'll have:
 
@@ -8,11 +8,11 @@ In the next 5 minutes, you'll have:
 * Your first published message
 * A subscription feeding you live data
 
-The `mump2p` CLI is your shortcut into `OptimumP2P` — a high-performance, RLNC-enhanced peer-to-peer network.
+The `mump2p` CLI is your shortcut into `Optimum Network` — a high-performance, RLNC-enhanced peer-to-peer network.
 
 Instead of:
 
-* Manually locating and connecting to active OptimumP2P nodes
+* Manually locating and connecting to active Optimum Network nodes
 * Handling low-level peer discovery and connection logic
 * Managing complex network and encoding configurations
 
@@ -21,7 +21,7 @@ It connects to an `optimum-proxy` and lets you publish and subscribe to real-tim
 
 ## Why Optimum Proxy?
 
-OptimumP2P is a **peer-to-peer network** where nodes exchange messages over a `RLNC-enhanced` pubsub mesh.  
+Optimum Network is a **peer-to-peer network** where nodes exchange messages over a `RLNC-enhanced` pubsub mesh.  
 If you connect directly to a P2P node, you need to:
 
 * Know node IP/port.
@@ -31,7 +31,7 @@ If you connect directly to a P2P node, you need to:
 The **Optimum Proxies** removes that complexity:
 
 * Acts as **points of entry**.
-* Maintains connections to multiple OptimumP2P nodes.
+* Maintains connections to multiple Optimum Network nodes.
 * Enforces thresholds and applies filters.
 * Tracks usage and applies fair rate limits.
 

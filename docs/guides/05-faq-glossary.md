@@ -107,4 +107,4 @@ When something doesn't work:
 
 * **CLI Issues**: [mump2p-cli FAQ](https://github.com/getoptimum/mump2p-cli#faq---common-issues--troubleshooting)
 * **Setup Issues**: Check [`optimum-dev-setup-guide/docs/guide.md`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md)
-* **Protocol Questions**: See [OptimumP2P Documentation](./p2p.md)
+* **Protocol Questions**: See [mumP2P Documentation](./p2p.md)

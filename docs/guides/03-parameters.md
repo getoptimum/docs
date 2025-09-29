@@ -1,6 +1,6 @@
-# Understanding Key Parameters in OptimumP2P
+# Understanding Key Parameters in mumP2P
 
-OptimumP2P nodes can operate in **two distinct protocol modes**, configured via:
+mumP2P nodes can operate in **two distinct protocol modes**, configured via:
 
 ```sh
 NODE_MODE=optimum    # RLNC-enhanced gossip
@@ -11,9 +11,9 @@ Each mode has its own parameter set, with some shared configurations.
 
 We support **two protocol modes** to let developers and researchers compare **performance, reliability, and bandwidth trade-offs** in real-world scenarios — without changing the rest of their infrastructure.
 
-## OptimumP2P (RLNC) Mode — `NODE_MODE=optimum`
+## mumP2P (RLNC) Mode — `NODE_MODE=optimum`
 
-OptimumP2P extends the gossip protocol with **Random Linear Network Coding**:
+mumP2P extends the gossip protocol with **Random Linear Network Coding**:
 
 * Messages are split into **shards**
 * Shards can be forwarded early once a threshold is reached
@@ -138,7 +138,7 @@ The following table shows the **production defaults**, which are optimized for t
 
 ### For Quick Start (Copy-Paste Ready)
 
-**OptimumP2P Mode (`NODE_MODE=optimum`):**
+**mumP2P Mode (`NODE_MODE=optimum`):**
 
 ```yaml
 environment:
@@ -204,5 +204,5 @@ environment:
 | `GOSSIPSUB_MESH_MAX`         | 12            | gossipsub    | Max peers before pruning                       |
 | `BOOTSTRAP_PEERS`            | []            | Both         | List of peer multiaddrs for bootstrap         |
 
-> **Note:** These are the production defaults used by OptimumP2P nodes. For experimental tuning, see [Common Experiments](./04-experiments.md).
+> **Note:** These are the production defaults used by mumP2P nodes. For experimental tuning, see [Common Experiments](./04-experiments.md).
 

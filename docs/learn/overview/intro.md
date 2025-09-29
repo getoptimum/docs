@@ -12,9 +12,9 @@ Powered by [Random Linear Network Coding (RLNC)](./p2p.md#random-linear-network-
 
 ## Products
 
-Builders and operators can adopt **OptimumP2P** now for measurable latency gains. DeRAM and DeROM are next to unlock low-latency reads/writes.
+Builders and operators can adopt **mumP2P** now for measurable latency gains. DeRAM and DeROM are next to unlock low-latency reads/writes.
 
-### OptimumP2P
+### mumP2P
 
 RLNC-accelerated, libp2p/gossipsub-compatible pub/sub for fast, resilient propagation of blocks, blobs, and transactions.  
 **Get started:** [Overview](../../learn/overview/p2p.md) · [Quickstart](../../guides/01-getting-started-cli.md)
@@ -40,7 +40,7 @@ A **flexnode** is an operator-run node that participates in Optimum's coded goss
 
 ## Start here
 
-* **Try OptimumP2P (≤5 min):** [Using mump2p-cli](../../guides/01-getting-started-cli.md)
+* **Try mumP2P (≤5 min):** [Using mump2p-cli](../../guides/01-getting-started-cli.md)
 * **Run locally:** [Local Setup with Docker](../../guides/02-getting-started-docker.md)
 * **Integrate:** [Publish/Subscribe via Optimum Proxy endpoints](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#proxy-api)
 
