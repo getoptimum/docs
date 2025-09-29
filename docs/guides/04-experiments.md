@@ -1,6 +1,6 @@
 # Common Experiments
 
-Once your OptimumP2P network is running (see [Parameters](./03-parameters.md)), you can try different experiments to understand **performance, reliability, and scaling behavior**.
+Once your Optimum Network is running (see [Parameters](./03-parameters.md)), you can try different experiments to understand **performance, reliability, and scaling behavior**.
 
 > **Before You Begin:**  
 > Make sure you’ve read:
@@ -17,9 +17,9 @@ You can run them using:
 
 
 
-## 1. GossipSub vs OptimumP2P
+## 1. GossipSub vs mumP2P
 
-**Goal:** Compare standard libp2p gossip to RLNC-enhanced gossip to confirm OptimumP2P is faster.
+**Goal:** Compare standard libp2p gossip to RLNC-enhanced gossip to confirm mumP2P is faster.
 
 **How:**
 
@@ -29,11 +29,11 @@ You can run them using:
 
 **Observe:**
 
-* **Delivery latency** (primary metric - OptimumP2P should be faster)
-* **Bandwidth usage** (OptimumP2P should use less)
+* **Delivery latency** (primary metric - mumP2P should be faster)
+* **Bandwidth usage** (mumP2P should use less)
 * **Success rate** (both should deliver messages successfully)
 
-**Expected Result:** OptimumP2P should show lower latency and bandwidth usage.
+**Expected Result:** mumP2P should show lower latency and bandwidth usage.
 
 
 ## 2. Shard Factor Sweep
@@ -74,13 +74,13 @@ You can run them using:
 
 ## 4. Mesh Density Impact
 
-**Goal:** Compare OptimumP2P vs GossipSub with different mesh sizes.
+**Goal:** Compare mumP2P vs GossipSub with different mesh sizes.
 
 **How:**
 
 * Test both `NODE_MODE=gossipsub` and `NODE_MODE=optimum`.
 * For GossipSub: try `GOSSIPSUB_MESH_TARGET` = 4, 6, 8.
-* For OptimumP2P: try `OPTIMUM_MESH_TARGET` = 6, 12, 18.
+* For mumP2P: try `OPTIMUM_MESH_TARGET` = 6, 12, 18.
 * Run the same publish/subscribe test.
 
 **Observe:**
@@ -88,7 +88,7 @@ You can run them using:
 * **Delivery latency** (primary metric)
 * **Bandwidth usage**
 
-**Expected Result:** OptimumP2P should perform better with higher mesh targets (around 12) while GossipSub optimal around 6.
+**Expected Result:** mumP2P should perform better with higher mesh targets (around 12) while GossipSub optimal around 6.
 
 
 
@@ -96,7 +96,7 @@ You can run them using:
 
 ## 5. Load Test
 
-**Goal:** Find when OptimumP2P vs GossipSub starts to fail under stress.
+**Goal:** Find when mumP2P vs GossipSub starts to fail under stress.
 
 **How:**
 
@@ -109,13 +109,13 @@ You can run them using:
 * **When delivery starts to fail** (primary metric)
 * **Delivery rate degradation**
 
-**Expected Result:** OptimumP2P should handle higher stress levels before failing compared to GossipSub.
+**Expected Result:** mumP2P should handle higher stress levels before failing compared to GossipSub.
 
 
 > **Tip:** Enable protocol traces in the gRPC client to get hop-by-hop delivery info:
 >
 > * `MessageTraceGossipSub` for GossipSub mode.
-> * `MessageTraceOptimumP2P` for OptimumP2P mode.
+> * `MessageTraceOptimumP2P` for mumP2P mode.
 
 ## Metrics Collection
 
@@ -128,7 +128,7 @@ For comprehensive metrics collection during experiments, use the gRPC P2P client
 The client automatically captures and displays:
 
 * **GossipSub traces**: Peer routing, message delivery status, hop counts, latency
-* **OptimumP2P traces**: Shard encoding/decoding, reconstruction efficiency, redundancy metrics  
+* **mumP2P traces**: Shard encoding/decoding, reconstruction efficiency, redundancy metrics  
 * **Message-level data**: Delivery success rates, end-to-end latency, bandwidth usage
 
 **Key trace handlers:**
@@ -138,7 +138,7 @@ case protobuf.ResponseType_MessageTraceGossipSub:
     fmt.Printf("[TRACE] GossipSub trace received: %s\n", string(resp.GetData()))
 
 case protobuf.ResponseType_MessageTraceOptimumP2P:
-    fmt.Printf("[TRACE] OptimumP2P trace received: %s\n", string(resp.GetData()))
+    fmt.Printf("[TRACE] mumP2P trace received: %s\n", string(resp.GetData()))
 ```
 
 Use this client instead of the CLI for detailed performance analysis during experiments.

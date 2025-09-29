@@ -1,12 +1,12 @@
 # Quick Start
 
-This developer guide is your complete reference for installing, configuring, and operating **OptimumP2P**.
+This developer guide is your complete reference for installing, configuring, and operating **Optimum Network**.
 
-This guide walks you through everything you need to **understand**, **deploy**, **run**, and **experiment** with OptimumP2P. It's designed for beginners but complete enough for advanced developers to jump in and integrate.
+This guide walks you through everything you need to **understand**, **deploy**, **run**, and **experiment** with Optimum Network. It's designed for beginners but complete enough for advanced developers to jump in and integrate.
 
 Whether you are an application developer, systems engineer, or hackathon participant, this guide will help you:
 
-1. **Install and run** OptimumP2P in different environments
+1. **Install and run** Optimum Network in different environments
 2. **Connect clients** via gRPC, REST, or CLI
 3. **Tune parameters** for performance or reliability
 4. **Run experiments** to validate system behavior
@@ -14,9 +14,9 @@ Whether you are an application developer, systems engineer, or hackathon partici
 
 ## Start Building
 
-Choose your path to get started with OptimumP2P:
+Choose your path to get started with Optimum Network:
 
-### **Try OptimumP2P (≤5 min)**
+### **Try mumP2P (≤5 min)**
 
 **[Using mump2p-cli](01-getting-started-cli.md)** — Connect to hosted proxy, no setup required
 
@@ -30,7 +30,7 @@ Choose your path to get started with OptimumP2P:
 
 * Complete local network deployment
 * Experiment with different parameters
-* Compare OptimumP2P vs GossipSub performance
+* Compare mumP2P vs GossipSub performance
 
 ### **Understanding & Experimenting**
 
@@ -62,7 +62,7 @@ This guide is organized into self-contained sections:
 
 ## Key Concepts
 
-Before diving deep, familiarize yourself with these terms and how they relate to OptimumP2P's architecture:
+Before diving deep, familiarize yourself with these terms and how they relate to Optimum Network's architecture:
 
 | Term         | Description |
 |--------------|-------------|
@@ -77,9 +77,9 @@ Before diving deep, familiarize yourself with these terms and how they relate to
 | **Direct P2P Mode** | Clients connect directly to P2P nodes via gRPC without going through a proxy. This can reduce latency but requires more configuration. |
 | **Mesh Parameters** | Settings such as `MESH_TARGET` that define how many peers a node tries to keep in its topic mesh. |
 | **Fanout**   | A temporary set of peers a publisher sends messages to when it is not part of the topic mesh. |
-| **Control Messages** | Special messages like GRAFT, PRUNE, IHAVE, IWANT used for GossipSub mesh management. OptimumP2P integrates similar control flows for RLNC. |
+| **Control Messages** | Special messages like GRAFT, PRUNE, IHAVE, IWANT used for GossipSub mesh management. mumP2P integrates similar control flows for RLNC. |
 | **Node Discovery** | The process by which proxies or nodes automatically learn about other nodes to connect to. |
 | **gRPC API** | The RPC interface provided by either a P2P node or a proxy for client communication. |
 
-For more technical details, see the **[OptimumP2P Technical Overview](../learn/overview/p2p.md)**.
+For more technical details, see the **[mumP2P Technical Overview](../learn/overview/p2p.md)**.
 

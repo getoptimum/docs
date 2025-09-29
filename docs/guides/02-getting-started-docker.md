@@ -1,19 +1,19 @@
 # Getting Started with Docker (Local Deployment)
 
-Running **OptimumP2P** locally with Docker gives you **full control** over configuration, topology, and experiments.  
+Running **Optimum Network** locally with Docker gives you **full control** over configuration, topology, and experiments.  
 You can run the network in two primary ways:
 
-**1. OptimumProxy + OptimumP2P** — Clients connect to an **Optimum Proxy**, which manages P2P connections for them.
+**1. OptimumProxy + mumP2P** — Clients connect to an **Optimum Proxy**, which manages P2P connections for them.
 
-![OptimumProxy + OptimumP2P Architecture](../../static/img/docker_1.png)
+![OptimumProxy + mumP2P Architecture](../../static/img/docker_1.png)
 
 * Simplifies client configuration — only the Proxy address is needed.
 * Proxy handles shard reassembly, threshold logic, and node selection automatically.
 * Easier scaling and centralized policy control.
 
-**2. Direct OptimumP2P** — Clients connect directly to **OptimumP2P nodes** (each node must run the gRPC API).
+**2. Direct mumP2P** — Clients connect directly to **mumP2P nodes** (each node must run the gRPC API).
 
-![Direct OptimumP2P Architecture](../../static/img/docker_2.png)
+![Direct mumP2P Architecture](../../static/img/docker_2.png)
 
 * Fewer network hops = potentially lower latency.
 * Clients must know node addresses and manage failover logic.
@@ -32,7 +32,7 @@ local deployment offers:
 
 Choose the deployment mode that best fits your use case:
 
-| **Mode A: Proxy + OptimumP2P** | **Mode B: Direct OptimumP2P** |
+| **Mode A: Proxy + mumP2P** | **Mode B: Direct mumP2P** |
 |---|---|
 | **One endpoint** — simpler client config | **Lowest latency** — fewer network hops |
 | **Policy control** — rate limiting, auth | **Direct control** — no proxy overhead |
@@ -40,14 +40,14 @@ Choose the deployment mode that best fits your use case:
 
 **Quick Decision:**
 
-* **Want simpler setup and client code?** → **[Start with Mode A](#4-mode-a--optimumproxy--optimump2p-recommended)**  
-* **Need maximum performance and control?** → **[Jump to Mode B](#5-mode-b--direct-optimump2p-advanced--lower-latency)**
+* **Want simpler setup and client code?** → **[Start with Mode A](#4-mode-a--optimumproxy--mump2p-recommended)**  
+* **Need maximum performance and control?** → **[Jump to Mode B](#5-mode-b--direct-mump2p-advanced--lower-latency)**
 
 ## 1. Before You Start
 
 ### Requirements
 
-* **[Docker](https://docs.docker.com/engine/install/)** — Container runtime for running OptimumP2P components
+* **[Docker](https://docs.docker.com/engine/install/)** — Container runtime for running Optimum Network components
 * **[Docker Compose](https://docs.docker.com/compose/install/)** — Tool for defining multi-container applications  
 * **[Go v1.24+](https://golang.org/dl/)** — Required for building custom gRPC clients
 * At least **2 GB free RAM** for running multiple nodes locally
@@ -62,7 +62,7 @@ Choose the deployment mode that best fits your use case:
 
 | Component           | Purpose                                                                                                                                 | Docker Images               |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| **OptimumP2P Node** | RLNC-enabled mesh peer, encodes/decodes message shards, handles peer discovery and subscriptions. Optional gRPC API for direct clients. | `getoptimum/p2pnode:v0.0.1-rc2` |
+| **mumP2P Node** | RLNC-enabled mesh peer, encodes/decodes message shards, handles peer discovery and subscriptions. Optional gRPC API for direct clients. | `getoptimum/p2pnode:v0.0.1-rc2` |
 | **Optimum Proxy**   | Bridges clients and the mesh, manages subscriptions, shard reassembly, threshold logic, and node selection.                             | `getoptimum/proxy:v0.0.1-rc3`   |
 
 
@@ -84,13 +84,13 @@ We’ll keep identity in `./identity` folder so you can reuse keys across restar
 
 | Recommended mode              | Why                                                                                       |
 | ----------------------------- | ----------------------------------------------------------------------------------------- |
-| **OptimumProxy + OptimumP2P** | One endpoint for clients, proxy handles matching, decoding thresholds, fanout, and policy |
-| **Direct OptimumP2P**         | Fewer hops, you control connection/retry logic and node selection                         |
+| **OptimumProxy + mumP2P** | One endpoint for clients, proxy handles matching, decoding thresholds, fanout, and policy |
+| **Direct mumP2P**         | Fewer hops, you control connection/retry logic and node selection                         |
 
 
 ## 3. Generate a Bootstrap Identity (once)
 
-OptimumP2P nodes need a **P2P identity** (cryptographic keypair) for peer-to-peer communication. The bootstrap node needs a persistent identity so other nodes can discover it reliably.
+mumP2P nodes need a **P2P identity** (cryptographic keypair) for peer-to-peer communication. The bootstrap node needs a persistent identity so other nodes can discover it reliably.
 
 **What is P2P Identity?**
 
@@ -111,7 +111,7 @@ This script:
 * Saves to `identity/p2p.key` with proper checksum format
 * Exports `BOOTSTRAP_PEER_ID` environment variable
 * Handles existing identity gracefully
-* Uses the correct file format expected by OptimumP2P nodes
+* Uses the correct file format expected by mumP2P nodes
 
 **Output:**
 
@@ -125,7 +125,7 @@ This script:
 [SUCCESS] Peer ID: 12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
 [INFO] To use in docker-compose:
 export BOOTSTRAP_PEER_ID=12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
-[SUCCESS] Done! Your OptimumP2P peer ID: 12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
+[SUCCESS] Done! Your mumP2P peer ID: 12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
 ```
 
 **What this creates:**
@@ -142,7 +142,7 @@ This guide covers:
 * Connecting via CLI (`mump2p-cli`) or `gRPC clients` (Go examples included).
 * Adjusting key parameters for your environment.
 
-## 4. Mode A — OptimumProxy + OptimumP2P (Recommended)
+## 4. Mode A — OptimumProxy + mumP2P (Recommended)
 
 ### Create the docker-compose file
 
@@ -477,7 +477,7 @@ func main() {
 }
 ```
 
-## 5. Mode B — Direct OptimumP2P (Advanced / Lower Latency)
+## 5. Mode B — Direct mumP2P (Advanced / Lower Latency)
 
 In this mode, clients connect `straight to node sidecar gRPC`. You’ll manage client-side reconnection, backoff, and which node to hit.
 
@@ -571,7 +571,7 @@ For a complete working P2P client that connects directly to nodes, see the full 
 The client includes:
 
 * **Message publishing and subscribing** with gRPC streaming
-* **Protocol trace handling** for both GossipSub and OptimumP2P
+* **Protocol trace handling** for both GossipSub and mumP2P
 * **Metrics collection** via `MessageTraceGossipSub` and `MessageTraceOptimumP2P` responses
 * **Stress testing capabilities** with batch message publishing
 
@@ -620,7 +620,7 @@ func main() {
     case protobuf.ResponseType_MessageTraceGossipSub:
       fmt.Printf("[TRACE] GossipSub trace: %d bytes\n", len(resp.GetData()))
     case protobuf.ResponseType_MessageTraceOptimumP2P:
-      fmt.Printf("[TRACE] OptimumP2P trace: %d bytes\n", len(resp.GetData()))
+      fmt.Printf("[TRACE] mumP2P trace: %d bytes\n", len(resp.GetData()))
     }
   }
 }
