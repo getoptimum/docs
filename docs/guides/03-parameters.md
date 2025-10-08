@@ -1,5 +1,7 @@
 # Understanding Key Parameters in mumP2P
 
+> **Complete Reference:** [Full parameter guide and defaults](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#configuration) - all variables, `.env` workflow, production configs
+
 mumP2P nodes can operate in **two distinct protocol modes**, configured via:
 
 ```sh
@@ -23,20 +25,14 @@ Example Docker service:
 
 ```yaml
 p2pnode-1:
-  image: 'getoptimum/p2pnode:latest'
+  image: 'getoptimum/p2pnode:${P2P_NODE_VERSION-latest}'
   environment:
     - NODE_MODE=optimum
-    - LOG_LEVEL=debug
-    - CLUSTER_ID=p2pnode-1
+    - CLUSTER_ID=${CLUSTER_ID}
     - OPTIMUM_PORT=7070
-    - OPTIMUM_MAX_MSG_SIZE=1048576
     - OPTIMUM_MESH_TARGET=6
-    - OPTIMUM_MESH_MIN=3
-    - OPTIMUM_MESH_MAX=12
     - OPTIMUM_SHARD_FACTOR=4
-    - OPTIMUM_SHARD_MULT=1.5
     - OPTIMUM_THRESHOLD=0.75
-    - BOOTSTRAP_PEERS=/ip4/172.28.0.12/tcp/7070/p2p/${BOOTSTRAP_PEER_ID}
 ```
 
 ### Parameters
@@ -66,7 +62,7 @@ Example Docker service:
 
 ```yaml
 p2pnode-1:
-  image: 'getoptimum/p2pnode:latest'
+  image: 'getoptimum/p2pnode:${P2P_NODE_VERSION-latest}'
   environment:
     - NODE_MODE=gossipsub
     - LOG_LEVEL=debug
@@ -113,7 +109,7 @@ Example Docker service:
 
 ```yaml
 proxy-1:
-  image: 'getoptimum/proxy:latest'
+  image: 'getoptimum/proxy:${PROXY_VERSION-latest}'
   environment:
     - PROXY_HTTP_PORT=:8080
     - PROXY_GRPC_PORT=:50051

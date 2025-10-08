@@ -46,8 +46,6 @@ Authentication in `mump2p-cli` is not just about logging in, it enables:
 * **Usage Tracking**: Monitor your publish/subscription stats.
 * **Account Linking**: Associate activity with your user or team.
 
-Without authentication, you can only use **open/public topics** with strict limits.
-
 ## How It Fits into the Network
 
 ![mump2p CLI Architecture](../../static/img/mump2p.png)
@@ -87,20 +85,9 @@ If you prefer manual installation:
 ./mump2p version
 ```
 
-**Output:**
-
-```bash
-Version: v0.0.1-rc5
-Commit:  d5b774a
-```
-
-You can visit [mump2p-cli release page](https://github.com/getoptimum/mump2p-cli/releases) for the latest version.
-
----
+> Always use the latest version from [mump2p-cli releases](https://github.com/getoptimum/mump2p-cli/releases)
 
 ### 2. Authenticate
-
-*mump2p-cli currently uses [auth0](https://auth0.com/) to manage authentication/authorization*.
 
 Login via device authorization flow:
 
@@ -162,6 +149,29 @@ Daily Quota:       5120.00 MB
 ./mump2p logout    # Logout
 ```
 
+#### Development Mode (No Authentication)
+
+For testing without authentication:
+
+```sh
+./mump2p --disable-auth --client-id="test-client" publish --topic=demo --message="Hello" --service-url="http://proxy_1:8081" # localhost
+./mump2p --disable-auth --client-id="test-client" subscribe --topic=demo --service-url="http://proxy_1:8081" # localhost
+```
+
+> **Complete Guide:** [Development mode documentation](https://github.com/getoptimum/mump2p-cli/blob/main/docs/guide.md#developmenttesting-mode) - covers all flags, usage, and examples
+
+#### Custom Authentication Path
+
+For production deployments or custom storage locations:
+
+```sh
+./mump2p --auth-path /opt/mump2p/auth/token.yml login
+# Or use environment variable
+export MUMP2P_AUTH_PATH="/opt/mump2p/auth/token.yml"
+```
+
+> **Complete Guide:** [Custom auth path documentation](https://github.com/getoptimum/mump2p-cli/blob/main/docs/guide.md#custom-authentication-file-location) - use cases, security, deployment
+
 **Refresh Output:**
 
 ```bash
@@ -196,7 +206,6 @@ Use a custom location
 --service-url="http://34.142.205.26:8080"
 ```
 
----
 
 ### 4. Subscribe to a Topic
 
@@ -243,21 +252,26 @@ Listening for messages on topic 'demo'... Press Ctrl+C to exit
 
 #### Forward to webhook
 
+Basic webhook forwarding:
+
 ```sh
 ./mump2p subscribe --topic=demo --webhook=https://your-server.com/webhook
 ```
 
-**Output:**
+**Webhook with custom schema templates:**
 
-```bash
-Forwarding messages to webhook: https://your-server.com/webhook
-claims is &{google-oauth2|100677750055416883405 2025-08-17 13:15:07 +0530 IST 2025-08-18 13:15:07 +0530 IST true 4194304 1000 8 5368709120 google-oauth2|100677750055416883405 1755416706719}
-claims is google-oauth2|100677750055416883405
-Sending HTTP POST subscription request...
-HTTP POST subscription successful: {"status":"subscribed","topic":"demo"}
-Opening WebSocket connection...
-Listening for messages on topic 'demo'... Press Ctrl+C to exit
+```sh
+# Discord
+./mump2p subscribe --topic=alerts --webhook="https://discord.com/api/webhooks/..." --webhook-schema='{"content":"{{.Message}}"}'
+
+# Slack
+./mump2p subscribe --topic=notifications --webhook="https://hooks.slack.com/services/..." --webhook-schema='{"text":"{{.Message}}"}'
+
+# Custom JSON with metadata
+./mump2p subscribe --topic=logs --webhook="https://your-server.com/webhook" --webhook-schema='{"message":"{{.Message}}","timestamp":"{{.Timestamp}}","topic":"{{.Topic}}"}'
 ```
+
+> **Complete Guide:** [Webhook formatting documentation](https://github.com/getoptimum/mump2p-cli/blob/main/docs/guide.md#webhook-formatting) - Discord, Slack, Telegram templates, variables, queue options
 
 #### gRPC Subscription
 
@@ -277,7 +291,6 @@ HTTP POST subscription successful: {"client":"google-oauth2|10067775005541688340
 Listening for messages on topic 'demo' via gRPC... Press Ctrl+C to exit
 ```
 
----
 
 ### 5. Publish a Message
 
@@ -327,7 +340,6 @@ For high-performance publishing, use gRPC mode:
 ./mump2p publish --topic=demo --message="High reliability" --threshold=0.9
 ```
 
----
 
 ### 6. Check Usage & Limits
 
@@ -352,9 +364,19 @@ Shows:
 * Time until reset
 * Token expiry
 
----
 
-### 7. Check Proxy Health
+### 7. List Active Topics
+
+Check which topics you're currently subscribed to:
+
+```sh
+./mump2p list-topics
+```
+
+> **Complete Guide:** [List topics documentation](https://github.com/getoptimum/mump2p-cli/blob/main/docs/guide.md#list-your-active-topics) - multi-proxy support, output format
+
+
+### 8. Check Proxy Health
 
 Monitor the health and system metrics of the proxy server:
 
@@ -379,9 +401,57 @@ Disk Used:   44.91%
 ./mump2p health --service-url="http://35.221.118.95:8080"
 ```
 
----
 
-### 8. Common Issues
+### 9. Debug Mode
+
+The `--debug` flag provides detailed timing and proxy information for troubleshooting and performance analysis.
+
+**What it shows:**
+
+* Message timestamps (send/receive times in nanoseconds)
+* Proxy IP addresses (source and destination)
+* Message metadata (size, hash, protocol)
+* Sequential message numbering
+
+**Basic usage:**
+
+```sh
+# Debug publish operations
+./mump2p --debug publish --topic=test-topic --message='Hello World'
+
+# Debug subscribe operations
+./mump2p --debug subscribe --topic=test-topic
+
+# Debug with gRPC
+./mump2p --debug publish --topic=test-topic --message='Hello World' --grpc
+./mump2p --debug subscribe --topic=test-topic --grpc
+```
+
+**Example output:**
+
+Publish:
+
+```text
+Publish: sender_info:34.146.222.111, [send_time, size]:[1757606701424811000, 2010] topic:test-topic msg_hash:4bbac12f protocol:HTTP
+```
+
+Subscribe:
+
+```text
+Recv: [1] receiver_addr:34.146.222.111 [recv_time, size]:[1757606701424811000, 2082] sender_addr:34.146.222.111 [send_time, size]:[1757606700160514000, 2009] topic:test-topic hash:8da69366 protocol:WebSocket
+```
+
+**Understanding the output:**
+
+* `[1]` - Message sequence number
+* `[send_time, size]` - Unix timestamp (nanoseconds) and message size
+* `msg_hash/hash` - First 8 characters of SHA256 hash for tracking
+* Calculate latency: `recv_time - send_time`
+
+> **Complete Guide:** [Debug mode documentation](https://github.com/getoptimum/mump2p-cli/blob/main/docs/guide.md#debug-mode) - blast testing, load testing, performance analysis
+
+
+### 10. Common Issues
 
 #### Unauthorized
 
@@ -439,7 +509,8 @@ Error: authentication required: token has expired, please login again
 
 → Run `./mump2p login` to authenticate.
 
-### 9. Important Tips
+
+### 11. Important Tips
 
 * Use descriptive topic names per team.
 * Keep `whoami` and `usage` handy.
@@ -449,12 +520,12 @@ Error: authentication required: token has expired, please login again
 * Use the `--service-url` flag to connect to different gateways for better performance.
 * Use `--grpc` flag for high-performance streaming and publishing.
 * Monitor proxy health with `./mump2p health` for troubleshooting.
+* Use `--debug` flag for performance monitoring and troubleshooting.
+* Check active topics with `./mump2p list-topics` to manage subscriptions.
 
----
+## Complete Documentation
 
-#### Important Links
-
-* [mump2p CLI Source Code](https://github.com/getoptimum/mump2p-cli)
-* [Developer Guide](https://github.com/getoptimum/mump2p-cli/blob/main/docs/guide.md)
-* [Release Page](https://github.com/getoptimum/mump2p-cli/releases)
-* [Available Service URLs](https://github.com/getoptimum/mump2p-cli?tab=readme-ov-file#3-service-url--connectivity-issues)
+* **[Complete User Guide](https://github.com/getoptimum/mump2p-cli/blob/main/docs/guide.md)** - Advanced features, authentication, webhooks, debug mode
+* **[CLI Repository](https://github.com/getoptimum/mump2p-cli)** - Source code and documentation
+* **[FAQ & Troubleshooting](https://github.com/getoptimum/mump2p-cli#faq---common-issues--troubleshooting)** - Common issues and solutions
+* **[Latest Releases](https://github.com/getoptimum/mump2p-cli/releases)** - Download latest version
