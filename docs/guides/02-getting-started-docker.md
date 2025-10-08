@@ -40,8 +40,8 @@ Choose the deployment mode that best fits your use case:
 
 **Quick Decision:**
 
-* **Want simpler setup and client code?** → **[Start with Mode A](#4-mode-a--optimumproxy--mump2p-recommended)**  
-* **Need maximum performance and control?** → **[Jump to Mode B](#5-mode-b--direct-mump2p-advanced--lower-latency)**
+* **Want simpler setup and client code?** → **[Start with Mode A](#5-mode-a--optimumproxy--mump2p-recommended)**  
+* **Need maximum performance and control?** → **[Jump to Mode B](#6-mode-b--direct-mump2p-advanced--lower-latency)**
 
 ## 1. Before You Start
 
@@ -88,192 +88,95 @@ We’ll keep identity in `./identity` folder so you can reuse keys across restar
 | **Direct mumP2P**         | Fewer hops, you control connection/retry logic and node selection                         |
 
 
-## 3. Generate a Bootstrap Identity (once)
+## 3. Environment Configuration
 
-mumP2P nodes need a **P2P identity** (cryptographic keypair) for peer-to-peer communication. The bootstrap node needs a persistent identity so other nodes can discover it reliably.
-
-**What is P2P Identity?**
-
-* A cryptographic private key stored in `identity/p2p.key`
-* Used for peer authentication and discovery
-* Generates a unique **Peer ID** (like `12D3KooW...`) that other nodes use to connect
-
-### Quick One-Command Setup
+Before starting, create your `.env` file:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/getoptimum/optimum-dev-setup-guide/main/script/generate-identity.sh | bash
+cp .env.example .env
 ```
 
-This script:
-
-* Creates `./identity/` directory
-* Generates P2P keypair using the existing keygen utility
-* Saves to `identity/p2p.key` with proper checksum format
-* Exports `BOOTSTRAP_PEER_ID` environment variable
-* Handles existing identity gracefully
-* Uses the correct file format expected by mumP2P nodes
-
-**Output:**
+Edit with your values:
 
 ```bash
-[INFO] Generating P2P Bootstrap Identity...
-[INFO] Creating identity directory...
-[INFO] Using existing keygen script...
-[INFO] Generating P2P keypair...
-[SUCCESS] Generated P2P identity successfully!
-[SUCCESS] Identity saved to: ./identity/p2p.key
-[SUCCESS] Peer ID: 12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
-[INFO] To use in docker-compose:
-export BOOTSTRAP_PEER_ID=12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
-[SUCCESS] Done! Your mumP2P peer ID: 12D3KooWLsSmLLoE2T7JJ3ZyPqoXEusnBhsBA1ynJETsziCKGsBw
+BOOTSTRAP_PEER_ID=<your-generated-peer-id>
+CLUSTER_ID=my-cluster
+PROXY_VERSION=v0.0.1-rc7
+P2P_NODE_VERSION=v0.0.1-rc6
 ```
 
-**What this creates:**
+> **Complete Guide:** [Environment configuration](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#environment-variables-env)
 
-* `./identity/p2p.key` — JSON file containing the private key and peer ID
-* `BOOTSTRAP_PEER_ID` environment variable for use in docker-compose files
+## 4. Generate a Bootstrap Identity
 
-> **Note:** This process creates a persistent identity that will be reused across container restarts. The `identity/` folder is mounted into containers so the same keypair is shared by the bootstrap node.
+Generate P2P identity for node discovery:
 
-This guide covers:
+```bash
+make generate-identity
+```
 
-* Setting up Docker Compose for both approach.
-* Running and verifying the network.
-* Connecting via CLI (`mump2p-cli`) or `gRPC clients` (Go examples included).
-* Adjusting key parameters for your environment.
+This creates `./identity/p2p.key` with your unique Peer ID.
 
-## 4. Mode A — OptimumProxy + mumP2P (Recommended)
+> **Complete Guide:** [Identity generation and Makefile commands](https://github.com/getoptimum/optimum-dev-setup-guide#quick-start) - all make commands, direct binary usage
 
-### Create the docker-compose file
+## 5. Mode A — OptimumProxy + mumP2P (Recommended)
 
-Save as `./proxy-p2p/docker-compose.yml`:
+### Docker Compose Setup
+
+**Key points:**
+
+* Use `.env` variables for versions and cluster ID
+* Network uses static IPs for deterministic bootstrap addresses
+* Bootstrap node (p2pnode-1) needs identity volume mount
+* Production setup uses 2 proxies and 4 P2P nodes
+
+**Simplified example:**
 
 ```yaml
 services:
-  proxy:
-    image: 'getoptimum/proxy:v0.0.1-rc3'
-    platform: linux/amd64
+  proxy-1:
+    image: 'getoptimum/proxy:${PROXY_VERSION-latest}'
     environment:
-      - PROXY_PORT=:8080                 # internal port, mapped below
-      - CLUSTER_ID=proxy-1
-      - ENABLE_AUTH=false                # set true in prod; see "Auth" below
-      - LOG_LEVEL=debug
-      # list of P2P node sidecar (gRPC) addresses (container DNS names)
+      - CLUSTER_ID=${CLUSTER_ID}
       - P2P_NODES=p2pnode-1:33212,p2pnode-2:33212
-    depends_on:
-      - p2pnode-1
-      - p2pnode-2
     ports:
-      - "8081:8080"   # HTTP/WebSocket API (POST /publish, WS /ws, GET /health)
-      - "50051:50051" # (optional) proxy gRPC, if exposed by your proxy build
-    networks:
-      testnet:
-        ipv4_address: 172.28.0.10
+      - "8081:8080"
+      - "50051:50051"
 
   p2pnode-1:
-    image: 'getoptimum/p2pnode:v0.0.1-rc2'
-    platform: linux/amd64
+    image: 'getoptimum/p2pnode:${P2P_NODE_VERSION-latest}'
     volumes:
-      - ../identity:/identity
+      - ./identity:/identity
     environment:
-      - LOG_LEVEL=debug
-      - CLUSTER_ID=p2pnode-1
-      - NODE_MODE=optimum           # or gossipsub
-      - IDENTITY_DIR=/identity
-      # Ports
-      - SIDECAR_PORT=33212          # client/proxy gRPC port
-      - API_PORT=9090               # node REST API
-      - OPTIMUM_PORT=7070           # inter-node P2P
-      # Mesh & RLNC
-      - OPTIMUM_MESH_TARGET=6
-      - OPTIMUM_MESH_MIN=3
-      - OPTIMUM_MESH_MAX=12
-      - OPTIMUM_MAX_MSG_SIZE=1048576
-      - OPTIMUM_SHARD_FACTOR=4
-      - OPTIMUM_SHARD_MULT=1.5
-      - OPTIMUM_THRESHOLD=0.75
-    ports:
-      - "33221:33212"  # sidecar gRPC (host)
-      - "9091:9090"    # node API (host)
-      - "7071:7070"    # P2P (host; optional if single host only)
-    networks:
-      testnet:
-        ipv4_address: 172.28.0.11
-
-  p2pnode-2:
-    image: 'getoptimum/p2pnode:latest'
-    platform: linux/amd64
-    environment:
-      - LOG_LEVEL=debug
-      - CLUSTER_ID=p2pnode-2
+      - CLUSTER_ID=${CLUSTER_ID}
       - NODE_MODE=optimum
-      - SIDECAR_PORT=33212
-      - API_PORT=9090
-      - OPTIMUM_PORT=7070
-      - OPTIMUM_MAX_MSG_SIZE=1048576
-      - OPTIMUM_MESH_TARGET=6
-      - OPTIMUM_MESH_MIN=3
-      - OPTIMUM_MESH_MAX=12
-      - OPTIMUM_SHARD_FACTOR=4
-      - OPTIMUM_SHARD_MULT=1.5
-      - OPTIMUM_THRESHOLD=0.75
-      # Bootstrap to node-1 (libp2p multiaddr)
-      - BOOTSTRAP_PEERS=/ip4/172.28.0.11/tcp/7070/p2p/${BOOTSTRAP_PEER_ID}
-    ports:
-      - "33222:33212"
-      - "9092:9090"
-      - "7072:7070"
-    networks:
-      testnet:
-        ipv4_address: 172.28.0.12
-
-networks:
-  testnet:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.28.0.0/16
+      - IDENTITY_DIR=/identity
 ```
 
-*Why fixed IPs?*
-
-It makes the bootstrap address deterministic `(/ip4/172.28.0.11/tcp/7070/p2p/<id>)`.
-You can use the default bridge and service names, but then set `BOOTSTRAP_PEERS` to a reachable address.
-
-See the [Parameter Section](./03-parameters.md) for config options and port usage.
+> **Complete Docker Compose:**
+>
+> * [Full configuration with 2 proxies + 4 nodes](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docker-compose-optimum.yml)
+> * [All environment variables](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#p2p-node-variables)
 
 ### Start the Network
 
 ```sh
-cd ~/optimum-local/proxy-p2p
-export BOOTSTRAP_PEER_ID=<paste-from-step-2>
+export BOOTSTRAP_PEER_ID=<your-peer-id>
 docker compose up -d
 ```
 
-### Validate everything is healthy
+### Verify Health
 
 ```sh
+# Check containers
 docker compose ps
-docker compose logs -f proxy | sed -n '1,120p
+
+# Test endpoints
+curl http://localhost:8081/api/v1/health  # Proxy
+curl http://localhost:9091/api/v1/health  # P2P node
 ```
 
-#### Health checks
-
-```sh
-# Proxy
-curl -s http://localhost:8081/api/v1/version
-curl -s http://localhost:8081/api/v1/health
-
-# Nodes
-curl -s http://localhost:9091/api/v1/health
-curl -s http://localhost:9092/api/v1/health
-
-# Peers seen by node-2 (should include node-1)
-curl -s http://localhost:9092/api/v1/node-state | jq '.peers'
-```
-
-You should see the mesh forming and node-2 discovering node-1 via the bootstrap address.
-<!-- TODO:: ref the github for available APIs from the proxy -->
+> **Complete Testing Guide:** [Health checks and validation](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#3-verification)
 
 ### Send & receive (Proxy mode) using mump2p-cli
 
@@ -294,349 +197,92 @@ If you haven't already installed `mump2p-cli`, see the [**Getting Started with m
 You should see your subscriber print the message immediately.
 
 
-### Use Proxy using REST API and WebSocket (optional)
+### Use Proxy via REST API (Optional)
 
-**Publish a message:**
+**Basic commands:**
 
 ```sh
+# Publish
 curl -X POST http://localhost:8081/api/v1/publish \
   -H "Content-Type: application/json" \
-  -d '{
-    "client_id": "your-client-id",
-    "topic": "example-topic",
-    "message": "Hello, world!"
-}'
-```
+  -d '{"client_id":"test","topic":"demo","message":"Hello"}'
 
-**Parameters:**
-
-* `client_id` – Unique identifier for the client (required)
-* `topic` – The topic to publish the message to
-* `message` – The content to broadcast to subscribers
-
-> **Important:** The `client_id` field is required for all publish requests. This should be the same ID used when subscribing to topics. If you're using WebSocket connections, use the same `client_id` for consistency.
-
-**Subscribe to a topic:**
-
-```sh
+# Subscribe
 curl -X POST http://localhost:8081/api/v1/subscribe \
   -H "Content-Type: application/json" \
-  -d '{
-    "client_id": "unique-client-id",
-    "topic": "example-topic",
-    "threshold": 0.7
-}'
+  -d '{"client_id":"test","topic":"demo","threshold":0.1}'
+
+# WebSocket
+wscat -c "ws://localhost:8081/api/v1/ws?client_id=test"
 ```
 
-**Parameters:**
+> **Complete API Reference:** [Proxy REST and WebSocket API](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#proxy-rest-api) - parameters, rate limits, authentication
 
-* `client_id` – Unique identifier for the client (required)
-* `topic` – The topic to subscribe to
-* `threshold` (optional, float) – Minimum percentage (0.1–1.0) of active nodes that must report a message before it's forwarded to this client
-    * Default: 0.1 (10% confirmation)
+### Use Proxy via gRPC (Optional)
 
-**Connect via WebSocket:**
+For gRPC bidirectional streaming (higher performance than WebSocket):
 
-```sh
-wscat -c "ws://localhost:8081/api/v1/ws?client_id=unique-client-id"
-```
+> **Complete Implementation:**
+>
+> * [Proxy gRPC Client Source](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proxy_client.go)
+> * [Setup and Usage Guide](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation)
+> * REST subscription + gRPC streaming + flow control settings
 
-> **Important:** WebSocket has limitations, and you may experience unreliable delivery when publishing message bursts. A gRPC connection (shown below) provides more reliable streaming.
+## 6. Mode B — Direct mumP2P (Advanced / Lower Latency)
 
-**Rate Limits:**
+In this mode, clients connect directly to node sidecar gRPC (no proxy).
 
-Rate limits are enforced based on client configuration. Exceeding limits results in 429 responses.
+### Docker Compose Setup
 
-> **Note:** Since authentication is disabled in our local setup (`ENABLE_AUTH=false`), no JWT tokens are required for these requests.
-
-### Use Proxy using gRPC Stream
-
-For a complete working proxy client with both REST subscription and gRPC streaming, see the full implementation:
-
-**[Complete Proxy Client Example](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation)**
-
-**[Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proxy_client.go)**
-
-The proxy client provides:
-
-* **REST API subscription** for topic registration and threshold configuration
-* **gRPC bidirectional streaming** for real-time message delivery
-* **Message publishing** via REST API endpoints
-* **Configurable parameters** for topic, threshold, and message count
-* **Flow control settings** for robust connections
-
-```go
-// Basic proxy client implementation (see full version in GitHub link above)
-package main
-
-import (
-  "bytes"
-  "context"
-  "encoding/json"
-  "fmt"
-  "io"
-  "log"
-  "math"
-  "net/http"
-  "time"
-
-  "google.golang.org/grpc"
-  "google.golang.org/grpc/credentials/insecure"
-  
-  protobuf "proxy_client/grpc" // Generated from gateway_stream.proto
-)
-
-const (
-  proxyREST = "http://localhost:8081"  // REST API for subscription/publishing
-  proxyGRPC = "localhost:50051"        // gRPC endpoint for streaming
-)
-
-func main() {
-  clientID := "client_demo123"
-  topic := "demo"
-  threshold := 0.1
-
-  // 1. Subscribe via REST API
-  body := map[string]interface{}{
-    "client_id": clientID,
-    "topic":     topic,
-    "threshold": threshold,
-  }
-  data, _ := json.Marshal(body)
-  resp, err := http.Post(proxyREST+"/api/v1/subscribe", "application/json", bytes.NewReader(data))
-  if err != nil {
-    log.Fatalf("subscription failed: %v", err)
-  }
-  resp.Body.Close()
-
-  // 2. Connect to gRPC stream
-  conn, err := grpc.NewClient(proxyGRPC,
-    grpc.WithTransportCredentials(insecure.NewCredentials()),
-    grpc.WithInitialWindowSize(1024*1024*1024),     // 1GB per-stream receive window
-    grpc.WithInitialConnWindowSize(1024*1024*1024), // 1GB connection-level receive window
-    grpc.WithDefaultCallOptions(
-      grpc.MaxCallRecvMsgSize(math.MaxInt),
-      grpc.MaxCallSendMsgSize(math.MaxInt),
-    ),
-  )
-  if err != nil {
-    log.Fatalf("gRPC connection failed: %v", err)
-  }
-  defer conn.Close()
-
-  client := protobuf.NewProxyStreamClient(conn)
-  stream, err := client.ClientStream(context.Background())
-  if err != nil {
-    log.Fatalf("stream creation failed: %v", err)
-  }
-
-  // 3. Send client ID to establish stream
-  if err := stream.Send(&protobuf.ProxyMessage{ClientId: clientID}); err != nil {
-    log.Fatalf("client ID send failed: %v", err)
-  }
-
-  // 4. Handle incoming messages
-  go func() {
-    for {
-      resp, err := stream.Recv()
-      if err == io.EOF {
-        log.Println("Stream closed by server")
-        return
-      }
-      if err != nil {
-        log.Printf("Stream receive error: %v", err)
-        return
-      }
-      log.Printf("Received: Topic=%s, Message=%s", resp.Topic, string(resp.Message))
-    }
-  }()
-
-  // 5. Publish messages via REST API
-  for i := 0; i < 3; i++ {
-    msg := fmt.Sprintf("Hello message %d @ %s", i+1, time.Now().Format("15:04:05"))
-    publishBody := map[string]interface{}{
-      "client_id": clientID,
-      "topic":     topic,
-      "message":   msg,
-    }
-    publishData, _ := json.Marshal(publishBody)
-    
-    log.Printf("Publishing: %s", msg)
-    resp, err := http.Post(proxyREST+"/api/v1/publish", "application/json", bytes.NewReader(publishData))
-    if err != nil {
-      log.Printf("Publish error: %v", err)
-    } else {
-      resp.Body.Close()
-    }
-    
-    time.Sleep(2 * time.Second)
-  }
-
-  // Keep client running to receive messages
-  time.Sleep(10 * time.Second)
-}
-```
-
-## 5. Mode B — Direct mumP2P (Advanced / Lower Latency)
-
-In this mode, clients connect `straight to node sidecar gRPC`. You’ll manage client-side reconnection, backoff, and which node to hit.
-
-### Create the docker-compose file
-
-Save as `./direct-p2p/docker-compose.yml`:
+**Simplified example:**
 
 ```yaml
 services:
   p2pnode-1:
-    image: 'getoptimum/p2pnode:latest'
-    platform: linux/amd64
+    image: 'getoptimum/p2pnode:${P2P_NODE_VERSION-latest}'
     volumes:
-      - ../identity:/identity
+      - ./identity:/identity
     environment:
-      - LOG_LEVEL=debug
-      - CLUSTER_ID=p2pnode-1
+      - CLUSTER_ID=${CLUSTER_ID}
       - NODE_MODE=optimum
       - IDENTITY_DIR=/identity
-      - SIDECAR_PORT=33212
-      - API_PORT=9090
-      - OPTIMUM_PORT=7070
-      - OPTIMUM_MESH_TARGET=6
-      - OPTIMUM_MESH_MIN=3
-      - OPTIMUM_MESH_MAX=12
-      - OPTIMUM_MAX_MSG_SIZE=1048576
-      - OPTIMUM_SHARD_FACTOR=4
-      - OPTIMUM_SHARD_MULT=1.5
-      - OPTIMUM_THRESHOLD=0.75
     ports:
       - "33221:33212"
-      - "9091:9090"
-      - "7071:7070"
-    networks:
-      testnet:
-        ipv4_address: 172.28.0.11
-
-  p2pnode-2:
-    image: 'getoptimum/p2pnode:latest'
-    platform: linux/amd64
-    environment:
-      - LOG_LEVEL=debug
-      - CLUSTER_ID=p2pnode-2
-      - NODE_MODE=optimum
-      - SIDECAR_PORT=33212
-      - API_PORT=9090
-      - OPTIMUM_PORT=7070
-      - OPTIMUM_MESH_TARGET=6
-      - OPTIMUM_MESH_MIN=3
-      - OPTIMUM_MESH_MAX=12
-      - OPTIMUM_MAX_MSG_SIZE=1048576
-      - OPTIMUM_SHARD_FACTOR=4
-      - OPTIMUM_SHARD_MULT=1.5
-      - OPTIMUM_THRESHOLD=0.75
-      - BOOTSTRAP_PEERS=/ip4/172.28.0.11/tcp/7070/p2p/${BOOTSTRAP_PEER_ID}
-    ports:
-      - "33222:33212"
-      - "9092:9090"
-      - "7072:7070"
-    networks:
-      testnet:
-        ipv4_address: 172.28.0.12
-
-networks:
-  testnet:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 172.28.0.0/16
 ```
 
-### Start and validate
+> **Complete Docker Compose:** [Full configuration for direct P2P mode](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docker-compose-optimum.yml)
+
+### Start and Verify
 
 ```sh
-cd ~/optimum-local/direct-p2p
-export BOOTSTRAP_PEER_ID=<paste-from-step-2>
+export BOOTSTRAP_PEER_ID=<your-peer-id>
 docker compose up -d
-docker compose ps
-curl -s http://localhost:9091/api/v1/health
-curl -s http://localhost:9092/api/v1/health
+curl http://localhost:9091/api/v1/health
 ```
 
-### Minimal Direct P2P sidecar gRPC stream client
+### Use P2P Client Directly
 
-For a complete working P2P client that connects directly to nodes, see the full implementation with trace handling:
+Connect using the P2P client with trace handling and metrics:
 
-**[Complete P2P Client Example](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#using-p2p-nodes-directly-optional--no-proxy)**
+```bash
+# Subscribe
+./p2p-client -mode=subscribe -topic=testtopic --addr=127.0.0.1:33221
 
-**[Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/p2p_client.go)**
-
-The client includes:
-
-* **Message publishing and subscribing** with gRPC streaming
-* **Protocol trace handling** for both GossipSub and mumP2P
-* **Metrics collection** via `MessageTraceGossipSub` and `MessageTraceOptimumP2P` responses
-* **Stress testing capabilities** with batch message publishing
-
-```go
-// Basic client skeleton (see full implementation in GitHub link above)
-package main
-
-import (
-  "context"
-  "fmt"
-  "log"
-  "math"
-
-  "google.golang.org/grpc"
-  "google.golang.org/grpc/credentials/insecure"
-  
-  protobuf "p2p_client/grpc" // Generated from p2p_stream.proto
-)
-
-func main() {
-  conn, err := grpc.NewClient("localhost:33221",
-    grpc.WithTransportCredentials(insecure.NewCredentials()),
-    grpc.WithDefaultCallOptions(
-      grpc.MaxCallRecvMsgSize(math.MaxInt),
-      grpc.MaxCallSendMsgSize(math.MaxInt),
-    ),
-  )
-  if err != nil { log.Fatal(err) }
-  defer conn.Close()
-
-  client := protobuf.NewCommandStreamClient(conn)
-  stream, _ := client.ListenCommands(context.Background())
-  
-  // Subscribe to topic
-  stream.Send(&protobuf.Request{
-    Command: int32(CommandSubscribeToTopic),
-    Topic: "demo",
-  })
-  
-  // Handle responses including trace data
-  for {
-    resp, _ := stream.Recv()
-    switch resp.GetCommand() {
-    case protobuf.ResponseType_Message:
-      fmt.Printf("MSG: %s\n", string(resp.GetData()))
-    case protobuf.ResponseType_MessageTraceGossipSub:
-      fmt.Printf("[TRACE] GossipSub trace: %d bytes\n", len(resp.GetData()))
-    case protobuf.ResponseType_MessageTraceOptimumP2P:
-      fmt.Printf("[TRACE] mumP2P trace: %d bytes\n", len(resp.GetData()))
-    }
-  }
-}
+# Publish
+./p2p-client -mode=publish -topic=testtopic -msg="Hello" --addr=127.0.0.1:33222
 ```
 
-For all available configuration variables, observability and validations check the [Parameters Section](./03-parameters.md).
+> **Complete Implementation:**
+>
+> * [P2P Client Source](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/p2p_client.go)
+> * [Usage Guide with Makefile commands](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#using-p2p-nodes-directly-optional--no-proxy)
+> * [Message format explanation](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#understanding-message-output-format)
+
+For all configuration variables, see the [Parameters Section](./03-parameters.md).
 
 ## Troubleshooting
 
-### No peers / mesh empty
-
-* Check `BOOTSTRAP_PEERS` uses a reachable address of a running node.
-* If using static IPs, confirm the `testnet` subnet and container IPs match the compose file.
-* Look for `bootstrap` lines in docker compose logs `p2pnode`.
-
-### “connection refused” from client
+### "Connection refused" from client
 
 * Ensure you’re pointing to the host-mapped ports (e.g., 33221, 8081).
 * Run docker compose ps and confirm port bindings.
