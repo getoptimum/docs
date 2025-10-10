@@ -192,7 +192,7 @@ function sidebarHome() {
           link: "/docs/learn/overview/intro",
         },
         {
-          text: "OptimumP2P",
+          text: "mumP2P Protocol",
           link: "/docs/learn/overview/p2p.md",
         },
         {
@@ -208,6 +208,14 @@ function sidebarHome() {
         {
           text: "Quick Start",
           link: "/docs/guides/overview",
+        },
+        {
+          text: "HOP Testing Suite",
+          link: "https://getoptimum.github.io/optimum-hop/",
+        },
+        {
+          text: "Optimum Gateway",
+          link: "https://getoptimum.github.io/optimum-gateway/versions/v0.0.1-rc6/",
         },
         {
           text: "Getting Started with CLI",
@@ -236,7 +244,7 @@ function sidebarHome() {
       collapsed: false,
       items: [
         {
-          text: "OptimumP2P",
+          text: "mumP2P Protocol",
           collapsed: true,
           items: [
             {
