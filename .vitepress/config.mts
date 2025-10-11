@@ -210,14 +210,6 @@ function sidebarHome() {
           link: "/docs/guides/overview",
         },
         {
-          text: "HOP Testing Suite",
-          link: "https://getoptimum.github.io/optimum-hop/",
-        },
-        {
-          text: "Optimum Gateway",
-          link: "https://getoptimum.github.io/optimum-gateway/versions/v0.0.1-rc6/",
-        },
-        {
           text: "Getting Started with CLI",
           link: "/docs/guides/01-getting-started-cli",
         },
@@ -236,6 +228,20 @@ function sidebarHome() {
         {
           text: "FAQ",
           link: "/docs/guides/05-faq-glossary",
+        },
+      ],
+    },
+    {
+      text: "Ethereum Integration",
+      collapsed: false,
+      items: [
+        {
+          text: "HOP Testing Suite",
+          link: "https://getoptimum.github.io/optimum-hop/",
+        },
+        {
+          text: "Optimum Gateway",
+          link: "https://getoptimum.github.io/optimum-gateway/versions/v0.0.1-rc6/",
         },
       ],
     },

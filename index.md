@@ -1,6 +1,6 @@
 ---
 layout: page
-title: "Redirecting to Introduction"
+title: "Introduction"
 ---
 
 <script setup>
@@ -8,6 +8,6 @@ title: "Redirecting to Introduction"
 window.location.replace('/docs/learn/overview/intro')
 </script>
 
-# Redirecting to Introduction
+# Introduction
 
 If you are not redirected automatically, [click here to go to the Introduction page](/docs/learn/overview/intro).
