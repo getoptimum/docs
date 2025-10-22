@@ -16,7 +16,7 @@ Whether you are an application developer, systems engineer, or hackathon partici
 
 Choose your path to get started with Optimum Network:
 
-### **Try mumP2P (≤5 min)**
+### **Try mump2p (≤5 min)**
 
 **[Using mump2p-cli](01-getting-started-cli.md)** — Connect to hosted proxy, no setup required
 
@@ -30,7 +30,7 @@ Choose your path to get started with Optimum Network:
 
 * Complete local network deployment
 * Experiment with different parameters
-* Compare mumP2P vs GossipSub performance
+* Compare mump2p vs GossipSub performance
 
 ### **Understanding & Experimenting**
 
@@ -77,9 +77,9 @@ Before diving deep, familiarize yourself with these terms and how they relate to
 | **Direct P2P Mode** | Clients connect directly to P2P nodes via gRPC without going through a proxy. This can reduce latency but requires more configuration. |
 | **Mesh Parameters** | Settings such as `MESH_TARGET` that define how many peers a node tries to keep in its topic mesh. |
 | **Fanout**   | A temporary set of peers a publisher sends messages to when it is not part of the topic mesh. |
-| **Control Messages** | Special messages like GRAFT, PRUNE, IHAVE, IWANT used for GossipSub mesh management. mumP2P integrates similar control flows for RLNC. |
+| **Control Messages** | Special messages like GRAFT, PRUNE, IHAVE, IWANT used for GossipSub mesh management. mump2p integrates similar control flows for RLNC. |
 | **Node Discovery** | The process by which proxies or nodes automatically learn about other nodes to connect to. |
 | **gRPC API** | The RPC interface provided by either a P2P node or a proxy for client communication. |
 
-For more technical details, see the **[mumP2P Technical Overview](../learn/overview/p2p.md)**.
+For more technical details, see the **[mump2p Technical Overview](../learn/overview/p2p.md)**.
 

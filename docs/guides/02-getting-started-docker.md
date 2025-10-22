@@ -3,17 +3,17 @@
 Running **Optimum Network** locally with Docker gives you **full control** over configuration, topology, and experiments.  
 You can run the network in two primary ways:
 
-**1. OptimumProxy + mumP2P** — Clients connect to an **Optimum Proxy**, which manages P2P connections for them.
+**1. OptimumProxy + mump2p** — Clients connect to an **Optimum Proxy**, which manages P2P connections for them.
 
-![OptimumProxy + mumP2P Architecture](../../static/img/docker_1.png)
+![OptimumProxy + mump2p Architecture](../../static/img/docker_1.png)
 
 * Simplifies client configuration — only the Proxy address is needed.
 * Proxy handles shard reassembly, threshold logic, and node selection automatically.
 * Easier scaling and centralized policy control.
 
-**2. Direct mumP2P** — Clients connect directly to **mumP2P nodes** (each node must run the gRPC API).
+**2. Direct mump2p** — Clients connect directly to **mump2p nodes** (each node must run the gRPC API).
 
-![Direct mumP2P Architecture](../../static/img/docker_2.png)
+![Direct mump2p Architecture](../../static/img/docker_2.png)
 
 * Fewer network hops = potentially lower latency.
 * Clients must know node addresses and manage failover logic.
@@ -32,7 +32,7 @@ local deployment offers:
 
 Choose the deployment mode that best fits your use case:
 
-| **Mode A: Proxy + mumP2P** | **Mode B: Direct mumP2P** |
+| **Mode A: Proxy + mump2p** | **Mode B: Direct mump2p** |
 |---|---|
 | **One endpoint** — simpler client config | **Lowest latency** — fewer network hops |
 | **Policy control** — rate limiting, auth | **Direct control** — no proxy overhead |
@@ -62,7 +62,7 @@ Choose the deployment mode that best fits your use case:
 
 | Component           | Purpose                                                                                                                                 | Docker Images               |
 | ------------------- | --------------------------------------------------------------------------------------------------------------------------------------- | --------------------------- |
-| **mumP2P Node** | RLNC-enabled mesh peer, encodes/decodes message shards, handles peer discovery and subscriptions. Optional gRPC API for direct clients. | `getoptimum/p2pnode:v0.0.1-rc2` |
+| **mump2p Node** | RLNC-enabled mesh peer, encodes/decodes message shards, handles peer discovery and subscriptions. Optional gRPC API for direct clients. | `getoptimum/p2pnode:v0.0.1-rc2` |
 | **Optimum Proxy**   | Bridges clients and the mesh, manages subscriptions, shard reassembly, threshold logic, and node selection.                             | `getoptimum/proxy:v0.0.1-rc3`   |
 
 
@@ -84,8 +84,8 @@ We’ll keep identity in `./identity` folder so you can reuse keys across restar
 
 | Recommended mode              | Why                                                                                       |
 | ----------------------------- | ----------------------------------------------------------------------------------------- |
-| **OptimumProxy + mumP2P** | One endpoint for clients, proxy handles matching, decoding thresholds, fanout, and policy |
-| **Direct mumP2P**         | Fewer hops, you control connection/retry logic and node selection                         |
+| **OptimumProxy + mump2p** | One endpoint for clients, proxy handles matching, decoding thresholds, fanout, and policy |
+| **Direct mump2p**         | Fewer hops, you control connection/retry logic and node selection                         |
 
 
 ## 3. Environment Configuration
@@ -119,7 +119,7 @@ This creates `./identity/p2p.key` with your unique Peer ID.
 
 > **Complete Guide:** [Identity generation and Makefile commands](https://github.com/getoptimum/optimum-dev-setup-guide#quick-start) - all make commands, direct binary usage
 
-## 5. Mode A — OptimumProxy + mumP2P (Recommended)
+## 5. Mode A — OptimumProxy + mump2p (Recommended)
 
 ### Docker Compose Setup
 
@@ -228,7 +228,7 @@ For gRPC bidirectional streaming (higher performance than WebSocket):
 > * [Setup and Usage Guide](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation)
 > * REST subscription + gRPC streaming + flow control settings
 
-## 6. Mode B — Direct mumP2P (Advanced / Lower Latency)
+## 6. Mode B — Direct mump2p (Advanced / Lower Latency)
 
 In this mode, clients connect directly to node sidecar gRPC (no proxy).
 

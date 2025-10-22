@@ -1,8 +1,8 @@
-# Understanding Key Parameters in mumP2P
+# Understanding Key Parameters in mump2p
 
 > **Complete Reference:** [Full parameter guide and defaults](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#configuration) - all variables, `.env` workflow, production configs
 
-mumP2P nodes can operate in **two distinct protocol modes**, configured via:
+mump2p nodes can operate in **two distinct protocol modes**, configured via:
 
 ```sh
 NODE_MODE=optimum    # RLNC-enhanced gossip
@@ -13,9 +13,9 @@ Each mode has its own parameter set, with some shared configurations.
 
 We support **two protocol modes** to let developers and researchers compare **performance, reliability, and bandwidth trade-offs** in real-world scenarios — without changing the rest of their infrastructure.
 
-## mumP2P (RLNC) Mode — `NODE_MODE=optimum`
+## mump2p (RLNC) Mode — `NODE_MODE=optimum`
 
-mumP2P extends the gossip protocol with **Random Linear Network Coding**:
+mump2p extends the gossip protocol with **Random Linear Network Coding**:
 
 * Messages are split into **shards**
 * Shards can be forwarded early once a threshold is reached
@@ -134,7 +134,7 @@ The following table shows the **production defaults**, which are optimized for t
 
 ### For Quick Start (Copy-Paste Ready)
 
-**mumP2P Mode (`NODE_MODE=optimum`):**
+**mump2p Mode (`NODE_MODE=optimum`):**
 
 ```yaml
 environment:
@@ -200,5 +200,5 @@ environment:
 | `GOSSIPSUB_MESH_MAX`         | 12            | gossipsub    | Max peers before pruning                       |
 | `BOOTSTRAP_PEERS`            | []            | Both         | List of peer multiaddrs for bootstrap         |
 
-> **Note:** These are the production defaults used by mumP2P nodes. For experimental tuning, see [Common Experiments](./04-experiments.md).
+> **Note:** These are the production defaults used by mump2p nodes. For experimental tuning, see [Common Experiments](./04-experiments.md).
 
