@@ -192,7 +192,7 @@ function sidebarHome() {
           link: "/docs/learn/overview/intro",
         },
         {
-          text: "mumP2P Protocol",
+          text: "mump2p Protocol",
           link: "/docs/learn/overview/p2p.md",
         },
         {
@@ -250,7 +250,7 @@ function sidebarHome() {
       collapsed: false,
       items: [
         {
-          text: "mumP2P Protocol",
+          text: "mump2p Protocol",
           collapsed: true,
           items: [
             {

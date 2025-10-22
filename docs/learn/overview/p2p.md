@@ -1,15 +1,15 @@
-# mumP2P Protocol
+# mump2p Protocol
 
-**mumP2P** is a next-generation gossip protocol that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to revolutionize message dissemination in peer-to-peer networks. Built on [libp2p](https://docs.libp2p.io/), it offers a high-performance alternative to traditional protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), delivering faster propagation, better bandwidth efficiency, and better fault tolerance using network coding.
+**mump2p** is a next-generation gossip protocol that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to revolutionize message dissemination in peer-to-peer networks. Built on [libp2p](https://docs.libp2p.io/), it offers a high-performance alternative to traditional protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), delivering faster propagation, better bandwidth efficiency, and better fault tolerance using network coding.
 
 
-## How mumP2P Works
+## How mump2p Works
 
-mumP2P is a gossip mechanism based on RLNC, also known as **Galois Gossip**, that builds upon [libp2p](https://docs.libp2p.io/)'s [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) protocol. Instead of transmitting complete messages between peers, mumP2P breaks messages into coded shards that can be independently forwarded and mathematically recombined to reconstruct the original data.
+mump2p is a gossip mechanism based on RLNC, also known as **Galois Gossip**, that builds upon [libp2p](https://docs.libp2p.io/)'s [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub) protocol. Instead of transmitting complete messages between peers, mump2p breaks messages into coded shards that can be independently forwarded and mathematically recombined to reconstruct the original data.
 
 ### Node Architecture
 
-Each mumP2P node is a standard libp2p host enhanced with RLNC logic. Core components include:
+Each mump2p node is a standard libp2p host enhanced with RLNC logic. Core components include:
 
 * **libp2p Host** – Provides peer discovery, secure communication, and network transport.
 * **Mesh Topology** – Maintains a configurable gossip mesh with peer degrees similar to GossipSub.
@@ -60,7 +60,7 @@ When a node receives a shard:
 
 ### Control Messages
 
-mumP2P uses and extends [GossipSub's](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md#control-messages) control messages for optimized mesh performance:
+mump2p uses and extends [GossipSub's](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md#control-messages) control messages for optimized mesh performance:
 
 | Message     | Purpose                                                                 |
 |-------------|-------------------------------------------------------------------------|
@@ -71,7 +71,7 @@ mumP2P uses and extends [GossipSub's](https://github.com/libp2p/specs/blob/maste
 
 ## Configuration Parameters
 
-mumP2P provides several configurable parameters to tune performance for different network conditions and requirements:
+mump2p provides several configurable parameters to tune performance for different network conditions and requirements:
 
 ### RLNC Encoding
 
@@ -81,21 +81,21 @@ mumP2P provides several configurable parameters to tune performance for differen
 
 ### Mesh Topology Parameters
 
-mumP2P builds upon libp2p's [GossipSub mesh topology](https://docs.libp2p.io/concepts/pubsub/overview/#full-message), where peers maintain **full-message peerings** for reliable data transmission and **metadata-only peerings** for gossip and network maintenance.
+mump2p builds upon libp2p's [GossipSub mesh topology](https://docs.libp2p.io/concepts/pubsub/overview/#full-message), where peers maintain **full-message peerings** for reliable data transmission and **metadata-only peerings** for gossip and network maintenance.
 
 * **MeshDegreeTarget**: Target number of peers to maintain in the mesh overlay. This controls the trade-off between speed, reliability, resilience and efficiency of the network. A higher peering degree helps messages get delivered faster with better reliability, but increases bandwidth usage due to redundant message copies.
 * **MeshDegreeMin**: Minimum number of mesh peers before triggering [grafting](https://docs.libp2p.io/concepts/pubsub/overview/#grafting-and-pruning) (converting metadata-only connections to full-message).
 * **MeshDegreeMax**: Maximum number of mesh peers before triggering [pruning](https://docs.libp2p.io/concepts/pubsub/overview/#grafting-and-pruning) (converting full-message peerings back to metadata-only).
 
-In libp2p's default implementation, the ideal network peering degree is 6 with anywhere from 4–12 being acceptable. mumP2P inherits these mesh management mechanisms while optimizing shard propagation through the established topology.
+In libp2p's default implementation, the ideal network peering degree is 6 with anywhere from 4–12 being acceptable. mump2p inherits these mesh management mechanisms while optimizing shard propagation through the established topology.
 
 ## Use Cases
 
-mumP2P serves as a foundational, general-purpose data propagation protocol with benefits extending across various blockchain use cases.
+mump2p serves as a foundational, general-purpose data propagation protocol with benefits extending across various blockchain use cases.
 
 ### Validators and Node Operators
 
-mumP2P supercharges validator and full node performance in bandwidth-constrained and latency-sensitive networks:
+mump2p supercharges validator and full node performance in bandwidth-constrained and latency-sensitive networks:
 
 * **[Ethereum](https://ethereum.org/)**: Faster mempool propagation, lower uncle rates, and potential integration into both execution and consensus layers.
 * **[Solana](https://solana.com/)**: Enhances Turbine-style data sharding with fault-tolerant packet loss recovery.  
@@ -114,7 +114,7 @@ High-frequency trading chains rely on fast, reliable state propagation:
 
 AI networks are data-intensive and latency-sensitive:
 
-* mumP2P enables fast gossiping of model weights, gradients, and other updates
+* mump2p enables fast gossiping of model weights, gradients, and other updates
 * Supports high-throughput training/inference coordination across distributed nodes
 * Reduces straggler nodes and failed task replication due to packet loss
 
@@ -130,7 +130,7 @@ Decentralized physical infrastructure demands reliable node coordination at scal
 
 These chains rely on fast event propagation for user interactions:
 
-* mumP2P delivers low-latency, real-time interactions (game state syncs, social updates)
+* mump2p delivers low-latency, real-time interactions (game state syncs, social updates)
 * Improves experience for multiplayer, onchain games and social dApps
 * Reduces costs of redundant relay infra through efficient data spreading
 
@@ -138,7 +138,7 @@ These chains rely on fast event propagation for user interactions:
 
 ## Security Model
 
-mumP2P inherits libp2p's robust security foundation, and adds safeguards specific to network coding.
+mump2p inherits libp2p's robust security foundation, and adds safeguards specific to network coding.
 
 ### Inherited from libp2p
 
@@ -147,11 +147,11 @@ mumP2P inherits libp2p's robust security foundation, and adds safeguards specifi
 
 For a full overview of these protections, refer to the [libp2p security considerations](https://docs.libp2p.io/concepts/security/security-considerations/).
 
-### mumP2P avoids Pollution Attacks
+### mump2p avoids Pollution Attacks
 
 In **pollution attacks** attack, a malicious actor injects corrupted or invalid coded shards into the network, with the goal of preventing honest nodes from successfully decoding the original message.
 
-mumP2P mitigates this risk through a multi-layered approach centered on **source authentication**.
+mump2p mitigates this risk through a multi-layered approach centered on **source authentication**.
 
 *   The original message data is cryptographically hashed to create a unique identifier.
 *   This identifier, along with the publisher's signature, is bound to the data.
