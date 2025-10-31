@@ -4,7 +4,7 @@ description: Get a quick primer on the constituent components of the Optimum pro
 
 # Introduction to Optimum
 
-**Optimum** is the world's first decentralized **shared-memory and network-communication** layer for blockchains. It accelerates **low-latency gossip** across geographically distributed nodes to scale data access and reduce network congestion for latency-sensitive dApps.
+**Optimum** is the fastest decentralized internet protocol for web3. It accelerates **low-latency gossip** across geographically distributed nodes to scale data access and reduce network congestion for latency-sensitive dApps.
 
 Powered by [Random Linear Network Coding (RLNC)](./p2p.md#random-linear-network-coding-rlnc-fundamentals) — a cutting-edge data encoding technique developed under the supervision of **Professor Muriel Medard, EECS, MIT**. By applying RLNC to gossip, Optimum reduces redundancy and improves loss tolerance; under standard RLNC models, the dissemination strategy is **provably optimal** for throughput/latency under loss and contention.
 
