@@ -17,7 +17,7 @@ primitives. This flexibility contributes to improved durability, reduced
 bandwidth usage, and enhanced fault tolerance within a distributed storage
 framework.
 
-Our system is implemented as a network of functionally hetrogeneous nodes, termed
+Our system is implemented as a network of functionally heterogeneous nodes, termed
 Flexnodes, which collectively provide decentralized storage and communication
 services. External clients can interact with any Flexnode to perform read/write
 operations, using this system both for data storage and as a communication
