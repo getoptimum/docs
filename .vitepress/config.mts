@@ -241,7 +241,7 @@ function sidebarHome() {
         },
         {
           text: "Optimum Gateway",
-          link: "https://getoptimum.github.io/optimum-gateway/versions/v0.0.1-rc6/",
+          link: "https://getoptimum.github.io/optimum-gateway/versions/latest/",
         },
       ],
     },
