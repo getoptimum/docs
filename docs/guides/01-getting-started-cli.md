@@ -1,6 +1,6 @@
 # Getting Started with mump2p CLI
 
-The `mump2p` CLI is the quickest way to interact with [Optimum Network](https://github.com/getoptimum/optimum-p2p) without running your own infrastructure.
+The `mump2p` CLI is the quickest way to interact with Optimum Network without running your own infrastructure.
 
 In the next 5 minutes, you'll have:
 

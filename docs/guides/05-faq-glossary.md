@@ -20,13 +20,17 @@ It includes detailed troubleshooting for:
 
 ### Q: `docker run ... generate-key` command doesn't work
 
-**A:** Use the identity generation script instead:
+**A:** Use the identity generation script or Makefile command:
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/getoptimum/optimum-dev-setup-guide/main/script/generate-identity.sh | bash
+# Using Makefile (recommended)
+make generate-identity
+
+# Or using the script directly
+./script/generate-identity.sh
 ```
 
-This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
+This generates `./identity/p2p.key` and displays the `BOOTSTRAP_PEER_ID` that you need to add to your `.env` file.
 
 ### Container Startup Issues
 
@@ -34,10 +38,10 @@ This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
 
 **A:** Common fixes:
 
-1. **Check Docker images**: Use correct versions (`getoptimum/proxy:v0.0.1-rc3`, `getoptimum/p2pnode:v0.0.1-rc2`)
+1. **Check Docker images**: Use correct versions from your `.env` file (`PROXY_VERSION=v0.0.1-rc16`, `P2P_NODE_VERSION=v0.0.1-rc16` by default)
 2. **Network conflicts**: Change subnet in docker-compose if `172.28.0.0/16` conflicts
-3. **Port conflicts**: Ensure ports 8080, 8081, 33221, 9091, 7071 are available
-4. **Platform issues**: Add `platform: linux/amd64` for M1 Macs
+3. **Port conflicts**: Ensure ports 8081, 8082, 50051, 50052, 33221-33224, 9091-9094, 7071-7074 are available
+4. **Platform issues**: Add `platform: linux/amd64` for M1 Macs (already included in docker-compose-optimum.yml)
 
 ### Q: "Connection refused" when clients try to connect
 
@@ -60,6 +64,8 @@ This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
 3. **Use latest client examples**: Reference [`optimum-dev-setup-guide/docs/guide.md#grpc-proxy-client-implementation`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#grpc-proxy-client-implementation)
 
    **[Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proxy_client.go)**
+   
+   For P2P direct client, see [`grpc_p2p_client/cmd/single/main.go`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/cmd/single/main.go)
 
 ### Q: Getting "method not found" or protobuf errors
 
@@ -67,7 +73,7 @@ This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
 
 * See the [API Reference section](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#api-reference) for complete protobuf definitions
 * All proto files are available in the repository's `grpc_*_client/proto/` directories:
-    * [`grpc_proxy_client/proto/gateway_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proto/gateway_stream.proto)
+    * [`grpc_proxy_client/proto/proxy_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_proxy_client/proto/proxy_stream.proto)
     * [`grpc_p2p_client/proto/p2p_stream.proto`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/proto/p2p_stream.proto)
 
 
@@ -97,14 +103,17 @@ This generates `p2p.key` and exports `BOOTSTRAP_PEER_ID` automatically.
 
 When something doesn't work:
 
-1. **Check container logs**: `docker logs <container-name>`
-2. **Verify network connectivity**: `docker network ls` and `docker network inspect`
-3. **Test basic connectivity**: `curl http://localhost:8080/health`
-4. **Check authentication**: `mump2p whoami`
-5. **Verify versions**: Use latest CLI and Docker images
+1. **Check container logs**: `docker-compose -f docker-compose-optimum.yml logs <service-name>` or `docker logs <container-name>`
+2. **Verify network connectivity**: `docker network ls` and `docker network inspect optimum-dev-setup-guide_optimum-network`
+3. **Test basic connectivity**: 
+   * Proxy: `curl http://localhost:8081/api/v1/health`
+   * P2P Node: `curl http://localhost:9091/api/v1/health`
+4. **Check authentication**: `mump2p whoami` (if using CLI)
+5. **Verify versions**: Check your `.env` file for `PROXY_VERSION` and `P2P_NODE_VERSION` (default: v0.0.1-rc16)
+6. **Check service status**: `docker-compose -f docker-compose-optimum.yml ps`
 
 ### Getting Help
 
 * **CLI Issues**: [mump2p-cli FAQ](https://github.com/getoptimum/mump2p-cli#faq---common-issues--troubleshooting)
 * **Setup Issues**: Check [`optimum-dev-setup-guide/docs/guide.md`](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md)
-* **Protocol Questions**: See [mump2p Documentation](./p2p.md)
+* **Protocol Questions**: See [mump2p Documentation](../learn/overview/p2p.md)

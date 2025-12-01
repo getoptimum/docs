@@ -111,9 +111,9 @@ Example Docker service:
 proxy-1:
   image: 'getoptimum/proxy:${PROXY_VERSION-latest}'
   environment:
-    - PROXY_HTTP_PORT=:8080
+    - PROXY_PORT=:8080
     - PROXY_GRPC_PORT=:50051
-    - CLUSTER_ID=proxy-1
+    - CLUSTER_ID=${CLUSTER_ID}
     - ENABLE_AUTH=false
     - LOG_LEVEL=debug
     - P2P_NODES=p2pnode-1:33212,p2pnode-2:33212
@@ -121,7 +121,7 @@ proxy-1:
 
 | Parameter                         | Default | Purpose                                                    |
 | --------------------------------- | ------- | ---------------------------------------------------------- |
-| `PROXY_HTTP_PORT`                 | :8080   | HTTP API port for clients.                                 |
+| `PROXY_PORT`                      | :8080   | HTTP API port for clients.                                 |
 | `PROXY_GRPC_PORT`                 | :50051  | gRPC API port for clients.                                 |
 | `ENABLE_AUTH`                     | false   | Enable Auth0 authentication.                               |
 | `AUTH0_DOMAIN` / `AUTH0_AUDIENCE` | (none)  | Auth0 settings (required if `ENABLE_AUTH`=true).           |
@@ -139,16 +139,15 @@ The following table shows the **production defaults**, which are optimized for t
 ```yaml
 environment:
   - NODE_MODE=optimum
-  - LOG_LEVEL=production
+  - LOG_LEVEL=debug
   - CLUSTER_ID=my-cluster
   - SIDECAR_PORT=33212
-  - API_PORT=8081
+  - API_PORT=9090
   - IDENTITY_DIR=/identity
   - OPTIMUM_PORT=7070
   - OPTIMUM_MAX_MSG_SIZE=1048576
-  - OPTIMUM_RANDOM_MSG_SIZE=512
   - OPTIMUM_MESH_TARGET=6
-  - OPTIMUM_MESH_MIN=4
+  - OPTIMUM_MESH_MIN=3
   - OPTIMUM_MESH_MAX=12
   - OPTIMUM_SHARD_FACTOR=4
   - OPTIMUM_SHARD_MULT=1.5
@@ -161,10 +160,10 @@ environment:
 ```yaml
 environment:
   - NODE_MODE=gossipsub
-  - LOG_LEVEL=production
+  - LOG_LEVEL=debug
   - CLUSTER_ID=my-cluster
   - SIDECAR_PORT=33212
-  - API_PORT=8081
+  - API_PORT=9090
   - IDENTITY_DIR=/identity
   - GOSSIPSUB_PORT=6060
   - GOSSIPSUB_MAX_MSG_SIZE=1048576
@@ -178,17 +177,16 @@ environment:
 
 | Parameter                    | Default Value | Used In Mode | Description                                    |
 | ---------------------------- | ------------- | ------------ | ---------------------------------------------- |
-| `LOG_LEVEL`                  | production    | Both         | Log verbosity (production/debug/info/warn/error) |
+| `LOG_LEVEL`                  | debug         | Both         | Log verbosity (debug/info/warn/error)          |
 | `CLUSTER_ID`                 | ""            | Both         | Logical group name for metrics                 |
 | `NODE_MODE`                  | ""            | Both         | Protocol mode (optimum/gossipsub)             |
 | `SIDECAR_PORT`               | 33212         | Both         | gRPC sidecar port                              |
-| `API_PORT`                   | 8081          | Both         | HTTP API port                                  |
-| `IDENTITY_DIR`               | /tmp          | Both         | Directory for node private key                 |
+| `API_PORT`                   | 9090          | Both         | HTTP API port                                  |
+| `IDENTITY_DIR`               | /identity     | Both         | Directory for node private key                 |
 | `OPTIMUM_PORT`               | 7070          | optimum      | TCP port for RLNC gossip                      |
 | `OPTIMUM_MAX_MSG_SIZE`       | 1048576       | optimum      | Max message size (1MB)                         |
-| `OPTIMUM_RANDOM_MSG_SIZE`    | 512           | optimum      | Random message size for testing                |
 | `OPTIMUM_MESH_TARGET`        | 6             | optimum      | Desired peers in mesh                          |
-| `OPTIMUM_MESH_MIN`           | 4             | optimum      | Minimum peers before adding more               |
+| `OPTIMUM_MESH_MIN`           | 3             | optimum      | Minimum peers before adding more               |
 | `OPTIMUM_MESH_MAX`           | 12            | optimum      | Max peers before pruning                       |
 | `OPTIMUM_SHARD_FACTOR`       | 4             | optimum      | Number of shards per message                   |
 | `OPTIMUM_SHARD_MULT`         | 1.5           | optimum      | Redundancy multiplier (extra shards)          |
@@ -198,7 +196,7 @@ environment:
 | `GOSSIPSUB_MESH_TARGET`      | 6             | gossipsub    | Desired peers in mesh                          |
 | `GOSSIPSUB_MESH_MIN`         | 4             | gossipsub    | Minimum peers before adding more               |
 | `GOSSIPSUB_MESH_MAX`         | 12            | gossipsub    | Max peers before pruning                       |
-| `BOOTSTRAP_PEERS`            | []            | Both         | List of peer multiaddrs for bootstrap         |
+| `BOOTSTRAP_PEERS`            | (none)        | Both         | List of peer multiaddrs for bootstrap         |
 
 > **Note:** These are the production defaults used by mump2p nodes. For experimental tuning, see [Common Experiments](./04-experiments.md).
 

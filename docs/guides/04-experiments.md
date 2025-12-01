@@ -13,7 +13,7 @@ Each experiment below lists the **goal**, a quick **how-to**, and **what to obse
 You can run them using:
 
 * **mump2p CLI** (see [CLI Guide](./01-getting-started-cli.md))
-* **gRPC client** (with `MessageTraceGossipSub` or `MessageTraceOptimump2p` for protocol metrics)
+* **gRPC P2P client** (trace collection is automatic when subscribing - see [Trace Collection](#metrics-collection))
 
 
 
@@ -112,10 +112,7 @@ You can run them using:
 **Expected Result:** mump2p should handle higher stress levels before failing compared to GossipSub.
 
 
-> **Tip:** Enable protocol traces in the gRPC client to get hop-by-hop delivery info:
->
-> * `MessageTraceGossipSub` for GossipSub mode.
-> * `MessageTraceOptimump2p` for mump2p mode.
+> **Tip:** Trace collection is automatic when using the gRPC P2P client. Simply subscribe to a topic and trace events will be automatically parsed and displayed. See [Trace Collection](#metrics-collection) for details.
 
 ## Metrics Collection
 
@@ -123,22 +120,27 @@ For comprehensive metrics collection during experiments, use the gRPC P2P client
 
 **[P2P Client with Metrics Collection](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#collecting-trace-data-for-experiments)**
 
-**[Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/p2p_client.go)**
+**[Complete Code](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/grpc_p2p_client/cmd/single/main.go)**
 
-The client automatically captures and displays:
+The client automatically captures and displays trace events when you subscribe:
 
 * **GossipSub traces**: Peer routing, message delivery status, hop counts, latency
 * **mump2p traces**: Shard encoding/decoding, reconstruction efficiency, redundancy metrics  
 * **Message-level data**: Delivery success rates, end-to-end latency, bandwidth usage
 
-**Key trace handlers:**
+**Usage:**
 
-```go
-case protobuf.ResponseType_MessageTraceGossipSub:
-    fmt.Printf("[TRACE] GossipSub trace received: %s\n", string(resp.GetData()))
-
-case protobuf.ResponseType_MessageTraceOptimump2p:
-    fmt.Printf("[TRACE] mump2p trace received: %s\n", string(resp.GetData()))
+```bash
+# Subscribe to a topic - trace events are automatically collected and displayed
+./grpc_p2p_client/p2p-client -mode=subscribe -topic=your-topic --addr=127.0.0.1:33221
 ```
 
-Use this client instead of the CLI for detailed performance analysis during experiments.
+Trace parsing is implemented in `grpc_p2p_client/shared/utils.go` and handles both `ResponseType_MessageTraceGossipSub` and `ResponseType_MessageTraceMumP2P` automatically.
+
+For multi-node experiments with trace data collection, use the multi-subscribe client:
+
+```bash
+./grpc_p2p_client/p2p-multi-subscribe -topic=test-topic -ipfile=ips.txt -output-data=data.tsv -output-trace=trace.tsv
+```
+
+See the [dev setup guide](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#multi-node-client-tools) for more details on multi-node client tools.
