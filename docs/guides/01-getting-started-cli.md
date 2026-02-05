@@ -154,8 +154,8 @@ Daily Quota:       5120.00 MB
 For testing without authentication:
 
 ```sh
-./mump2p --disable-auth --client-id="test-client" publish --topic=demo --message="Hello" --service-url="http://proxy_1:8081" # localhost
-./mump2p --disable-auth --client-id="test-client" subscribe --topic=demo --service-url="http://proxy_1:8081" # localhost
+./mump2p --disable-auth --client-id="test-client" publish --topic=demo --message="Hello" --service-url="http://proxy_1:8080" # docker network
+./mump2p --disable-auth --client-id="test-client" subscribe --topic=demo --service-url="http://proxy_1:8080" # docker network
 ```
 
 > **Complete Guide:** [Development mode documentation](https://github.com/getoptimum/mump2p-cli/blob/main/docs/guide.md#developmenttesting-mode) - covers all flags, usage, and examples
