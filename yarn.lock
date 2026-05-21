@@ -381,6 +381,11 @@
     "@eslint/core" "^0.12.0"
     levn "^0.4.1"
 
+"@fontsource-variable/geist@^5.2.9":
+  version "5.2.9"
+  resolved "https://registry.yarnpkg.com/@fontsource-variable/geist/-/geist-5.2.9.tgz#261356515cb97e51bee31991259776b7435f0bd8"
+  integrity sha512-TP+QSBG3wxKGPE33CbMy/L0Nu3qvJ6Fy81Yc4LnQ95xH+i+cfEp8fyU8/kfV14YwszxIFPhnoMTbjL71waVpyQ==
+
 "@humanfs/core@^0.19.1":
   version "0.19.1"
   resolved "https://registry.npmjs.org/@humanfs/core/-/core-0.19.1.tgz"
