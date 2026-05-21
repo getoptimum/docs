@@ -1,17 +1,10 @@
-@font-face {
-  font-family: 'ABC Diatype';
-  font-weight: bold;
-  src: url('/fonts/ABCDiatype-Bold.woff2') format("font-woff2");
-}
-
-@font-face {
-  font-family: 'ABC Diatype';
-  src: url('/fonts/ABCDiatype-Light.woff2') format("font-woff2");
-}
+@import '@fontsource-variable/geist/index.css';
 
 :root {
-  --vp-font-family-base: 'ABC Diatype', ui-sans-serif, system-ui, sans-serif;
-  /* normal text font */
-  --vp-font-family-mono: 'ABC Diatype', monospace;
-  /* code font */
+  --vp-font-family-base: 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
+  --vp-font-family-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+}
+
+:where(h1, h2, h3, h4, h5, h6, .VPHero .name, .VPHero .text) {
+  font-family: 'ABC Diatype', 'Geist Variable', ui-sans-serif, system-ui, sans-serif;
 }
