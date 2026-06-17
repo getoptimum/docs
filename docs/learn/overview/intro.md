@@ -12,22 +12,12 @@ Powered by [Random Linear Network Coding (RLNC)](./p2p.md#random-linear-network-
 
 ## Products
 
-Builders and operators can adopt **mump2p** now for measurable latency gains. DeRAM and DeROM are next to unlock low-latency reads/writes.
+Builders and operators can adopt **mump2p** now for measurable latency gains via the **Optimum Gateway**.
 
 ### mump2p
 
 RLNC-accelerated, libp2p/gossipsub-compatible pub/sub for fast, resilient propagation of blocks, blobs, and transactions.  
-**Get started:** [Overview](../../learn/overview/p2p.md) · [Quickstart](../../guides/01-getting-started-cli.md)
-
-### Optimum DeRAM (Decentralized Random Access Memory)
-
-Decentralized **read-write** memory exposing low-latency shared-state semantics across nodes.  
-**Get started:** [Introduction](./deram.md)
-
-### Optimum DeROM (Decentralized Read-Only Memory)
-
-Decentralized **read-only/append-oriented** memory optimized for broadcast and caching.  
-**Get started:** [Coming next]
+**Get started:** [Overview](../../learn/overview/p2p.md) · [Optimum Gateway](https://getoptimum.github.io/optimum-gateway/versions/latest/)
 
 ## Flexnodes
 
@@ -35,14 +25,11 @@ A **flexnode** is an operator-run node that participates in Optimum's coded goss
 
 * encode, decode, and forward RLNC-coded gossip frames;
 * maintain bounded coded buffers to recover loss and smooth tail latency;
-* serve **DeRAM/DeROM** reads/writes per policy and quotas via stable APIs;
 * interoperate with existing clients and libp2p/gossipsub where applicable.
 
 ## Start here
 
-* **Try mump2p (≤5 min):** [Using mump2p-cli](../../guides/01-getting-started-cli.md)
-* **Run locally:** [Local Setup with Docker](../../guides/02-getting-started-docker.md)
-* **Integrate:** [Publish/Subscribe via Optimum Proxy endpoints](https://github.com/getoptimum/optimum-dev-setup-guide/blob/main/docs/guide.md#proxy-api)
+* **Run the Optimum Gateway:** [Gateway docs](https://getoptimum.github.io/optimum-gateway/versions/latest/)
 
 ### Intended users
 

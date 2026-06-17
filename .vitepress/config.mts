@@ -120,9 +120,12 @@ export default defineConfig({
 function nav() {
   return [
     {
+      text: "Optimum Gateway",
+      link: "https://getoptimum.github.io/optimum-gateway/versions/latest/",
+    },
+    {
       text: "Menu",
       items: [
-        // { text: "Get Started", link: "/docs/how-to-guides/overview" },
         { text: "Learn", link: "/docs/learn/overview/intro" },
         {
           text: "Resources",
@@ -160,50 +163,12 @@ function sidebarHome() {
           text: "mump2p Protocol",
           link: "/docs/learn/overview/p2p.md",
         },
-        {
-          text: "Optimum DeRAM",
-          link: "/docs/learn/overview/deram.md",
-        },
       ],
     },
     {
       text: "Getting Started",
       collapsed: false,
       items: [
-        {
-          text: "Quick Start",
-          link: "/docs/guides/overview",
-        },
-        {
-          text: "Getting Started with CLI",
-          link: "/docs/guides/01-getting-started-cli",
-        },
-        {
-          text: "Getting Started with Docker",
-          link: "/docs/guides/02-getting-started-docker",
-        },
-        {
-          text: "Understanding Key Parameters",
-          link: "/docs/guides/03-parameters",
-        },
-        {
-          text: "Common Experiments",
-          link: "/docs/guides/04-experiments",
-        },
-        {
-          text: "FAQ",
-          link: "/docs/guides/05-faq-glossary",
-        },
-      ],
-    },
-    {
-      text: "Ethereum Integration",
-      collapsed: false,
-      items: [
-        {
-          text: "HOP Testing Suite",
-          link: "https://getoptimum.github.io/optimum-hop/",
-        },
         {
           text: "Optimum Gateway",
           link: "https://getoptimum.github.io/optimum-gateway/versions/latest/",
@@ -215,37 +180,17 @@ function sidebarHome() {
       collapsed: false,
       items: [
         {
-          text: "mump2p Protocol",
-          collapsed: true,
-          items: [
-            {
-              text: "Gossip",
-              link: "/docs/research/gossip/gossip",
-            },
-            {
-              text: "Transport",
-              link: "/docs/research/gossip/transport",
-            },
-            {
-              text: "Decentralized Access",
-              link: "/docs/research/gossip/decentralized-access",
-            }
-          ]
+          text: "Gossip",
+          link: "/docs/research/gossip/gossip",
         },
         {
-          text: "Optimum DeRAM",
-          collapsed: true,
-          items: [
-            {
-              text: "Atomicity and Consistency",
-              link: "/docs/research/deram/atomicity-consistency",
-            },
-            {
-              text: "Decentralized Data Storage",
-              link: "/docs/research/deram/decentralized-storage",
-            }
-          ]
-        }
+          text: "Transport",
+          link: "/docs/research/gossip/transport",
+        },
+        {
+          text: "Decentralized Access",
+          link: "/docs/research/gossip/decentralized-access",
+        },
       ],
     },
   ]
