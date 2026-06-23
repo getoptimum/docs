@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 const { BASE: base = "/" } = process.env;
+const withBase = (path: string) => `${base}${path.replace(/^\//, "")}`;
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
@@ -23,14 +24,14 @@ export default defineConfig({
   head: [
     [
       "link",
-      { rel: "icon", href: "/favicons/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: withBase("/favicons/favicon.svg"), type: "image/svg+xml" },
     ],
-    ["link", { rel: "icon", href: "/favicons/favicon-96x96.png", type: "image/png" }],
+    ["link", { rel: "icon", href: withBase("/favicons/favicon-96x96.png"), type: "image/png" }],
     [
       "link",
       {
         rel: "shortcut icon",
-        href: "/favicons/favicon.ico",
+        href: withBase("/favicons/favicon.ico"),
         type: "image/x-icon",
       },
     ],
