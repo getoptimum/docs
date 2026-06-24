@@ -167,12 +167,16 @@ function sidebarHome() {
       ],
     },
     {
-      text: "Getting Started",
+      text: "Optimum Gateway",
       collapsed: false,
       items: [
         {
-          text: "Optimum Gateway",
+          text: "Documentation",
           link: "https://getoptimum.github.io/optimum-gateway/versions/latest/",
+        },
+        {
+          text: "Quick start (HOP)",
+          link: "https://getoptimum.github.io/optimum-hop/",
         },
       ],
     },
