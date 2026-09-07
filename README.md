@@ -55,7 +55,8 @@ on your machine.
 ```text
 docs/
 ├── how-to-guides   # Guides and tutorials
-└── learn           # Overview and primer material
+├── learn           # Overview and primer material
+└── research        # Background research and references
 ```
 
 ## Contribution Guidelines
