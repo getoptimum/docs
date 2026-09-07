@@ -39,7 +39,7 @@ RLNC enables performance gains by dividing messages into linearly coded shards. 
 
 ### When Publishing
 
-When a node receives a shard:
+When a node publishes a new message:
 
 1. **Message Preparation**: Add length prefix and pad if necessary.
 2. **Encoding**:
@@ -62,11 +62,11 @@ When a node receives a shard:
 
 mump2p uses and extends [GossipSub's](https://github.com/libp2p/specs/blob/master/pubsub/gossipsub/gossipsub-v1.0.md#control-messages) control messages for optimized mesh performance:
 
-| Message     | Purpose                                                                 |
-|-------------|-------------------------------------------------------------------------|
-| `IDONTWANT` | Informs peers not to send more shards for a decoded message             |
-| `IHAVE`     | Advertises that a node holds coded shards for a message                 |
-| `IWANT`     | Requests additional shards for an undecoded message                     |
+| Message         | Purpose                                                          |
+|-----------------|------------------------------------------------------------------|
+| `IDONTWANT`     | Informs peers not to send more shards for a decoded message      |
+| `IHAVE`         | Advertises that a node holds coded shards for a message          |
+| `IWANT`         | Requests additional shards for an undecoded message              |
 | `GRAFT`/`PRUNE` | Maintains optimal mesh size by adding/removing peers dynamically |
 
 ## Configuration Parameters
