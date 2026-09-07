@@ -39,7 +39,7 @@ RLNC enables performance gains by dividing messages into linearly coded shards. 
 
 ### When Publishing
 
-When a node receives a shard:
+When a node publishes a new message:
 
 1. **Message Preparation**: Add length prefix and pad if necessary.
 2. **Encoding**:
