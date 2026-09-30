@@ -11,7 +11,7 @@ Optimum works on both.
 
 ## What Optimum is
 
-Optimum runs **mump2p**, a peer-to-peer mesh that propagates blocks using network coding. Peers send coded pieces of a block and rebuild it from whichever pieces reach them first, instead of waiting for a full copy. See [mump2p protocol](/docs/learn/overview/p2p) for the details.
+**mump2p** is Optimum's peer-to-peer mesh. It propagates blocks using network coding: peers send coded pieces of a block and rebuild it from whichever pieces arrive first, instead of waiting for a full copy. See [mump2p protocol](/docs/learn/overview/p2p) for the details.
 
 You join the mesh by running the **Optimum gateway**, one container on a host beside your beacon node.
 
