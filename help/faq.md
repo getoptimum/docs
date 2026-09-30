@@ -23,7 +23,7 @@ The identity directories were not mounted. [When the check fails](/signal/when-t
 
 ## I lost the enrollment key
 
-It cannot be shown again. Mint another from **Keys**, or **Manage gateways** on an invited account. [What Signal does](/signal/what-signal-does).
+It cannot be shown again. On Signal, create a one-day key into the command, or mint one on **Keys** → **Enrollment keys** (**Manage gateways** on an invited account). [What Signal does](/signal/what-signal-does).
 
 ## I do not see Accelerate
 
@@ -31,7 +31,7 @@ It is not enabled for this account. Self-serve accounts do not have the sidebar 
 
 ## I do not see a performance report
 
-Reports need 500 confirmed indices, and self-serve accounts do not get that sidebar group yet. [Your first report](/signal/your-first-report).
+Each report waits on something different: a running gateway, confirmed indices, or proposed slots. Each entry appears only when it is enabled for your account. [Your first report](/signal/your-first-report).
 
 ## Which region do I pick?
 

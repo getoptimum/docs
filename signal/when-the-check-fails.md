@@ -1,11 +1,29 @@
 ---
 title: When the check fails
-description: The four failures Console names, and what actually fixes each one.
+description: What Verify reports, what it cannot see, and the four failures Console names.
 ---
 
 # When the check fails
 
-A `503` from `/health` immediately after start, with `cl_peers` failing, is expected until the consensus client is peered. Read [Connect your gateway](/signal/connect-your-gateway) before treating that as a fault. The four cases below are the ones that stay broken.
+## Verify
+
+**Verify the connection** on Signal runs by itself when you open the screen. It keeps checking while a gateway is enrolled but has not reported in. **Run check** runs it again.
+
+It reads three things from outside your host.
+
+| Row | Passes when | If it fails |
+| --- | --- | --- |
+| Gateway enrolled | A gateway has connected to Optimum for this account. | No gateway has connected yet. Mint an enrollment key, then run the command from **Run a gateway**. |
+| Seen by Optimum | The gateway reported in within the last ten minutes. | It has a credential but has not reported in. Check that the container is running and outbound `443` is open. |
+| Blocks arriving | Its blocks reached the mesh in recent slots. | It reports in, but its blocks are not reaching the mesh. Check that inbound `33212` and `33213` are open to it. |
+
+**Could not check** means a lookup did not answer. That does not mean the gateway is down. Run the check again. If a gateway is not recorded against a cluster and stays that way, contact support.
+
+::: info Whether your client is peered, only you can see
+Optimum cannot see whether your consensus client peered with the gateway. On the gateway host, run `curl http://localhost:48123/health` and read `cl_peers`.
+:::
+
+A `503` from `/health` right after start, with `cl_peers` failing, is expected until the client is peered. Read [Connect your gateway](/signal/connect-your-gateway) before treating that as a fault. The four cases below stay broken until you fix them. Console lists them under **What the check will tell you**.
 
 ## Gateway not reachable
 

@@ -1,24 +1,31 @@
 ---
 title: What Signal does
-description: Signal is the flow that peers your gateway with your beacon node.
+description: Signal puts a gateway beside your beacon node so your validators receive blocks sooner.
 ---
 
 # What Signal does
 
-Signal is the sidebar entry for the first gateway. The screen is **Connect your first gateway**.
+Signal is the gateway beside your beacon node. It receives blocks from the Optimum mesh and hands them to your consensus client, so your validators receive blocks sooner. That is what improves attestation performance.
 
-The order on that screen is not numbered a second time. Signup already shows which step of registration you are on.
+You set it up in one of two places. Both use the same command.
 
-1. **Start the gateway beside your beacon node** — or, if you do not run validators, **Start the gateway on any host you control**.
-2. **Check it is healthy** — `curl` against the gateway host.
-3. **Connect your validators** — only if you run validators. You pick the consensus client here. The flag, and which side dials, depend on that client.
+* **During signup.** The step is **Connect your first gateway**. It creates an enrollment key, shows the start command, the health check, and, if you run validators, the client flag. You can leave it with **I’ll do this later**.
+* **Signal in the Console sidebar.** Use this after signup, and for every gateway after the first. It has three steps.
 
-Create the enrollment key when you are ready to run the container. Nothing is created until you do. The secret is shown once, inside the command. If you already have an unused key, Console cannot show the secret again: export it as `OPT_JOIN_KEY` and run the command, or mint a new one.
+| Step | On the screen | What you do |
+| --- | --- | --- |
+| Run a gateway | One command | Start the container, then check it is healthy on the host. |
+| Peer your client | One setting | Point your consensus client at the gateway, or, for Lighthouse, the gateway at the client. |
+| Verify | Check it took | Console confirms the gateway enrolled, reported in, and is sending blocks to the mesh. |
 
-You can skip with **I’ll do this later**. The gateway can be connected from Console afterwards. A failed mint does not change the account; mint again from **Keys** (self-serve) or **Manage gateways** (invited operators and staff).
+An account that does not run validators skips **Peer your client**.
 
-One key covers every gateway. Run the same command on each host. Hostnames must differ, because the gateway enrols as `OPT_GATEWAY_ID=$(hostname)` and a repeat label is refused.
+The pill beside the **Signal** title shows the last check: **Not checked**, **Checking**, **Connected**, **Not connected**, **Unknown**, or **Check failed**.
 
-::: info
-Optimum does not see the loopback health check. The check you run is on the gateway host. What Console can see from outside is that a credential exists, the gateway reported in, and its blocks reached the mesh.
-:::
+## Enrollment keys
+
+One enrollment key covers every gateway you run. Each host enrols under its hostname, so hostnames must differ.
+
+On Signal, **Create an enrollment key that lasts a day** puts a new key straight into the command. The key is shown once. After a day, that copy of the command no longer enrols gateways. For a longer-lived key, mint one on **Keys** → **Enrollment keys** (invited operator accounts see **Manage gateways**), where you choose how long it lasts. Export it as `OPT_JOIN_KEY` before running the command.
+
+Next: [Network](/signal/network), then [Connect your gateway](/signal/connect-your-gateway).

@@ -25,4 +25,4 @@ Paste decimal validator indices, or upload a CSV (one per line, or comma separat
 
 After a successful submit, the note on the screen is: submitted, and confirmed before they appear in any report.
 
-You can add more later from the console. Self-serve accounts find ongoing key management under **Keys**. Invited operators see **Manage gateways** and, when it is enabled, **Activate validators**.
+To add more later, come back from the signup link or ask support. Invited operator accounts can also use **Activate validators** when it is enabled. **Keys** and **Manage gateways** hold gateway keys, not validator indices.

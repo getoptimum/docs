@@ -1,18 +1,21 @@
 ---
 title: Your first report
-description: When a report can show anything, and what a self-serve account can see today.
+description: What each report waits for, and where it appears.
 ---
 
 # Your first report
 
-A network or attestation report needs **500 or more confirmed validator indices**. Below that, Console does not treat the window as something it can report. Confirmation is a separate step after you submit indices; submitted and still waiting does not count.
+Reports appear under **Performance** in the Console sidebar. Each entry appears only when it is enabled for your account.
 
-A gateway shows up in measurements as soon as it is running, with no indices involved. That is the **Gateways** view, when it is enabled for your account. It is not the validator performance report.
+| Entry | What it shows | What it waits for |
+| --- | --- | --- |
+| Gateways | Your gateways as Optimum measures them. | A running gateway. No validator indices needed. |
+| Network | Propagation against libp2p for your validators. | 500 or more confirmed validator indices. Per-operator figures show `n/a` until at least 30 paired slots are in the window. |
+| Attestations | Attestation outcomes. | Confirmed validator indices. Self-serve accounts do not have this entry. |
+| MumBoost | Proposal performance and MEV capture. See [Where results show](/accelerate/where-results-show). | Proposed slots from registered validators. |
 
-The attestation report needs a folder of confirmed indices. Until Optimum has confirmed them, that report is empty on purpose.
+**Gateways** is in the main sidebar group, not under **Performance**.
 
-::: warning TODO
-Self-serve accounts do not get the Performance reports in the sidebar yet. Invited operators see them when the indices are confirmed and the reports are enabled for that organisation. There is no self-serve report to open from this page today.
-:::
+Submitted indices are not confirmed indices. Optimum confirms them first. Until then, **Network** and **Attestations** are empty on purpose. A newly onboarded partner sees the same.
 
-Accelerate’s own figure is a different screen, and it waits on proposed slots rather than on this 500-index line. See [Readiness](/accelerate/readiness).
+Accelerate waits on proposed slots, not on the 500-index line. See [Readiness](/accelerate/readiness).

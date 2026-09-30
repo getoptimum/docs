@@ -217,10 +217,6 @@ function sidebarHome() {
         { text: "Gossip", link: "/docs/research/gossip/gossip" },
         { text: "Transport", link: "/docs/research/gossip/transport" },
         { text: "Decentralized access", link: "/docs/research/gossip/decentralized-access" },
-        {
-          text: "ADRs",
-          link: "https://github.com/getoptimum/optimum/tree/main/docs/architecture#adr-table-of-contents",
-        },
       ],
     },
   ]

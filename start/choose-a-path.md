@@ -21,10 +21,12 @@ The container is started with `OPT_STREAM_ENABLE` and `OPT_STREAM_ONLY`. The lib
 
 ## Obol and other distributed validator setups
 
-The gateway still sits beside the beacon node those validators use. There is no separate Console flow.
+The gateway still sits beside the beacon node those validators use. Charon and the validator client do not change.
 
-::: warning TODO
-A dedicated Obol page does not exist yet.
+For an Obol Charon Distributed Validator Node (CDVN), use the [Optimum Gateway overlay for Obol CDVN](https://getoptimum.github.io/optimum-hop/integration/obol/). It adds the gateway as an opt-in Docker Compose overlay on the `dvnode` network, dials the beacon node from the gateway side, and turns off by removing the overlay from `COMPOSE_FILE`.
+
+::: warning
+The overlay was written before Console enrolment. It uses an API key (`OPT_API_KEY=ogw_live_...`), pins `GATEWAY_VERSION=v1.1.1`, writes a mounted `app_conf.yml`, and its sample targets Hoodi. Console hands out an enrollment key (`OPT_JOIN_KEY`) and `v1.3.2`, run with `-config ""`. Ask [support](/help/support) which credential and version to use in the overlay before you mix the two.
 :::
 
 ## A gateway Optimum hosts for you

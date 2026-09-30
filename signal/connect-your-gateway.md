@@ -5,7 +5,9 @@ description: The production command Console shows, and how each consensus client
 
 # Connect your gateway
 
-Copy the command from Console. It already contains the enrollment key, while Console can still show that secret, and the cluster id the key was minted for. The block below is the production shape, so you can read it. If Console shows a different `OPT_GATEWAY_CLUSTER_ID`, use that one. A mismatch authenticates and then fails every mesh handshake.
+This page covers **Run a gateway** and **Peer your client** on Signal, and the same commands in the signup step **Connect your first gateway**.
+
+Copy the command from Console. If you just created the key, it is already in the command. Otherwise the command reads `$OPT_JOIN_KEY`, so export the key first. The command also carries the cluster id the key was minted for. The block below is the production shape, so you can read it. If Console shows a different `OPT_GATEWAY_CLUSTER_ID`, use that one. A mismatch authenticates and then fails every mesh handshake.
 
 The image Console hands out for production is `v1.3.2`. `-config ""` is required. The flag defaults to `config/app_conf.yml`, which is not in the image, and the process exits before it reads any environment variable.
 
