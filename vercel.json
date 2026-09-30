@@ -1,4 +1,5 @@
 {
+	"ignoreCommand": "[ \"$VERCEL_ENV\" != production ]",
 	"cleanUrls": true,
 	"redirects": [
 		{ "source": "/docs/guides", "destination": "/start/what-optimum-does", "permanent": true },

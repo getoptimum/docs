@@ -1,0 +1,13 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  // Must match the Worker connected to this repo. Workers Builds rejects a mismatch.
+  "name": "docs",
+  "compatibility_date": "2026-09-30",
+  // Version URLs are public. Vercel previews sit behind team login, so this is the link to share.
+  "preview_urls": true,
+  "assets": {
+    "directory": "./.vitepress/dist",
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  }
+}
