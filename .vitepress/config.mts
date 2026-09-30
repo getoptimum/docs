@@ -7,7 +7,7 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, "")}`;
 export default defineConfig({
   lang: "en-US",
   title: "Optimum Docs",
-  description: "The world's first high-performance memory infrastructure for any blockchain.",
+  description: "Run an Optimum gateway, connect your validators, and read Signal and Accelerate in Console.",
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: true,
@@ -49,7 +49,7 @@ export default defineConfig({
       "meta",
       {
         property: "description",
-        content: "The world's first high-performance memory infrastructure for any blockchain.",
+        content: "Run an Optimum gateway, connect your validators, and read Signal and Accelerate in Console.",
       },
     ],
     ["meta", { httpEquiv: "Content-Language", content: "en" }],
@@ -118,83 +118,108 @@ export default defineConfig({
   }
 })
 
+const gateway = "https://getoptimum.github.io/optimum-gateway/versions/latest"
+
 function nav() {
   return [
-    {
-      text: "Optimum Gateway",
-      link: "https://getoptimum.github.io/optimum-gateway/versions/latest/",
-    },
-    {
-      text: "Menu",
-      items: [
-        { text: "Learn", link: "/docs/learn/overview/intro" },
-        {
-          text: "Resources",
-          items: [
-            // {
-            //   text: "Optimum Improvement Proposals (OIPs)",
-            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            // },
-            {
-              text: "Optimum ADRs",
-              link: "https://github.com/getoptimum/optimum/tree/main/docs/architecture#adr-table-of-contents",
-            },
-            // {
-            //   text: "Flexnode API Docs",
-            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            // },
-          ],
-        },
-      ],
-    },
+    { text: "Start", link: "/start/what-optimum-does" },
+    { text: "Console", link: "https://console.getoptimum.io/" },
+    { text: "Gateway", link: `${gateway}/` },
   ];
 }
 
 function sidebarHome() {
   return [
     {
-      text: "Overview of Optimum",
+      text: "Start here",
       collapsed: false,
       items: [
+        { text: "What Optimum does", link: "/start/what-optimum-does" },
+        { text: "Choose a path", link: "/start/choose-a-path" },
+        { text: "Before you begin", link: "/start/before-you-begin" },
+      ],
+    },
+    {
+      text: "Getting in",
+      collapsed: false,
+      items: [
+        { text: "Create an account", link: "/getting-in/create-an-account" },
+        { text: "Account type", link: "/getting-in/account-type" },
+        { text: "Register", link: "/getting-in/register" },
+        { text: "Region", link: "/getting-in/region" },
+      ],
+    },
+    {
+      text: "Signal",
+      collapsed: false,
+      items: [
+        { text: "What Signal does", link: "/signal/what-signal-does" },
+        { text: "Network", link: "/signal/network" },
+        { text: "Connect your gateway", link: "/signal/connect-your-gateway" },
+        { text: "When the check fails", link: "/signal/when-the-check-fails" },
+        { text: "Register keys", link: "/signal/register-keys" },
+        { text: "Your first report", link: "/signal/your-first-report" },
+      ],
+    },
+    {
+      text: "Accelerate",
+      collapsed: false,
+      items: [
+        { text: "What Accelerate does", link: "/accelerate/what-accelerate-does" },
+        { text: "Readiness", link: "/accelerate/readiness" },
+        { text: "Recommendation", link: "/accelerate/recommendation" },
+        { text: "Adjust MEV-Boost", link: "/accelerate/adjust-mev-boost" },
+        { text: "Where results show", link: "/accelerate/where-results-show" },
+      ],
+    },
+    {
+      text: "Operate",
+      collapsed: true,
+      items: [
+        { text: "Run the gateway", link: "/operate/run-the-gateway" },
+        { text: "Kubernetes", link: "/operate/kubernetes" },
+        { text: "Block stream", link: "/operate/block-stream" },
+        { text: "Telemetry", link: "/operate/telemetry" },
+      ],
+    },
+    {
+      text: "Reference",
+      collapsed: true,
+      items: [
+        { text: "On this site", link: "/reference/" },
+        { text: "Gateway docs", link: `${gateway}/` },
+        { text: "Configuration", link: `${gateway}/configuration` },
+        { text: "Self-enrollment", link: `${gateway}/gateway-self-enrollment` },
+        { text: "Block stream", link: `${gateway}/block-stream` },
+        { text: "Metrics", link: `${gateway}/metrics` },
+        { text: "Metrics methodology", link: `${gateway}/metrics-methodology` },
+        { text: "Release notes", link: `${gateway}/release-notes` },
         {
-          text: "Introduction",
-          link: "/docs/learn/overview/intro",
-        },
-        {
-          text: "mump2p Protocol",
-          link: "/docs/learn/overview/p2p.md",
+          text: "Security audit",
+          link: "https://cdn.probelab.io/media/documents/2026-08-ProbeLab-Security_Audit_Report_Optimum_Gateway.pdf",
         },
       ],
     },
     {
-      text: "Optimum Gateway",
-      collapsed: false,
+      text: "Help",
+      collapsed: true,
       items: [
-        {
-          text: "Documentation",
-          link: "https://getoptimum.github.io/optimum-gateway/versions/latest/",
-        },
-        {
-          text: "Quick start (HOP)",
-          link: "https://getoptimum.github.io/optimum-hop/",
-        },
+        { text: "Troubleshoot", link: "/help/troubleshoot" },
+        { text: "Support", link: "/help/support" },
+        { text: "FAQ", link: "/help/faq" },
       ],
     },
     {
-      text: "Research",
-      collapsed: false,
+      text: "Learn",
+      collapsed: true,
       items: [
+        { text: "mump2p protocol", link: "/docs/learn/overview/p2p" },
+        { text: "Gossip", link: "/docs/research/gossip/gossip" },
+        { text: "Transport", link: "/docs/research/gossip/transport" },
+        { text: "Decentralized access", link: "/docs/research/gossip/decentralized-access" },
         {
-          text: "Gossip",
-          link: "/docs/research/gossip/gossip",
-        },
-        {
-          text: "Transport",
-          link: "/docs/research/gossip/transport",
-        },
-        {
-          text: "Decentralized Access",
-          link: "/docs/research/gossip/decentralized-access",
+          text: "ADRs",
+          link: "https://github.com/getoptimum/optimum/tree/main/docs/architecture#adr-table-of-contents",
         },
       ],
     },

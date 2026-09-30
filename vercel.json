@@ -1,5 +1,22 @@
 {
 	"cleanUrls": true,
+	"redirects": [
+		{ "source": "/docs/guides", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/guides/:path*", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/how-to-guides", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/how-to-guides/:path*", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/learn/opt", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/learn/how-to-stake-mum", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/learn/overview/intro", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/learn/overview/deram", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/learn/p2p/intro", "destination": "/docs/learn/overview/p2p", "permanent": true },
+		{ "source": "/docs/aws_deploy_devnet", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/aws_devnet", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/linode_devnet", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/resources/news", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/resources/optimum", "destination": "/start/what-optimum-does", "permanent": true },
+		{ "source": "/docs/index", "destination": "/", "permanent": true }
+	],
 	"builds": [
 		{
 			"src": "package.json",
