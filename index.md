@@ -15,10 +15,37 @@ Optimum runs **mump2p**, a peer-to-peer mesh that propagates blocks using networ
 
 You join the mesh by running the **Optimum gateway**, one container on a host beside your beacon node.
 
-```text
-Optimum mesh ──► your gateway ──► your beacon node ──► your validator client
-                 (you run it)     (unchanged)           (unchanged)
-```
+<div class="data-path">
+
+<svg viewBox="0 0 1340 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Data path: Optimum mesh to your gateway (you run it) to your beacon node (unchanged) to your validator client (unchanged)">
+  <defs>
+    <marker id="path-arrow" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse" markerUnits="userSpaceOnUse">
+      <path d="M0,0 L10,5 L0,10 L2.2,5 Z" fill="currentColor" fill-opacity="0.55"></path>
+    </marker>
+  </defs>
+  <line x1="272" y1="150" x2="348" y2="150" stroke="currentColor" stroke-opacity="0.55" stroke-width="1.25" marker-end="url(#path-arrow)"></line>
+  <line x1="652" y1="150" x2="728" y2="150" stroke="currentColor" stroke-opacity="0.55" stroke-width="1.25" marker-end="url(#path-arrow)"></line>
+  <line x1="992" y1="150" x2="1068" y2="150" stroke="currentColor" stroke-opacity="0.55" stroke-width="1.25" marker-end="url(#path-arrow)"></line>
+  <path d="M 40,60 L 240,60 A 20,20 0 0 1 260,80 L 260,220 A 20,20 0 0 1 240,240 L 40,240 A 20,20 0 0 1 20,220 L 20,80 A 20,20 0 0 1 40,60 Z" fill="currentColor" fill-opacity="0.035" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.25"></path>
+  <text x="46" y="98" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="1.1" fill="currentColor" fill-opacity="0.55">NETWORK</text>
+  <text x="46" y="136" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="400" letter-spacing="-0.5" fill="currentColor">Optimum mesh</text>
+  <text x="46" y="178" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="500" fill="currentColor" fill-opacity="0.72">Interconnected</text>
+  <text x="46" y="200" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="500" fill="currentColor" fill-opacity="0.72">mump2p nodes</text>
+  <path d="M 440,50 L 620,50 A 20,20 0 0 1 640,70 L 640,170 A 80,80 0 0 1 560,250 L 380,250 A 20,20 0 0 1 360,230 L 360,130 A 80,80 0 0 1 440,50 Z" fill="#B87CFF" fill-opacity="0.07" stroke="#B87CFF" stroke-width="2"></path>
+  <text x="396" y="94" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="1.1" fill="#B87CFF">GATEWAY</text>
+  <text x="396" y="140" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="28" font-weight="400" letter-spacing="-0.5" fill="currentColor">Your gateway</text>
+  <text x="396" y="188" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="500" fill="currentColor" fill-opacity="0.6">(you run it)</text>
+  <path d="M 760,60 L 960,60 A 20,20 0 0 1 980,80 L 980,220 A 20,20 0 0 1 960,240 L 760,240 A 20,20 0 0 1 740,220 L 740,80 A 20,20 0 0 1 760,60 Z" fill="currentColor" fill-opacity="0.035" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.25"></path>
+  <text x="766" y="98" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="1.1" fill="currentColor" fill-opacity="0.55">CONSENSUS</text>
+  <text x="766" y="136" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="400" letter-spacing="-0.5" fill="currentColor">Your beacon node</text>
+  <text x="766" y="188" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="500" fill="currentColor" fill-opacity="0.6">(unchanged)</text>
+  <path d="M 1100,60 L 1300,60 A 20,20 0 0 1 1320,80 L 1320,220 A 20,20 0 0 1 1300,240 L 1100,240 A 20,20 0 0 1 1080,220 L 1080,80 A 20,20 0 0 1 1100,60 Z" fill="currentColor" fill-opacity="0.035" stroke="currentColor" stroke-opacity="0.32" stroke-width="1.25"></path>
+  <text x="1106" y="98" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="11" font-weight="700" letter-spacing="1.1" fill="currentColor" fill-opacity="0.55">VALIDATOR</text>
+  <text x="1106" y="136" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="22" font-weight="400" letter-spacing="-0.5" fill="currentColor">Your validator client</text>
+  <text x="1106" y="188" font-family="Geist, ui-sans-serif, system-ui, sans-serif" font-size="14" font-weight="500" fill="currentColor" fill-opacity="0.6">(unchanged)</text>
+</svg>
+
+</div>
 
 The gateway is a peer of your consensus client. It passes blocks to the client and never receives validator keys. Your validator client, keys, and signing setup stay exactly as they are.
 

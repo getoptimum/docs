@@ -165,3 +165,16 @@ html.dark .light-mode-only {
 html.dark .dark-mode-only {
   display: block !important;
 }
+
+/* The data-path diagram uses currentColor, so it follows the theme. */
+.data-path {
+  overflow-x: auto;
+  margin: 1.5rem 0;
+  color: var(--vp-c-text-1);
+}
+
+.data-path svg {
+  width: 100%;
+  height: auto;
+  display: block;
+}

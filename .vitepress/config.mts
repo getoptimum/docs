@@ -199,6 +199,10 @@ function sidebarHome() {
           text: "Security audit",
           link: "https://cdn.probelab.io/media/documents/2026-08-ProbeLab-Security_Audit_Report_Optimum_Gateway.pdf",
         },
+        {
+          text: "Obol CDVN",
+          link: "https://getoptimum.github.io/optimum-hop/integration/obol/",
+        },
       ],
     },
     {
