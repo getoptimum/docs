@@ -5,7 +5,7 @@ description: Where to ask when the docs and the gateway troubleshooting page do 
 
 # Support
 
-[Discord](https://discord.gg/7EwFpu79cZ). That is the same link as the footer of this site.
+[Discord](https://discord.gg/getoptimum). Console's **Support** link points to the same server.
 
 Use it when an index is already claimed, a lookup limit stopped a submit, or a report failed to load after a refresh. Include the gateway id (`OPT_GATEWAY_ID`, which is the host name), the client, and the `failing` list from `http://localhost:48123/health` if you have it. Do not paste the enrollment key.
 

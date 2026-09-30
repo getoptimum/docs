@@ -111,7 +111,7 @@ export default defineConfig({
     socialLinks: [
       { icon: "github", link: "https://github.com/getoptimum/docs" },
       { icon: "x", link: "https://x.com/get_optimum" },
-      { icon: "discord", link: "https://discord.gg/7EwFpu79cZ" },
+      { icon: "discord", link: "https://discord.gg/getoptimum" },
       // { icon: "youtube", link: "" },
       // { icon: { svg: telegramSVG }, link: "" },
     ],
@@ -134,6 +134,7 @@ function sidebarHome() {
       text: "Start here",
       collapsed: false,
       items: [
+        { text: "Introduction", link: "/" },
         { text: "What Optimum does", link: "/start/what-optimum-does" },
         { text: "Choose a path", link: "/start/choose-a-path" },
         { text: "Before you begin", link: "/start/before-you-begin" },
