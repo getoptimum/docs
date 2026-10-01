@@ -13,3 +13,6 @@
 /docs/guides/* /start/what-optimum-does 301
 /docs/how-to-guides /start/what-optimum-does 301
 /docs/how-to-guides/* /start/what-optimum-does 301
+/reference https://getoptimum.github.io/optimum-gateway/versions/latest/ 301
+/reference/ https://getoptimum.github.io/optimum-gateway/versions/latest/ 301
+/getting-in/region /help/faq 301

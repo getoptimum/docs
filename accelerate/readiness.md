@@ -16,6 +16,16 @@ Two other answers, when there is nothing to recommend:
 * Proposals were measured, but none of them took a relay bid, so there is no bid curve to read a cutoff from yet.
 * Proposals were measured, and no better bid arrived after the one your current cutoff took.
 
-**Validator keys registered** is shown as **Done** or **Needed**. Indices are required to know which slots you propose. The button tells you what is missing rather than failing silently. See [Register keys](/signal/register-keys).
+Under **Before you start**, the row **Validator keys active** has three states. Indices are required to know which slots you propose. The button tells you what is missing rather than failing silently.
+
+| State | On the screen | What to do |
+| --- | --- | --- |
+| **Needed** | Needed to know which slots you propose. | [Register keys](/signal/register-keys). |
+| **Activating** | Indices on record, none active on chain yet. | Wait for the activation queue. Pending validators are not assigned proposal slots, so nothing is measured until they activate. |
+| **Done** | `N` of `M` registered indices active on chain. | Nothing. Proposals count as they happen. |
+
+While Console is still looking, the row reads **Checking which of your indices are active on chain…**.
+
+If indices are on record and the panel says **Not enough proposals yet**, check this row first. **Activating** means you are waiting on activation, not on proposal luck.
 
 The report’s own charts use the same measurement: accepted ETH on the bid that was taken, unrealised ETH on bids that arrived later, per MEV block. A per-proposal average is a different number and is labelled that way on the report. Do not read the headline ETH-per-MEV-block figure as ETH per proposal.

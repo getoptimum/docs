@@ -16,7 +16,9 @@
 		{ "source": "/docs/linode_devnet", "destination": "/start/what-optimum-does", "permanent": true },
 		{ "source": "/docs/resources/news", "destination": "/start/what-optimum-does", "permanent": true },
 		{ "source": "/docs/resources/optimum", "destination": "/start/what-optimum-does", "permanent": true },
-		{ "source": "/docs/index", "destination": "/", "permanent": true }
+		{ "source": "/docs/index", "destination": "/", "permanent": true },
+		{ "source": "/reference", "destination": "https://getoptimum.github.io/optimum-gateway/versions/latest/", "permanent": true },
+		{ "source": "/getting-in/region", "destination": "/help/faq", "permanent": true }
 	],
 	"builds": [
 		{

@@ -12,7 +12,7 @@ Reports appear under **Performance** in the Console sidebar. Each entry appears 
 | Gateways | Your gateways as Optimum measures them. | A running gateway. No validator indices needed. |
 | Network | Propagation against libp2p for your validators. | 500 or more confirmed validator indices. Per-operator figures show `n/a` until at least 30 paired slots are in the window. |
 | Attestations | Attestation outcomes. | Confirmed validator indices. Self-serve accounts do not have this entry. |
-| MumBoost | Proposal performance and MEV capture. See [Where results show](/accelerate/where-results-show). | Proposed slots from registered validators. |
+| MumBoost | The Accelerate proposal report: proposal performance and MEV capture. MumBoost is the older name still on this entry. See [Where results show](/accelerate/where-results-show). | Proposed slots from active validators. |
 
 **Gateways** is in the main sidebar group, not under **Performance**.
 

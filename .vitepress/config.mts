@@ -147,7 +147,6 @@ function sidebarHome() {
         { text: "Create an account", link: "/getting-in/create-an-account" },
         { text: "Account type", link: "/getting-in/account-type" },
         { text: "Register", link: "/getting-in/register" },
-        { text: "Region", link: "/getting-in/region" },
       ],
     },
     {
@@ -159,6 +158,7 @@ function sidebarHome() {
         { text: "Connect your gateway", link: "/signal/connect-your-gateway" },
         { text: "When the check fails", link: "/signal/when-the-check-fails" },
         { text: "Register keys", link: "/signal/register-keys" },
+        { text: "Onboard in bulk", link: "/signal/onboard-in-bulk" },
         { text: "Your first report", link: "/signal/your-first-report" },
       ],
     },
@@ -181,28 +181,6 @@ function sidebarHome() {
         { text: "Kubernetes", link: "/operate/kubernetes" },
         { text: "Block stream", link: "/operate/block-stream" },
         { text: "Telemetry", link: "/operate/telemetry" },
-      ],
-    },
-    {
-      text: "Reference",
-      collapsed: true,
-      items: [
-        { text: "On this site", link: "/reference/" },
-        { text: "Gateway docs", link: `${gateway}/` },
-        { text: "Configuration", link: `${gateway}/configuration` },
-        { text: "Self-enrollment", link: `${gateway}/gateway-self-enrollment` },
-        { text: "Block stream", link: `${gateway}/block-stream` },
-        { text: "Metrics", link: `${gateway}/metrics` },
-        { text: "Metrics methodology", link: `${gateway}/metrics-methodology` },
-        { text: "Release notes", link: `${gateway}/release-notes` },
-        {
-          text: "Security audit",
-          link: "https://cdn.probelab.io/media/documents/2026-08-ProbeLab-Security_Audit_Report_Optimum_Gateway.pdf",
-        },
-        {
-          text: "Obol CDVN",
-          link: "https://getoptimum.github.io/optimum-hop/integration/obol/",
-        },
       ],
     },
     {

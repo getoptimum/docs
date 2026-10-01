@@ -18,4 +18,4 @@ Do not start the container with `--network host`. That publishes telemetry, incl
 
 On Fedora, RHEL, Rocky, and Alma, SELinux is enforcing by default. The identity mounts then fail with `write identity data: permission denied` after the log has already loaded JWKS, which looks like a rejected key. Console has **Add an SELinux relabel to the identity mounts** above the start command. Turn it on before you copy the command. See [When the check fails](/signal/when-the-check-fails).
 
-One enrollment key covers every gateway you run. Each host enrols under its hostname (`OPT_GATEWAY_ID`). Two hosts that share a hostname: the second enrolment is refused with HTTP 409.
+One enrollment key covers every gateway you run. Each host enrols under its hostname (`OPT_GATEWAY_ID`). Two hosts that share a hostname: the second enrolment is refused with HTTP 409. For many hosts, see [Onboard in bulk](/signal/onboard-in-bulk).

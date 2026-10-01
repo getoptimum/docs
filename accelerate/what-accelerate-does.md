@@ -1,15 +1,21 @@
 ---
 title: What Accelerate does
-description: Bid cutoff recommendations from slots you already proposed. Console does not apply them.
+description: Bid cutoff recommendations from slots you already proposed, for entity accounts. Console does not apply them.
 ---
 
 # What Accelerate does
 
-Accelerate recommends a MEV-Boost bid cutoff from slots your validators already proposed. The setup screen is **Accelerate**. The report it points at is titled **MEV Cutoff Optimisation**.
+Accelerate recommends a MEV-Boost bid cutoff from slots your validators already proposed. Console never writes to your infrastructure. You upload the MEV-Boost configuration you run, read a recommendation, and download a config to deploy yourself. Nothing on this screen changes validator behaviour until you deploy that file.
 
-Console never writes to your infrastructure. You upload the MEV-Boost configuration you run, read a recommendation, and download a config to deploy yourself. Nothing on this screen changes validator behaviour until you deploy that file.
+## Who can use it
 
-The steps are:
+Accelerate is for **entity** accounts. An **individual** account has Signal only. See [Account type](/getting-in/account-type).
+
+A recommendation needs 200 measured proposals ([Readiness](/accelerate/readiness)). An individual operator rarely proposes that many in a window short enough to act on, so the flow is offered to entities.
+
+If you registered as an entity and **Accelerate** is not in the sidebar, it is not enabled for your account yet. Ask [support](/help/support). There is no other URL to use.
+
+## The steps
 
 1. **Start Accelerate** — prerequisites, including the disclaimer.
 2. **Recommendation** — your config.
@@ -17,14 +23,15 @@ The steps are:
 
 Where you land on a return visit follows what is already stored. No acceptance sends you to step 1. Acceptance without a saved config sends you to the recommendation. A saved config sends you to adjust. If the terms change, the previous acceptance no longer counts and you start again.
 
-::: warning TODO
-The setup flow is labeled Accelerate. Routes, flags, and some labels still say MumBoost. Which name stays is unanswered, so this site uses the label on each screen.
-:::
+## What it measures
 
-::: warning TODO
-A self-serve account does not have Accelerate in the sidebar. Whether individual accounts should see it is unanswered. If the entry is missing, it is not enabled for this account. There is no alternate URL to use.
-:::
+Every figure is measured on slots you already proposed. Console does not forecast an annual gain.
 
-::: warning TODO
-A modelled or annualised gain is not what Console shows. The figure is measured on slots already proposed. This site does not describe a forecast.
-:::
+## Older names on some screens
+
+Accelerate is the product. A few Console labels still use older names for the same thing:
+
+* **MumBoost** — the report entry under **Performance**, and the terms messages.
+* **MEV Cutoff Optimisation** — the title of the proposal report.
+
+This site says Accelerate, and quotes those labels where you need to find them on screen.

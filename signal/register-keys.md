@@ -25,4 +25,6 @@ Paste decimal validator indices, or upload a CSV (one per line, or comma separat
 
 After a successful submit, the note on the screen is: submitted, and confirmed before they appear in any report.
 
-To add more later, come back from the signup link or ask support. Invited operator accounts can also use **Activate validators** when it is enabled. **Keys** and **Manage gateways** hold gateway keys, not validator indices.
+To add more later, come back from the signup link or ask support. Invited operator accounts can also use **Activate validators** when it is enabled, including an importer that keeps the set in sync. See [Onboard in bulk](/signal/onboard-in-bulk). **Keys** and **Manage gateways** hold gateway keys, not validator indices.
+
+Accelerate counts only indices that are active on chain. An index still in the activation queue is on record and proposes nothing yet. See [Readiness](/accelerate/readiness).

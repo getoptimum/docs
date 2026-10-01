@@ -1,11 +1,11 @@
 ---
 title: Where results show
-description: The report Console opens after a cutoff is on file.
+description: The Accelerate proposal report Console opens after a cutoff is on file.
 ---
 
 # Where results show
 
-Open **View the proposal report** on Accelerate, or **Performance** → **MumBoost** in the sidebar. Both open the same report. Its title is **MEV Cutoff Optimisation**. The subtitle says the window measures either performance since your last cutoff adjustment or a window you selected. The window end date is not included.
+Open **View the proposal report** on Accelerate, or **Performance** → **MumBoost** in the sidebar. Both open the same Accelerate report. Its title on screen is still **MEV Cutoff Optimisation**. The subtitle says the window measures either performance since your last cutoff adjustment or a window you selected. The window end date is not included.
 
 **Optimum · mump2p · Mainnet** above the title names the network. It is not a separate product.
 
@@ -20,6 +20,6 @@ Once the window has proposals, the report shows:
 
 **No report for this window** means the report failed to load. It does not mean you have no proposals. Refresh. If it persists, use [Support](/help/support).
 
-Console stores a configuration only after it confirms you accepted the terms. **Could not check the MumBoost terms** means that check failed. Wait and refresh. **This operator has not accepted the MumBoost terms** means you need to accept them on Accelerate first. These labels still say MumBoost. See the naming note on [What Accelerate does](/accelerate/what-accelerate-does).
+Console stores a configuration only after it confirms you accepted the terms. **Could not check the MumBoost terms** means that check failed. Wait and refresh. **This operator has not accepted the MumBoost terms** means you need to accept them on Accelerate first. Both labels use MumBoost, the older name for Accelerate. See [Older names on some screens](/accelerate/what-accelerate-does#older-names-on-some-screens).
 
 The **MumBoost** entry appears only when it is enabled for your account.

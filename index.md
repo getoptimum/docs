@@ -54,13 +54,14 @@ The gateway is a peer of your consensus client. It passes blocks to the client a
 | | What it does | Where you see it |
 | --- | --- | --- |
 | **Signal** | The gateway hands your beacon node blocks from the mesh, so your validators receive blocks sooner. That improves attestation performance. | Signal in Console, then the **Network** report |
-| **Accelerate** | Reads the slots your validators already proposed and recommends a MEV-Boost bid cutoff. You download the config and deploy it yourself. | Accelerate in Console, then the **MumBoost** report |
+| **Accelerate** | Reads the slots your validators already proposed and recommends a MEV-Boost bid cutoff. You download the config and deploy it yourself. For entity accounts. | Accelerate in Console, then its proposal report |
 
-Console never changes your infrastructure. You run the gateway and apply any configuration yourself.
+Console never changes your infrastructure. Optimum does not host gateways. You run the gateway and apply any configuration yourself.
 
 ## Who it is for
 
-* **Validators and staking providers.** Run a gateway beside each beacon node, then register your validator indices so Console can measure the result.
+* **Staking providers and other entities.** Run a gateway beside each beacon node, register your validator indices so Console can measure the result, then use Accelerate on your proposals.
+* **Individuals who run validators.** Signal works the same way for you. Accelerate is offered to entity accounts only. [Account type](/getting-in/account-type).
 * **Participants without validators.** Run a stream-only gateway to receive blocks from the mesh and serve them to your own consumers. This is a supported account.
 
 ## The path
@@ -68,7 +69,7 @@ Console never changes your infrastructure. You run the gateway and apply any con
 1. **[Start here](/start/what-optimum-does).** How the pieces fit, which path is yours, and what the host needs.
 2. **[Getting in](/getting-in/create-an-account).** Create a Console account and register your organisation.
 3. **[Signal](/signal/what-signal-does).** Start the gateway, peer your consensus client, verify it, and register your validator indices.
-4. **[Accelerate](/accelerate/what-accelerate-does).** Once enough of your proposals are measured, read the cutoff recommendation and adjust MEV-Boost.
+4. **[Accelerate](/accelerate/what-accelerate-does).** For entity accounts. Once enough of your proposals are measured, read the cutoff recommendation and adjust MEV-Boost.
 
 [Open Console](https://console.getoptimum.io/)
 
