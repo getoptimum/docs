@@ -107,6 +107,10 @@ dist
 # vitepress build output
 **/.vitepress/dist
 
+# wrangler local state
+.wrangler/
+.dev.vars
+
 # vitepress cache directory
 **/.vitepress/cache
 
