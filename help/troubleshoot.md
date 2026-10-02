@@ -59,7 +59,7 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 **No Accelerate entry.** Accelerate is for entity accounts. An individual account has Signal only. An entity account without the entry: ask [support](/help/support). [Who can use it](/accelerate/what-accelerate-does#who-can-use-it).
 
-**Validator keys active says Activating.** Your indices are on record and none is active on chain yet. Pending validators are not assigned proposals, so nothing is measured until they activate. [Readiness](/accelerate/readiness).
+**Validator keys registered says Activating.** Your indices are on record and none is active on chain yet. Pending validators are not assigned proposals, so nothing is measured until they activate. [Readiness](/accelerate/readiness).
 
 **Not enough proposals yet.** The recommendation needs 200 measured proposals across your validators. [Readiness](/accelerate/readiness).
 

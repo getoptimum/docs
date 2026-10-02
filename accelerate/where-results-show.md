@@ -7,6 +7,8 @@ description: The Accelerate proposal report Console opens after a cutoff is on f
 
 Open **View the proposal report** on Accelerate, or **Performance** → **MumBoost** in the sidebar. Both open the same Accelerate report. Its title on screen is still **MEV Cutoff Optimisation**. The subtitle says the window measures either performance since your last cutoff adjustment or a window you selected. The window end date is not included.
 
+![The proposal report. MumBoost in the sidebar and the title MEV Cutoff Optimisation are marked.](/console/10-proposal-report.png)
+
 **Optimum · mump2p · Mainnet** above the title names the network. It is not a separate product.
 
 Once the window has proposals, the report shows:

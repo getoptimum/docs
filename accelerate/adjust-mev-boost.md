@@ -11,7 +11,11 @@ Upload first. The editor reads the file you are running.
 
 The late-in-slot deadline is `late_in_slot_time_ms`. The cutoff cannot sit on or past it; Console keeps the cutoff at least 1 ms earlier.
 
-Move the cutoff, then **DOWNLOAD CONFIG**. The file is `mev-boost-config.yaml`. The screen says **Export the new config and deploy it — nothing here reaches your infrastructure.** Deploy that file on your MEV-Boost the way you already deploy config. Optimum has no write access to it.
+Move the cutoff, then **DOWNLOAD CONFIG**. The file is `mev-boost-config.yaml`.
+
+![Accelerate, Adjust. The cutoff in milliseconds and Download config are marked.](/console/09-accelerate-adjust.png)
+
+The screen says **Export the new config and deploy it — nothing here reaches your infrastructure.** Deploy that file on your MEV-Boost the way you already deploy config. Optimum has no write access to it.
 
 **Configuration matches the file you uploaded** means you have not moved the cutoff since the upload. **Unsaved changes to the cutoff** means the editor and the file you uploaded differ; download before you deploy, or the node is still on the old value.
 

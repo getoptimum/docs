@@ -18,6 +18,10 @@ You set it up in one of two places.
 | Peer your client | One setting | Point your consensus client at the gateway, or, for Lighthouse, the gateway at the client. |
 | Verify | Check it took | Console confirms the gateway enrolled, reported in, and is sending blocks to the mesh. |
 
+![Signal, Run a gateway. The one-day enrollment key and the SELinux switch are marked.](/console/03-signal-run-gateway.png)
+
+Copy the command from this screen. It already carries the hosts for the environment you are signed into. Turn on the SELinux switch before you copy it when the host enforces SELinux.
+
 An account that does not run validators skips **Peer your client**. The command on Signal is still the beacon-node one, so for another stream-only gateway use the [stream-only command](/signal/connect-your-gateway#stream-only).
 
 **Verify** is the check to trust. It reads what Optimum sees from outside your host. The `curl /health` command beside the start command answers one thing Verify cannot: whether your consensus client is peered. Its first word is often `degraded` until that is done. See [When the check fails](/signal/when-the-check-fails).
@@ -44,6 +48,8 @@ Each key admits up to 1,000 gateways, and your organisation is capped at 1,000 l
 | Signup, **Connect your first gateway** | 14 days | The first gateway, when the person signing up is not the person on the host. |
 | Signal, **Create an enrollment key that lasts a day** | 1 day | A command you are about to paste. It goes straight into the command. |
 | **Keys** → **Enrollment keys** (**Manage gateways** on an invited account), **Generate enrollment key** | You choose in **Valid for (days)**, up to 365 | A rollout across many hosts or over several weeks. |
+
+![Manage gateways, Enrollment keys. Generate enrollment key is marked.](/console/06-enrollment-keys.png)
 
 Every key is shown once. Export it as `OPT_JOIN_KEY` before running the command, unless Console already put it in. The key list shows **enrollments used** and the expiry date.
 

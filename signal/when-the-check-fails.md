@@ -11,6 +11,8 @@ description: What Verify reports, what it cannot see, and the four failures Cons
 
 It reads three things from outside your host, across every gateway in your organisation. A row passes if any of them passes it. **Gateway enrolled** reads **Yes**, or **Yes, 3** for three gateways. **Blocks arriving** reads, for example, **4 of 5 slots**.
 
+![Verify the connection. Run check is marked, and the three rows read Yes, 9, Not seen, and Nothing to check.](/console/05-signal-verify.png)
+
 Verify is the check to trust for whether a gateway reached Optimum. Use `/health` on the host for the one thing Verify cannot see.
 
 | Row | Passes when | If it fails |

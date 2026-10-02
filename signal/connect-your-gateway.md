@@ -97,6 +97,8 @@ If you run validators, expect `503` until the client is peered. The mesh checks 
 
 Pick the client in Console. Four clients dial the gateway. Lighthouse is wired the other way: the gateway dials the node.
 
+![Signal, Peer your client. Prysm, Lighthouse, Teku, Nimbus, and Lodestar are marked.](/console/04-signal-peer-client.png)
+
 ### Prysm, Teku, Nimbus, Lodestar
 
 On the gateway host:

@@ -16,7 +16,9 @@ Two other answers, when there is nothing to recommend:
 * Proposals were measured, but none of them took a relay bid, so there is no bid curve to read a cutoff from yet.
 * Proposals were measured, and no better bid arrived after the one your current cutoff took.
 
-Under **Before you start**, the row **Validator keys active** has three states. Indices are required to know which slots you propose. The button tells you what is missing rather than failing silently.
+Under **Before you start**, the row **Validator keys registered** has three states. Indices are required to know which slots you propose. The button tells you what is missing rather than failing silently.
+
+![Accelerate, Before you start. Validator keys registered is marked, and its state is Needed.](/console/08-accelerate-before-you-start.png)
 
 | State | On the screen | What to do |
 | --- | --- | --- |
