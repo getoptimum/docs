@@ -16,9 +16,7 @@ Open [Console](https://console.getoptimum.io/). The sign-in card has two tabs.
 
 **Trouble signing in?** at the bottom of the card opens support.
 
-![Sign-in card. The Sign in and Create account tabs are marked, and Trouble signing in? is marked.](/console/01-sign-in.png)
-
-![Create account tab. Sign up with Google and Sign up with Microsoft are marked.](/console/02-create-account.png)
+<img class="console-card" src="/console/02-create-account.png" alt="Create account tab. Sign up with Google and Sign up with Microsoft are marked." />
 
 The rail, once registration starts, is **Account type**, then **Register org**. **Register org** includes **Do you run validators?** Registration ends when the account exists. Gateway setup, validator indices, and Accelerate are on the console after that, not on this rail.
 

@@ -178,3 +178,9 @@ html.dark .dark-mode-only {
   height: auto;
   display: block;
 }
+
+/* Sign-in cards are a narrow panel. Full column width makes them dominate the page. */
+.vp-doc img.console-card {
+  max-width: 32rem;
+  height: auto;
+}
