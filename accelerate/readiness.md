@@ -26,7 +26,7 @@ Under **Before you start**, the row **Validator keys registered** has three stat
 | **Activating** | Indices on record, none active on chain yet. | Wait for the activation queue. Pending validators are not assigned proposal slots, so nothing is measured until they activate. |
 | **Done** | `N` of `M` registered indices active on chain. | Nothing. Proposals count as they happen. |
 
-While Console is still looking, the row reads **Checking which of your indices are active on chain…**.
+If Console could not read which indices are active, the row stays **Needed** and says **We could not read which of your indices are active on chain, so this is unverified.** Refresh. That is a failed read, not an empty set.
 
 If indices are on record and the panel says **Not enough proposals yet**, check this row first. **Activating** means you are waiting on activation, not on proposal luck.
 

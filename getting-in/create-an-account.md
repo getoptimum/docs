@@ -20,9 +20,9 @@ Open [Console](https://console.getoptimum.io/). The sign-in card has two tabs.
 
 ![Create account tab. Sign up with Google and Sign up with Microsoft are marked.](/console/02-create-account.png)
 
-The rail, once registration starts, is **Register org**, then **Connect**, then **Register keys** if you run validators. You can leave Connect with **I’ll do this later** and finish on **Signal**. You can leave validator indices with **Skip for now** and come back from the signup link.
+The rail, once registration starts, is **Account type**, then **Register org**. **Register org** includes **Do you run validators?** Registration ends when the account exists. Gateway setup, validator indices, and Accelerate are on the console after that, not on this rail.
 
-The last screen is **Your account is ready**. It shows whether a gateway enrolled, how many indices you submitted (**Awaiting confirmation**), and **Go to the console**.
+The last screen is **Your account is ready**. It lists the account type, the organisation or username, the contact, and whether you run validators, then **Go to the console**.
 
 ## When signup is closed
 

@@ -18,20 +18,19 @@ If you registered as an entity and **Accelerate** is not in the sidebar, it is n
 ## The steps
 
 1. **Start Accelerate** — prerequisites, including the disclaimer.
-2. **Recommendation** — your config.
-3. **Adjust** — you record the cutoff you will deploy.
+2. **Recommendation** — your config, and the recommended bid cutoff once the window can support one.
+3. **Adjust** — you record the cutoff you will deploy, then download the config on file.
 
 Where you land on a return visit follows what is already stored. No acceptance sends you to step 1. Acceptance without a saved config sends you to the recommendation. A saved config sends you to adjust. If the terms change, the previous acceptance no longer counts and you start again.
 
+When a measurement cycle finishes and you have not answered it, **Accelerate** in the sidebar shows **1**, and the screen leads with **Your measurement cycle is complete**. **Review the recommendation** opens step 2. Dismissing hides that notice until the next cycle completes.
+
 ## What it measures
 
-Every figure is measured on slots you already proposed. Console does not forecast an annual gain.
+Every figure is measured on slots you already proposed. Console does not forecast an annual gain. The figures sit on this screen, under **MEV outcome**. See [Where results show](/accelerate/where-results-show).
 
 ## Older names on some screens
 
-Accelerate is the product. A few Console labels still use older names for the same thing:
+The sidebar entry and the screen heading are **Accelerate**. Results are **MEV outcome** on that screen. There is no **MumBoost** item under **Performance**, and the title **MEV Cutoff Optimisation** is not on this screen.
 
-* **MumBoost** — the report entry under **Performance**, and the terms messages.
-* **MEV Cutoff Optimisation** — the title of the proposal report.
-
-This site says Accelerate, and quotes those labels where you need to find them on screen.
+A direct link to the older report can still show two MumBoost messages: **Could not check the MumBoost terms**, and **This operator has not accepted the MumBoost terms**. Both mean the same check on Accelerate. See [Where results show](/accelerate/where-results-show).
