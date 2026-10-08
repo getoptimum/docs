@@ -1,6 +1,6 @@
 # mump2p Protocol
 
-**mump2p** is a next-generation gossip protocol that uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) to revolutionize message dissemination in peer-to-peer networks. Built on [libp2p](https://docs.libp2p.io/), it offers a high-performance alternative to traditional protocols like [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub), delivering faster propagation, better bandwidth efficiency, and better fault tolerance using network coding.
+**mump2p** is the protocol under a peer-to-peer mesh. It uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) so a peer can rebuild a message from coded pieces instead of waiting for a full copy. It is built on [libp2p](https://docs.libp2p.io/) and is an alternative to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub). The Optimum network is one mesh that runs this protocol. The protocol is not that network.
 
 
 ## How mump2p Works
@@ -91,11 +91,11 @@ In libp2p's default implementation, the ideal network peering degree is 6 with a
 
 ## Use Cases
 
-mump2p serves as a foundational, general-purpose data propagation protocol with benefits extending across various blockchain use cases.
+mump2p moves a message to many peers by sending coded pieces. A receiver rebuilds the message from whichever pieces arrive first.
 
 ### Validators and Node Operators
 
-mump2p supercharges validator and full node performance in bandwidth-constrained and latency-sensitive networks:
+On a validator network, that matters when bandwidth is tight and the block has to arrive before the attestation deadline:
 
 * **[Ethereum](https://ethereum.org/)**: Faster mempool propagation, lower uncle rates, and potential integration into both execution and consensus layers.
 * **[Solana](https://solana.com/)**: Enhances Turbine-style data sharding with fault-tolerant packet loss recovery.  
@@ -138,7 +138,7 @@ These chains rely on fast event propagation for user interactions:
 
 ## Security Model
 
-mump2p inherits libp2p's robust security foundation, and adds safeguards specific to network coding.
+mump2p uses libp2p's channel security, and adds checks that apply only because messages are sent as coded pieces.
 
 ### Inherited from libp2p
 
@@ -149,7 +149,7 @@ For a full overview of these protections, refer to the [libp2p security consider
 
 ### mump2p avoids Pollution Attacks
 
-In **pollution attacks** attack, a malicious actor injects corrupted or invalid coded shards into the network, with the goal of preventing honest nodes from successfully decoding the original message.
+In a **pollution attack**, a malicious actor injects corrupted or invalid coded shards into the network, so honest nodes cannot decode the original message.
 
 mump2p mitigates this risk through a multi-layered approach centered on **source authentication**.
 

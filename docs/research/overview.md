@@ -4,19 +4,8 @@ next:
   link: "/docs/research/gossip/gossip"
 ---
 
-# Technical Papers on Optimum
+# Technical papers on Optimum
 
-Optimum’s breakthrough in decentralized memory infrastructure is built on 15 years
-of pioneering work in network coding. Led by Prof. Muriel Medard (Co-founder & CEO),
-co-inventor of Random Linear Network Coding (RLNC), and driven by
-Dr. Kishori Konwar (Co-founder & CTO) in distributed systems and coding theory,
-our technology redefines data handling in blockchain networks.
-Prof. Nancy Lynch (Advisor), whose work on Byzantine Fault Tolerance and influence
-on Tendermint—along with her tenure as MIT’s NEC Chair of Software Science and
-Engineering before Prof. Medard—further anchors our foundation in resilient,
-secure systems.
+These papers are the research behind mump2p. The work covers about 15 years of network coding. Prof. Muriel Médard (co-founder and CEO) is a co-inventor of Random Linear Network Coding. Dr. Kishori Konwar (co-founder and CTO) works on distributed systems and coding theory. Prof. Nancy Lynch (advisor) works on Byzantine fault tolerance; that work influenced Tendermint. She held MIT’s NEC Chair of Software Science and Engineering before Prof. Médard.
 
-The papers in this section highlight how network coding advances both functional
-capabilities (storage, access, and propagation) and system properties
-(security, robustness, and attack resistance), forming the technical backbone of
-Optimum’s scalable solution for Web3.
+The lists cover what the protocol depends on: storing, accessing, and propagating data, and holding up under faults and attacks.
