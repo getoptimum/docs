@@ -11,11 +11,11 @@ The notice says the configuration information is a simulation from current netwo
 
 Read the text in the dialog. The copy on this page is a summary so you know what the step is. The dialog is the agreement.
 
-After you accept, **Bid cutoff** asks you to upload the MEV-Boost configuration you actually run. Console compares it with what your proposals show. It still does not change anything on your side.
+After you accept, **Bid cutoff** asks you to upload the MEV sidecar configuration you actually run, whether that sidecar is MEV-Boost or Commit-Boost. Console compares it with what your proposals show. It still does not change anything on your side.
 
 If the configuration is already on file and the terms are not yet acknowledged, the screen says **One thing before your recommendation**. **Read and acknowledge** opens the same dialog. The recommendation stays hidden until you accept.
 
-If you have no file yet, **Download a starter file**. The download is `mev-boost-config.yaml`, with the known mainnet relays and MEV-Boost’s default cutoff. It is a starting point, not a config Console has applied.
+If you have no file yet, **Download a starter file**. The download is `mev-boost-config.yaml`, with the known mainnet relays and MEV-Boost’s default cutoff. That file is the MEV-Boost shape. It is a starting point, not a config Console has applied. If you run Commit-Boost, start from the config that sidecar already uses.
 
 Until a file is on record, the report has no cutoff to judge proposals by. The screen says **No configuration uploaded yet**.
 

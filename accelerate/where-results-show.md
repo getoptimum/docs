@@ -1,9 +1,9 @@
 ---
-title: Where results show
+title: Acceleration
 description: Proposal figures on the Accelerate screen, under MEV outcome.
 ---
 
-# Where results show
+# Acceleration
 
 Open **Accelerate** in the sidebar. The proposal figures are on that screen. They are not a separate item under **Performance**.
 

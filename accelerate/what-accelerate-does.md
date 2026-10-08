@@ -1,11 +1,11 @@
 ---
 title: What Accelerate does
-description: Bid cutoff recommendations from slots you already proposed, for entity accounts. Console does not apply them.
+description: A bid cutoff for the MEV sidecar you already run, from slots you already proposed. Console does not apply it.
 ---
 
 # What Accelerate does
 
-Accelerate recommends a MEV-Boost bid cutoff from slots your validators already proposed. Console never writes to your infrastructure. You upload the MEV-Boost configuration you run, read a recommendation, and download a config to deploy yourself. Nothing on this screen changes validator behaviour until you deploy that file.
+Accelerate recommends the bid cutoff for the MEV sidecar you already run, so a proposal can take a better bid without waiting so long that the block is late. The number comes from slots your validators already proposed. You upload the sidecar configuration you run, read the recommendation, and download a config to deploy yourself. Console never writes to your infrastructure. Nothing on this screen changes validator behaviour until you deploy that file.
 
 ## Who can use it
 
@@ -27,10 +27,10 @@ When a measurement cycle finishes and you have not answered it, **Accelerate** i
 
 ## What it measures
 
-Every figure is measured on slots you already proposed. Console does not forecast an annual gain. The figures sit on this screen, under **MEV outcome**. See [Where results show](/accelerate/where-results-show).
+Every figure is measured on slots you already proposed. Console does not forecast an annual gain. The figures sit on this screen, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show).
 
 ## Older names on some screens
 
 The sidebar entry and the screen heading are **Accelerate**. Results are **MEV outcome** on that screen. There is no **MumBoost** item under **Performance**, and the title **MEV Cutoff Optimisation** is not on this screen.
 
-A direct link to the older report can still show two MumBoost messages: **Could not check the MumBoost terms**, and **This operator has not accepted the MumBoost terms**. Both mean the same check on Accelerate. See [Where results show](/accelerate/where-results-show).
+A direct link to the older report can still show two MumBoost messages: **Could not check the MumBoost terms**, and **This operator has not accepted the MumBoost terms**. Both mean the same check on Accelerate. See [Acceleration](/accelerate/where-results-show).

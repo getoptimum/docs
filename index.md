@@ -1,17 +1,19 @@
 ---
 title: Introduction to Optimum
-description: Optimum delivers Ethereum blocks to your beacon node sooner, and measures your MEV-Boost bid cutoff against your own proposals.
+description: Optimum is a gateway network that delivers Ethereum blocks to your beacon node sooner, and recommends a bid cutoff for the MEV sidecar you already run.
 ---
 
 # Introduction to Optimum
 
-Your validators can only attest to a block after it reaches your beacon node. When the block arrives late, attestations miss or vote on the wrong head. When you propose, the MEV-Boost bid cutoff sets how long you wait for a better bid. If you wait too long, your block is late. If you cut off too early, you leave value behind.
+Optimum is a network of gateways you run beside your beacon node. The gateway delivers Ethereum blocks sooner, so your validators can attest to the head that was actually proposed. For entity accounts, it also recommends a bid cutoff for the MEV sidecar you already run, so a proposal can take a better bid without waiting so long that the block is late.
 
-Optimum works on both.
+These pages are the runbook for that setup. They are for staking providers and for people who run their own validators. [Start here](/start/what-optimum-does) if you want the path before the detail. [Open Console](https://console.getoptimum.io/) when you are ready to enrol a gateway.
+
+Your validators can only attest to a block after it reaches your beacon node. When the block arrives late, attestations miss or vote on the wrong head. When you propose, the bid cutoff sets how long the sidecar waits for a better bid. If you wait too long, your block is late. If you cut off too early, you leave value behind.
 
 ## What Optimum is
 
-**mump2p** is Optimum's peer-to-peer mesh. It propagates blocks using network coding: peers send coded pieces of a block and rebuild it from whichever pieces arrive first, instead of waiting for a full copy. See [mump2p protocol](/docs/learn/overview/p2p) for the details.
+**mump2p** is the protocol under the peer-to-peer mesh. Peers send coded pieces of a block and rebuild it from whichever pieces arrive first, instead of waiting for a full copy. The Optimum network is the mesh of gateways that speak that protocol. The protocol and the network are not the same thing. See [mump2p protocol](/docs/learn/overview/p2p) for the protocol.
 
 You join the mesh by running the **Optimum gateway**, one container on a host beside your beacon node.
 
@@ -54,7 +56,7 @@ The gateway is a peer of your consensus client. It passes blocks to the client a
 | | What it does | Where you see it |
 | --- | --- | --- |
 | **Signal** | The gateway hands your beacon node blocks from the mesh, so your validators receive blocks sooner. That improves attestation performance. | Signal in Console, then the **Network** report |
-| **Accelerate** | Reads the slots your validators already proposed and recommends a MEV-Boost bid cutoff. You download the config and deploy it yourself. For entity accounts. | Accelerate in Console, then its proposal report |
+| **Accelerate** | Recommends a bid cutoff from slots your validators already proposed, so you can take a better bid without missing the slot. You download the config and deploy it on your own MEV sidecar. For entity accounts. | Accelerate in Console, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show). |
 
 Console never changes your infrastructure. Optimum does not host gateways. You run the gateway and apply any configuration yourself.
 
@@ -69,7 +71,7 @@ Console never changes your infrastructure. Optimum does not host gateways. You r
 1. **[Start here](/start/what-optimum-does).** How the pieces fit, which path is yours, and what the host needs.
 2. **[Getting in](/getting-in/create-an-account).** Create a Console account and register your organisation.
 3. **[Signal](/signal/what-signal-does).** Start the gateway, peer your consensus client, verify it, and register your validator indices.
-4. **[Accelerate](/accelerate/what-accelerate-does).** For entity accounts. Once enough of your proposals are measured, read the cutoff recommendation and adjust MEV-Boost.
+4. **[Accelerate](/accelerate/what-accelerate-does).** For entity accounts. Once enough of your proposals are measured, read the cutoff recommendation and set it on your MEV sidecar.
 
 [Open Console](https://console.getoptimum.io/)
 

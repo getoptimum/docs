@@ -169,8 +169,8 @@ function sidebarHome() {
         { text: "What Accelerate does", link: "/accelerate/what-accelerate-does" },
         { text: "Readiness", link: "/accelerate/readiness" },
         { text: "Recommendation", link: "/accelerate/recommendation" },
-        { text: "Adjust MEV-Boost", link: "/accelerate/adjust-mev-boost" },
-        { text: "Where results show", link: "/accelerate/where-results-show" },
+        { text: "MEV sidecar configuration", link: "/accelerate/adjust-mev-boost" },
+        { text: "Acceleration", link: "/accelerate/where-results-show" },
       ],
     },
     {
