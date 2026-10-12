@@ -19,11 +19,11 @@ The identity directories were not mounted. [When the check fails](/signal/when-t
 
 ## The second gateway was refused
 
-`OPT_GATEWAY_ID` is the hostname, and it is unique per organisation. [Before you begin](/start/before-you-begin).
+`OPT_GATEWAY_ID` is the name from **1a**, and it is unique per organisation. [Before you begin](/start/before-you-begin).
 
 ## I lost the enrollment key
 
-It cannot be shown again. On Signal, create a one-day key into the command, or mint one on **Keys** → **Enrollment keys** (**Manage gateways** on an invited account). Gateways that already enrolled are not affected. [Why enrollment keys](/signal/what-signal-does#why-enrollment-keys).
+It cannot be shown again. On Signal, create a one-day key into the command, or mint one on **Gateways & keys** → **Enrollment keys**. Gateways that already enrolled are not affected. [Why enrollment keys](/signal/what-signal-does#why-enrollment-keys).
 
 ## Which enrollment key should I use?
 

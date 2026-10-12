@@ -9,15 +9,15 @@ description: Many gateways from one enrollment key, and many validators at once.
 
 You do not need one key per host. One enrollment key enrols the whole fleet. See [Why enrollment keys](/signal/what-signal-does#why-enrollment-keys).
 
-1. Mint a key that outlasts the rollout: **Keys** → **Enrollment keys** (**Manage gateways** on an invited account) → **Generate enrollment key**. Set **Valid for (days)** to cover the time until the last host is started. The secret is shown once. Store it where your deployment tooling reads secrets.
-2. Copy the start command from Signal. It reads the key from `$OPT_JOIN_KEY` unless you had Console put a key in it.
-3. On each host, export `OPT_JOIN_KEY` and run that same command.
+1. Mint a key that outlasts the rollout: **Gateways & keys** → **Enrollment keys** → **Generate enrollment key**. Set **Valid for (days)** to cover the time until the last host is started. The secret is shown once. Store it where your deployment tooling reads secrets.
+2. On Signal, open **Set up another gateway**. In **1a**, set the name for this host, then copy the start command. It reads the key from `$OPT_JOIN_KEY` unless you had Console put a key in it. The name from **1a** is already in the command.
+3. On that host, export `OPT_JOIN_KEY` and run the command. For the next host, change the name in **1a** and copy the command again.
 4. Peer each gateway with the beacon node beside it. Every gateway has its own peer id. [Connect your gateway](/signal/connect-your-gateway).
 5. Open Signal and **Run check**. Verify covers every gateway in your organisation together: **Gateway enrolled** shows how many, such as **Yes, 3**. It does not name them, so check each new host with `curl http://localhost:48123/health` on that host.
 
-Hostnames must differ. The command sets `OPT_GATEWAY_ID=$(hostname)`, and a second gateway under a hostname that is already enrolled is refused with HTTP 409. Hosts built from one image often share a hostname, so set it per host first.
+Names must differ. The command sets `OPT_GATEWAY_ID` to the name from **1a**, and a second gateway under a name that is already enrolled is refused with HTTP 409.
 
-Keep each host's `$HOME/optimum-gateway` directories. A gateway that keeps them re-uses its credential and spends nothing on restart. One that loses them enrols again, spends another of the key's enrollments, and is refused under the same hostname until the old credential is revoked.
+Keep each host's `$HOME/optimum-gateway` directories. A gateway that keeps them re-uses its credential and spends nothing on restart. One that loses them enrols again, spends another of the key's enrollments, and is refused under the same name until the old credential is revoked.
 
 On Kubernetes, store the key in a Secret, inject it as `OPT_JOIN_KEY`, and give each pod a unique `OPT_GATEWAY_ID`, such as the pod name. Keep the identity PVC: an `emptyDir` is lost whenever the pod is replaced, and every replacement enrols again. The chart's own values still describe the older API key path. See [Fleet enrollment (join key)](https://getoptimum.github.io/optimum-gateway/versions/latest/kubernetes#fleet-enrollment-join-key) in the gateway Helm guide.
 

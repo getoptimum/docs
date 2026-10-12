@@ -11,7 +11,7 @@ Partners Optimum onboards directly also have a dedicated Telegram group. Use it 
 
 Use support when an index is already claimed, a lookup limit stopped a submit, a gateway credential needs revoking on a self-serve account, or a report failed to load after a refresh. Include:
 
-* the gateway id (`OPT_GATEWAY_ID`, which is the host name)
+* the gateway id (`OPT_GATEWAY_ID`, which is the name from **1a**)
 * the consensus client and its version
 * the `failing` list from `curl http://localhost:48123/health`, if you have it
 * what **Verify** on Signal shows

@@ -31,9 +31,9 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 **Enrollment fails with `401`.** The key is unknown, expired, used up, or revoked. Optimum returns the same `401` for all four on purpose, so it reads like a typo. Check the key on **Enrollment keys**: the card shows the expiry date and **enrollments used**, and a revoked key is no longer listed. A key from Signal lasts one day. During signup, the same case shows **This key can no longer be used**. Mint a new key and run the command again. [Which key lifetime](/signal/what-signal-does#which-key-lifetime).
 
-**A second host is refused with `409`.** Another gateway in your organisation already enrolled under that hostname. Give the host a unique hostname. [Onboard in bulk](/signal/onboard-in-bulk).
+**A second host is refused with `409`.** Another gateway in your organisation already enrolled under that name. Give this gateway a new name in **1a**. [Onboard in bulk](/signal/onboard-in-bulk).
 
-**A rebuilt host is refused with `409`.** The host lost `$HOME/optimum-gateway`, so it generated a new identity, and the old credential under its hostname is still live. Restore the directory if you have it. Otherwise revoke the old gateway key under **Manage gateways** → **Gateway** (self-serve accounts: ask [support](/help/support)), then start it again.
+**A rebuilt host is refused with `409`.** The host lost `$HOME/optimum-gateway`, so it generated a new identity, and the old credential under its name is still live. Restore the directory if you have it. Otherwise revoke the old gateway key under **Gateways & keys** → **Gateway** (self-serve accounts: ask [support](/help/support)), then start it again. The same name is the right one on that host once the old credential is gone.
 
 **Signup says Still waiting.** Nothing has enrolled with the key yet, and the page stopped checking. The key stays valid. Run the command, and Console picks the gateway up when it connects.
 
@@ -41,7 +41,7 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 **`/health` says `degraded` right after start.** For a validator gateway, expected until your consensus client is peered: `cl_peers`, `cl_health`, and `subscribed_topics` fail until then. For a stream-only gateway, it clears once the first block arrives. Use **Verify** on Signal to confirm the gateway reached Optimum. [Connect your gateway](/signal/connect-your-gateway#check-it-is-healthy).
 
-**A stream-only gateway stays `degraded` with `cl_peers` failing.** It was started with the beacon-node command from Signal. Replace it with the [stream-only command](/signal/connect-your-gateway#stream-only).
+**A stream-only gateway stays `degraded` with `cl_peers` failing.** It was started with **Peer with my consensus client**. On **1b**, choose **Stream only** and run that command. [Stream-only](/signal/connect-your-gateway#stream-only).
 
 **`curl` to port `48123` is refused from another machine.** Telemetry is published on the gateway host's loopback only. Run it on that host.
 

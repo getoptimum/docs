@@ -5,9 +5,11 @@ description: The production command Console shows, and how each consensus client
 
 # Connect your gateway
 
-This page covers **Run a gateway** and **Peer your client** on Signal, and the same commands in the signup step **Connect your first gateway**.
+This page covers **1b Start the gateway** and **1c Point your client at the gateway** on Signal, and the same commands in the signup step **Connect your first gateway**.
 
-Copy the command from Console. If you just created the key, it is already in the command. Otherwise the command reads `$OPT_JOIN_KEY`, so export the key first. The command also carries the cluster id the key was minted for. The block below is the production shape, so you can read it. If Console shows a different `OPT_GATEWAY_CLUSTER_ID`, use that one. A mismatch authenticates and then fails every mesh handshake.
+![Signal, Connect. 1a names the gateway. 1b starts it, 1c points the client at it, 1d verifies it.](/console/04-signal-connect.png)
+
+**1a** is the name. Console writes it into the command as `OPT_GATEWAY_ID`. The blocks below use `fra-gateway-1` so you can read the shape. Copy the command from Console rather than retyping that name. If you just created the key, it is already in the command. Otherwise the command reads `$OPT_JOIN_KEY`, so export the key first. The command also carries the cluster id the key was minted for. The block below is the production shape, so you can read it. If Console shows a different `OPT_GATEWAY_CLUSTER_ID`, use that one. A mismatch authenticates and then fails every mesh handshake.
 
 The image Console hands out for production is `v1.3.2`. `-config ""` is required. The flag defaults to `config/app_conf.yml`, which is not in the image, and the process exits before it reads any environment variable.
 
@@ -29,7 +31,7 @@ docker run -d --name optimum-gateway \
   -e OPT_REMOTE_AUTH_URL=https://auth.getoptimum.io \
   -e OPT_REMOTE_BOOTSTRAP_URL=https://bootstrap.getoptimum.io \
   -e OPT_GATEWAY_CLUSTER_ID=optimum_ethereum_mainnet_v0_1 \
-  -e OPT_GATEWAY_ID=$(hostname) \
+  -e OPT_GATEWAY_ID='fra-gateway-1' \
   -e OPT_ENABLE_TELEMETRY=true \
   -e OPT_REMOTE_PUSH_ENABLE=true \
   -v "$HOME/optimum-gateway/libp2p":/tmp/libp2p \
@@ -59,7 +61,7 @@ docker run -d --name optimum-gateway \
   -e OPT_REMOTE_AUTH_URL=https://auth.getoptimum.io \
   -e OPT_REMOTE_BOOTSTRAP_URL=https://bootstrap.getoptimum.io \
   -e OPT_GATEWAY_CLUSTER_ID=optimum_ethereum_mainnet_v0_1 \
-  -e OPT_GATEWAY_ID=$(hostname) \
+  -e OPT_GATEWAY_ID='fra-gateway-1' \
   -e OPT_ENABLE_TELEMETRY=true \
   -e OPT_REMOTE_PUSH_ENABLE=true \
   -e OPT_STREAM_ENABLE=true \
@@ -97,7 +99,7 @@ If you run validators, expect `503` until the client is peered. The mesh checks 
 
 Pick the client in Console. Four clients dial the gateway. Lighthouse is wired the other way: the gateway dials the node.
 
-![Signal, Peer your client. Prysm, Lighthouse, Teku, Nimbus, and Lodestar are marked.](/console/04-signal-peer-client.png)
+**1c** asks for the gateway peer id and the host your client uses to reach port `33212`, then prints the flag. The table is that same flag.
 
 ### Prysm, Teku, Nimbus, Lodestar
 
@@ -124,7 +126,7 @@ Add this on the beacon node. `<gateway ip>` is that reachable host, and `<gatewa
 | Nimbus | `--direct-peer=/ip4/<gateway ip>/tcp/33212/p2p/<gateway peer id>` | Use a stable `--netkey-file`, not a random key. Nimbus requires one for a direct peer. |
 | Lodestar | `--directPeers=/ip4/<gateway ip>/tcp/33212/p2p/<gateway peer id>` | Not `--bootnodes`. That is discovery. `--directPeers` is the mesh peer that is kept. |
 
-Teku, Nimbus, and Lodestar also need the gateway to be told about the node, or the link does not come back after the gateway restarts. The peering itself forms without that variable: the gateway marks a client that connects as a direct peer. It does not remember that peer across its own restart, and these clients may not re-dial. Add this to the start command, then replace the container:
+Teku, Nimbus, and Lodestar also need the gateway to be told about the node, or the link does not come back after the gateway restarts. The peering itself forms without that variable: the gateway marks a client that connects as a direct peer. It does not remember that peer across its own restart, and these clients may not re-dial. On **1b**, paste the node's address. Console puts this in the start command:
 
 ```bash
 -e OPT_DIRECT_CL_PEERS=/ip4/<your node ip>/tcp/<its p2p port>/p2p/<its peer id>
@@ -144,13 +146,13 @@ Lighthouse has no single flag for this. Wire it on the gateway. The lookup runs 
 curl -s http://localhost:5052/eth/v1/node/identity
 ```
 
-Read `data.p2p_addresses`. Pick an address the gateway can reach, not the first entry. The first is often `127.0.0.1`.
+Read `data.p2p_addresses`. On **1b**, paste an address the gateway can reach, not the first entry. The first is often `127.0.0.1`. Console puts this in the start command:
 
 ```bash
 -e OPT_DIRECT_CL_PEERS=/ip4/<your node ip>/tcp/<its p2p port>/p2p/<its peer id>
 ```
 
-Add that to the start command and replace the container. For Lighthouse this variable is the connection, not only the restart case: nothing on the node points at the gateway, so the gateway is the side that dials. The allowlist warning above applies.
+For Lighthouse this variable is the connection, not only the restart case: nothing on the node points at the gateway, so the gateway is the side that dials. The allowlist warning above applies.
 
 Lighthouse v8 needs extra PeerDAS flags. Those are in the [gateway quick start](https://getoptimum.github.io/optimum-gateway/versions/latest/quick-start), not on this page.
 

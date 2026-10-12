@@ -55,7 +55,7 @@ The gateway is a peer of your consensus client. It passes blocks to the client a
 
 | | What it does | Where you see it |
 | --- | --- | --- |
-| **Signal** | The gateway hands your beacon node blocks from the mesh, so your validators receive blocks sooner. That improves attestation performance. | Signal in Console, then the **Network** report |
+| **Signal** | The gateway hands your beacon node blocks from the mesh, so your validators receive blocks sooner. That improves attestation performance. | The Signal home in Console, then **Network** under **Performance** |
 | **Accelerate** | Recommends a bid cutoff from slots your validators already proposed, so you can take a better bid without missing the slot. You download the config and deploy it on your own MEV sidecar. For entity accounts. | Accelerate in Console, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show). |
 
 Console never changes your infrastructure. Optimum does not host gateways. You run the gateway and apply any configuration yourself.
@@ -70,7 +70,7 @@ Console never changes your infrastructure. Optimum does not host gateways. You r
 
 1. **[Start here](/start/what-optimum-does).** How the pieces fit, which path is yours, and what the host needs.
 2. **[Getting in](/getting-in/create-an-account).** Create a Console account and register your organisation.
-3. **[Signal](/signal/what-signal-does).** Start the gateway, peer your consensus client, verify it, and register your validator indices.
+3. **[Signal](/signal/what-signal-does).** Name the gateway, start it, peer your consensus client, verify it, and register your validator indices.
 4. **[Accelerate](/accelerate/what-accelerate-does).** For entity accounts. Once enough of your proposals are measured, read the cutoff recommendation and set it on your MEV sidecar.
 
 [Open Console](https://console.getoptimum.io/)

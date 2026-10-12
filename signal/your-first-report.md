@@ -1,20 +1,23 @@
 ---
 title: Your first report
-description: What each report waits for, and where it appears.
+description: What each figure waits for, and where it appears.
 ---
 
 # Your first report
 
-Reports appear under **Performance** in the Console sidebar. Each entry appears only when it is enabled for your account.
+The first figures are on the Signal home, not on a separate screen. Each card waits for something different, and a card that is still waiting says so.
 
-| Entry | What it shows | What it waits for |
+| Card | What it shows | What it waits for |
 | --- | --- | --- |
-| Gateways | Your gateways as Optimum measures them. | A running gateway. No validator indices needed. |
-| Network | Propagation against libp2p for your validators. | 500 or more confirmed validator indices. Per-operator figures show `n/a` until at least 30 paired slots are in the window. |
-| Attestations | Attestation outcomes. | Confirmed validator indices. Self-serve accounts do not have this entry. |
+| Blocks received earlier | Mean lead per slot, once there is a figure. | A week of paired slots. Per-operator figures stay **Pending** until at least 30 paired slots are in the window. |
+| Attestation accuracy | Correct and timely head votes. | 500 or more indices on record, then the weekly report. Below 500 the card says how many it needs. |
+| Gateways online | How many gateways Optimum saw recently. | A gateway that reported in during the last ten minutes. No validator indices needed. |
+| Indices measured | How many indices are on record. | Indices you submitted. The count is derived on-chain. |
 
-**Gateways** is in the main sidebar group, not under **Performance**. **Accelerate** is in that main group too. Its proposal figures are on the Accelerate screen, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show).
+**Weekly reports are running** appears once 500 or more indices are on record. **View gains** opens the attestation report. Below 500, the same band says there are too few duties in a week to separate a real change from noise.
 
-Submitted indices are not confirmed indices. Optimum confirms them first. Until then, **Network** and **Attestations** are empty on purpose. A newly onboarded partner sees the same.
+**Attestations** and **Network** under **Performance** are those same reports in full. Each entry appears only when it is enabled for your account. Self-serve accounts do not get **Attestations**.
 
-Accelerate waits on proposed slots, not on the 500-index line. See [Readiness](/accelerate/readiness).
+Submitted indices are not confirmed indices. Optimum confirms them first. Until then the accuracy card stays **Pending** on purpose.
+
+**Accelerate** is in the main sidebar, not under **Performance**. Its proposal figures are on the Accelerate screen, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show). Accelerate waits on proposed slots, not on the 500-index line. See [Readiness](/accelerate/readiness).
