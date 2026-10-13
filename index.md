@@ -68,11 +68,17 @@ Console never changes your infrastructure. Optimum does not host gateways. You r
 
 ## The path
 
-1. **[Start here](/start/what-optimum-does).** How the pieces fit, which path is yours, and what the host needs.
-2. **[Getting in](/getting-in/create-an-account).** Create a Console account and register your organisation.
+Start here. This is the operator setup.
+
+1. **[What Optimum does](/start/what-optimum-does).** How the pieces fit, which path is yours, and what the host needs.
+2. **[Create an account](/getting-in/create-an-account).** Register your organisation in Console.
 3. **[Signal](/signal/what-signal-does).** Name the gateway, start it, peer your consensus client, verify it, and register your validator indices.
 4. **[Accelerate](/accelerate/what-accelerate-does).** For entity accounts. Once enough of your proposals are measured, read the cutoff recommendation and set it on your MEV sidecar.
 
 [Open Console](https://console.getoptimum.io/)
 
-Already running a gateway? The versioned manual (every setting, metric, and log line) is the [gateway reference](https://getoptimum.github.io/optimum-gateway/versions/latest/).
+The other sections come after that setup:
+
+* **[Sync validator keys](/keysync/)** keeps a changing validator set in line with Console. You get there from [Register keys](/signal/register-keys).
+* **[Run the gateway](/operate/run-the-gateway)** opens the gateway manual: every setting, metric, and log line.
+* **[mump2p protocol](/docs/learn/overview/p2p)** is the general Optimum docs, for how the mesh works.

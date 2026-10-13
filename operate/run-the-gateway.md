@@ -5,7 +5,7 @@ description: Where the install, enrolment, and configuration references live.
 
 # Run the gateway
 
-The command operators paste is the one in [Connect your gateway](/signal/connect-your-gateway). It matches what Console renders for production (`v1.3.2`).
+The command operators paste is the one in [Connect your gateway](/signal/connect-your-gateway). It matches what Console renders for production (`v1.3.2`). If you have not enrolled a gateway yet, start at [What Optimum does](/start/what-optimum-does).
 
 Use the versioned gateway docs when you need the rest:
 

@@ -1,5 +1,7 @@
 # mump2p Protocol
 
+To run a gateway, start with [What Optimum does](/start/what-optimum-does). This page is the protocol underneath it.
+
 **mump2p** is the protocol under a peer-to-peer mesh. It uses [Random Linear Network Coding (RLNC)](https://x.com/get_optimum/status/1891520664726802439) so a peer can rebuild a message from coded pieces instead of waiting for a full copy. It is built on [libp2p](https://docs.libp2p.io/) and is an alternative to [GossipSub](https://github.com/libp2p/specs/tree/master/pubsub/gossipsub). The Optimum network is one mesh that runs this protocol. The protocol is not that network.
 
 

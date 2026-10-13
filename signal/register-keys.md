@@ -27,6 +27,6 @@ After a successful submit, the note on the screen is: submitted, and confirmed b
 
 Signal's **Register keys** step does not take the paste. It shows how many indices are on record, and **Register indices** opens **Activate validators**. Signup is where the paste and the CSV upload sit.
 
-To add more later, come back from the signup link, use **Activate validators**, or ask support. Invited operator accounts can also run an importer that keeps the set in sync. See [Onboard in bulk](/signal/onboard-in-bulk). **Gateways & keys** holds gateway keys, not validator indices.
+To add more later, come back from the signup link, use **Activate validators**, or ask support. Invited operator accounts with a set that keeps changing use [Keysync](/keysync/). The bulk screens are on [Onboard in bulk](/signal/onboard-in-bulk). **Gateways & keys** holds gateway keys, not validator indices.
 
 Accelerate counts only indices that are active on chain. An index still in the activation queue is on record and proposes nothing yet. See [Readiness](/accelerate/readiness).

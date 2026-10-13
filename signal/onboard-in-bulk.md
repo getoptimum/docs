@@ -29,7 +29,7 @@ Validator indices are how Console knows which slots you propose. Three ways to s
 | --- | --- | --- |
 | Signup, **Register keys** | **Paste indices** or **Upload CSV**: decimal indices, one per line or comma separated. Optimum confirms them before they count. | Every account that answered yes to **Do you run validators?** |
 | **Activate validators** → **Manage validators** | **Add**, **Remove**, or **Replace** your set. **Paste** or **Upload CSV**. A line is an index, an index and its BLS key, or a BLS key. **Replace** shows the net change before it applies. | Invited operator accounts, when the screen is enabled. |
-| **Keep your validators in sync automatically**, on **Activate validators** | Generate an operator API key under **Manage API keys**, then run [optimum-keysync](https://github.com/getoptimum/optimum-keysync) on a schedule. It reconciles your set against `POST /api/v1/validator-keys/batch` every run. | Invited operator accounts. |
+| **Keep your validators in sync automatically**, on **Activate validators** | Generate an operator API key under **Manage API keys**, then run [Keysync](/keysync/) on a schedule. It reconciles your set against Console on every run. | Invited operator accounts. |
 
 ![Manage validators. Add, Remove, Replace, Paste, and Upload CSV are marked.](/console/07-manage-validators.png)
 

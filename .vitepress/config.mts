@@ -1,6 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 const { BASE: base = "/" } = process.env;
+const gateway = "https://getoptimum.github.io/optimum-gateway/versions/latest"
 const withBase = (path: string) => `${base}${path.replace(/^\//, "")}`;
 
 // https://vitepress.dev/reference/site-config
@@ -118,8 +119,6 @@ export default defineConfig({
   }
 })
 
-const gateway = "https://getoptimum.github.io/optimum-gateway/versions/latest"
-
 function nav() {
   return [
     { text: "Start", link: "/start/what-optimum-does" },
@@ -131,75 +130,100 @@ function nav() {
 function sidebarHome() {
   return [
     {
-      text: "Start here",
+      text: "Operator setup",
       collapsed: false,
       items: [
-        { text: "Introduction", link: "/" },
-        { text: "What Optimum does", link: "/start/what-optimum-does" },
-        { text: "Choose a path", link: "/start/choose-a-path" },
-        { text: "Before you begin", link: "/start/before-you-begin" },
+        {
+          text: "Start here",
+          collapsed: false,
+          items: [
+            { text: "Introduction", link: "/" },
+            { text: "What Optimum does", link: "/start/what-optimum-does" },
+            { text: "Choose a path", link: "/start/choose-a-path" },
+            { text: "Before you begin", link: "/start/before-you-begin" },
+          ],
+        },
+        {
+          text: "Getting in",
+          collapsed: false,
+          items: [
+            { text: "Create an account", link: "/getting-in/create-an-account" },
+            { text: "Account type", link: "/getting-in/account-type" },
+            { text: "Register", link: "/getting-in/register" },
+          ],
+        },
+        {
+          text: "Signal",
+          collapsed: false,
+          items: [
+            { text: "What Signal does", link: "/signal/what-signal-does" },
+            { text: "Network", link: "/signal/network" },
+            { text: "Connect your gateway", link: "/signal/connect-your-gateway" },
+            { text: "When the check fails", link: "/signal/when-the-check-fails" },
+            { text: "Register keys", link: "/signal/register-keys" },
+            { text: "Onboard in bulk", link: "/signal/onboard-in-bulk" },
+            { text: "Your first report", link: "/signal/your-first-report" },
+          ],
+        },
+        {
+          text: "Accelerate",
+          collapsed: false,
+          items: [
+            { text: "What Accelerate does", link: "/accelerate/what-accelerate-does" },
+            { text: "Readiness", link: "/accelerate/readiness" },
+            { text: "Recommendation", link: "/accelerate/recommendation" },
+            { text: "MEV sidecar configuration", link: "/accelerate/adjust-mev-boost" },
+            { text: "Acceleration", link: "/accelerate/where-results-show" },
+          ],
+        },
+        {
+          text: "Operate",
+          collapsed: true,
+          items: [
+            { text: "Run the gateway", link: "/operate/run-the-gateway" },
+            { text: "Kubernetes", link: "/operate/kubernetes" },
+            { text: "Block stream", link: "/operate/block-stream" },
+            { text: "Telemetry", link: "/operate/telemetry" },
+          ],
+        },
+        {
+          text: "Help",
+          collapsed: true,
+          items: [
+            { text: "Troubleshoot", link: "/help/troubleshoot" },
+            { text: "Support", link: "/help/support" },
+            { text: "FAQ", link: "/help/faq" },
+          ],
+        },
       ],
     },
     {
-      text: "Getting in",
+      text: "Keysync",
       collapsed: false,
       items: [
-        { text: "Create an account", link: "/getting-in/create-an-account" },
-        { text: "Account type", link: "/getting-in/account-type" },
-        { text: "Register", link: "/getting-in/register" },
+        { text: "Sync validator keys", link: "/keysync/" },
       ],
     },
     {
-      text: "Signal",
-      collapsed: false,
-      items: [
-        { text: "What Signal does", link: "/signal/what-signal-does" },
-        { text: "Network", link: "/signal/network" },
-        { text: "Connect your gateway", link: "/signal/connect-your-gateway" },
-        { text: "When the check fails", link: "/signal/when-the-check-fails" },
-        { text: "Register keys", link: "/signal/register-keys" },
-        { text: "Onboard in bulk", link: "/signal/onboard-in-bulk" },
-        { text: "Your first report", link: "/signal/your-first-report" },
-      ],
-    },
-    {
-      text: "Accelerate",
-      collapsed: false,
-      items: [
-        { text: "What Accelerate does", link: "/accelerate/what-accelerate-does" },
-        { text: "Readiness", link: "/accelerate/readiness" },
-        { text: "Recommendation", link: "/accelerate/recommendation" },
-        { text: "MEV sidecar configuration", link: "/accelerate/adjust-mev-boost" },
-        { text: "Acceleration", link: "/accelerate/where-results-show" },
-      ],
-    },
-    {
-      text: "Operate",
-      collapsed: true,
-      items: [
-        { text: "Run the gateway", link: "/operate/run-the-gateway" },
-        { text: "Kubernetes", link: "/operate/kubernetes" },
-        { text: "Block stream", link: "/operate/block-stream" },
-        { text: "Telemetry", link: "/operate/telemetry" },
-      ],
-    },
-    {
-      text: "Help",
-      collapsed: true,
-      items: [
-        { text: "Troubleshoot", link: "/help/troubleshoot" },
-        { text: "Support", link: "/help/support" },
-        { text: "FAQ", link: "/help/faq" },
-      ],
-    },
-    {
-      text: "Learn",
+      text: "General Optimum docs",
       collapsed: true,
       items: [
         { text: "mump2p protocol", link: "/docs/learn/overview/p2p" },
         { text: "Gossip", link: "/docs/research/gossip/gossip" },
         { text: "Transport", link: "/docs/research/gossip/transport" },
         { text: "Decentralized access", link: "/docs/research/gossip/decentralized-access" },
+      ],
+    },
+    {
+      text: "Gateway manual",
+      collapsed: true,
+      items: [
+        { text: "Overview", link: `${gateway}/` },
+        { text: "Quick start", link: `${gateway}/quick-start` },
+        { text: "Connecting your CL client", link: `${gateway}/cl-clients` },
+        { text: "Configuration", link: `${gateway}/configuration` },
+        { text: "Kubernetes (Helm)", link: `${gateway}/kubernetes` },
+        { text: "Troubleshooting", link: `${gateway}/troubleshoot` },
       ],
     },
   ]
