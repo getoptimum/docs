@@ -5,7 +5,7 @@ description: Sign up to Console with Google or Microsoft, or sign in to an accou
 
 # Create an account
 
-Open [Console](https://console.getoptimum.io/). The sign-in card has two tabs.
+Open [Console](https://console.getoptimum.xyz/). The sign-in card has two tabs.
 
 | Tab | Heading | Buttons |
 | --- | --- | --- |
@@ -24,7 +24,7 @@ The last screen is **Your account is ready**. It lists the account type, the org
 
 ## When signup is closed
 
-If the card has no **Create account** tab, or [signup](https://console.getoptimum.io/signup) shows a 404, self-serve signup is closed. Optimum creates the account for you, and you sign in with the Google or Microsoft account you gave them. Where Signal and Accelerate are enabled for your organisation, you use the same screens.
+If the card has no **Create account** tab, or [signup](https://console.getoptimum.xyz/signup) shows a 404, self-serve signup is closed. Optimum creates the account for you, and you sign in with the Google or Microsoft account you gave them. Where Signal and Accelerate are enabled for your organisation, you use the same screens.
 
 ## No organisation linked
 

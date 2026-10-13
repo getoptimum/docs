@@ -122,7 +122,7 @@ export default defineConfig({
 function nav() {
   return [
     { text: "Start", link: "/start/what-optimum-does" },
-    { text: "Console", link: "https://console.getoptimum.io/" },
+    { text: "Console", link: "https://console.getoptimum.xyz/" },
     { text: "Gateway", link: `${gateway}/` },
   ];
 }
