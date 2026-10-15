@@ -35,13 +35,13 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 **A rebuilt host is refused with `409`.** The host lost `$HOME/optimum-gateway`, so it generated a new identity, and the old credential under its name is still live. Restore the directory if you have it. Otherwise revoke the old gateway key under **Gateways & keys** → **Gateway** (self-serve accounts: ask [support](/help/support)), then start it again. The same name is the right one on that host once the old credential is gone.
 
-**Signup says Still waiting.** Nothing has enrolled with the key yet, and the page stopped checking. The key stays valid. Run the command, and Console picks the gateway up when it connects.
+**Connect your first gateway says Still waiting.** Nothing has enrolled with the key yet, and the page stopped checking. The key stays valid. Run the command, and Console picks the gateway up when it connects.
 
 ## Health and Verify
 
 **`/health` says `degraded` right after start.** For a validator gateway, expected until your consensus client is peered: `cl_peers`, `cl_health`, and `subscribed_topics` fail until then. For a stream-only gateway, it clears once the first block arrives. Use **Verify** on Signal to confirm the gateway reached Optimum. [Connect your gateway](/signal/connect-your-gateway#check-it-is-healthy).
 
-**A stream-only gateway stays `degraded` with `cl_peers` failing.** It was started with **Peer with my consensus client**. On **1b**, choose **Stream only** and run that command. [Stream-only](/signal/connect-your-gateway#stream-only).
+**A stream-only gateway stays `degraded` with `cl_peers` failing.** It was started with the **My consensus client** command. On **1b**, choose **A feed for my consumers** and run that command. [Stream-only](/signal/connect-your-gateway#stream-only).
 
 **`curl` to port `48123` is refused from another machine.** Telemetry is published on the gateway host's loopback only. Run it on that host.
 

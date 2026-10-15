@@ -27,7 +27,7 @@ Validator indices are how Console knows which slots you propose. Three ways to s
 
 | Where | How | Who has it |
 | --- | --- | --- |
-| Signup, **Register keys** | **Paste indices** or **Upload CSV**: decimal indices, one per line or comma separated. Optimum confirms them before they count. | Every account that answered yes to **Do you run validators?** |
+| **Activate validators**, **Validator indices to connect** | **Paste indices** or **Upload CSV**: decimal indices, one per line or comma separated. Optimum confirms them before they count. **What you submitted** tags each index with its outcome. | Self-serve accounts that answered yes to **Do you run validators?** |
 | **Activate validators** → **Manage validators** | **Add**, **Remove**, or **Replace** your set. **Paste** or **Upload CSV**. A line is an index, an index and its BLS key, or a BLS key. **Replace** shows the net change before it applies. | Invited operator accounts, when the screen is enabled. |
 | **Keep your validators in sync automatically**, on **Activate validators** | Generate an operator API key under **Manage API keys**, then run [Keysync](/keysync/) on a schedule. It reconciles your set against Console on every run. | Invited operator accounts. |
 
@@ -35,4 +35,4 @@ Validator indices are how Console knows which slots you propose. Three ways to s
 
 Console never lists your indices back to you. **Activate validators** shows counts and a history of changes only.
 
-Self-serve accounts add indices after signup by returning from the signup link or asking [support](/help/support). See [Register keys](/signal/register-keys).
+Self-serve accounts add more indices on **Activate validators** at any time, or ask [support](/help/support). See [Register keys](/signal/register-keys).

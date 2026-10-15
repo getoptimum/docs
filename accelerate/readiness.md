@@ -1,20 +1,29 @@
 ---
 title: Readiness
-description: The 200-proposal floor Console uses before it will recommend a cutoff.
+description: The 200-proposal floor Console uses before it will recommend a cutoff, and what the screen shows until then.
 ---
 
 # Readiness
 
-Before you accept anything, Console states what the current window can support.
+Before you accept anything, Console states what your history can support.
 
-A cutoff recommendation needs **200 proposals that carry a failure measurement**, across all your validators, not per key. The panel is **Not enough proposals yet** until that count reaches 200. You can still start Accelerate and upload a configuration. Measurement runs from the moment that configuration takes effect. The recommendation appears once the window holds enough.
+A cutoff recommendation needs 200 measured proposals, across all your validators, not per key. Until the cycle holds that many, the Adjust step says **Not enough proposals yet for a recommendation**. You can still start Accelerate and upload a configuration. Measurement runs from the moment that configuration takes effect. The recommendation appears once the cycle holds enough.
 
-When the window is large enough and a later bid was actually available, the panel is **What your proposals show**. The number is **ETH per MEV block**, left on the table in this window, measured against bids that arrived after the one your current cutoff took. The line under it is **Already proposed — not a projection.**
+## Modelled annual gain
 
-Two other answers, when there is nothing to recommend:
+The top of step 1 is about the modelled gain: what a later bid cutoff could have captured on blocks you already proposed, held at that rate for a year. It is read from the simulation the terms describe, so before you accept them the screen says **Accept the terms to see your modelled gain**.
 
-* Proposals were measured, but none of them took a relay bid, so there is no bid curve to read a cutoff from yet.
-* Proposals were measured, and no better bid arrived after the one your current cutoff took.
+The other answers in that place:
+
+| On the screen | What it means |
+| --- | --- |
+| **Reading your modelled gain** | The window is still being read. |
+| **Still gathering evidence** | The model needs 30 days of ingested history and 30 MEV blocks. The line says how far along you are. |
+| **No MEV blocks to model yet** | Nothing you proposed in the window took a relay bid, so there is no bid timing to model. |
+| **Nothing was left on the table** | No better bid arrived after the one you took, at any measured offset. |
+| **Could not model your proposals** | The read failed. Refresh. |
+
+## Before you start
 
 Under **Before you start**, the row **Validator keys registered** has three states. Indices are required to know which slots you propose. The button tells you what is missing rather than failing silently.
 
@@ -28,6 +37,6 @@ Under **Before you start**, the row **Validator keys registered** has three stat
 
 If Console could not read which indices are active, the row stays **Needed** and says **We could not read which of your indices are active on chain, so this is unverified.** Refresh. That is a failed read, not an empty set.
 
-If indices are on record and the panel says **Not enough proposals yet**, check this row first. **Activating** means you are waiting on activation, not on proposal luck.
+If indices are on record and the recommendation says **Not enough proposals yet for a recommendation**, check this row first. **Activating** means you are waiting on activation, not on proposal luck.
 
-The report’s own charts use the same measurement: accepted ETH on the bid that was taken, unrealised ETH on bids that arrived later, per MEV block. A per-proposal average is a different number and is labelled that way on the report. Do not read the headline ETH-per-MEV-block figure as ETH per proposal.
+The report’s own charts measure per MEV block: accepted ETH on the bid that was taken, unrealised ETH on bids that arrived later. A per-proposal average is a different number and is labelled that way on the report.

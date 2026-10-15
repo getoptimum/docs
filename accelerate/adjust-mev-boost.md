@@ -1,31 +1,41 @@
 ---
 title: MEV sidecar configuration
-description: Record the cutoff you set on MEV-Boost or Commit-Boost, then download the config on file. Console does not push it.
+description: Set the cutoff on the Adjust step, download the config for MEV-Boost or Commit-Boost, and record what you deployed. Console does not push it.
 ---
 
 # MEV sidecar configuration
 
-The cutoff you deploy lives in the MEV sidecar beside your beacon node. Two implementations are in use.
+The cutoff you deploy lives in the MEV sidecar beside your beacon node. Console writes a file for either implementation you run.
 
-* **MEV-Boost.** Console’s download is `mev-boost-config.yaml`. The cutoff in that file is `timeout_get_header_ms`. Deploy the file the way you already deploy MEV-Boost config.
-* **Commit-Boost.** Console does not write a Commit-Boost file. Take the same cutoff, in milliseconds into the slot, and set it in the Commit-Boost config you already deploy.
+* **MEV-Boost.** The download is `mev-boost-config.yaml`, a complete config. The cutoff is `timeout_get_header_ms`.
+* **Commit-Boost.** The download is `cb-config-pbs.toml`, the `[pbs]` timings and your relay URLs. Merge it into the `cb-config.toml` you already run. It carries no chain, port, or signer settings. Its header names anything from your upload it leaves out, such as a relay-mux block.
 
 Optimum has no write access to either sidecar.
 
-**Bid cutoff** is `timeout_get_header_ms`: the last moment a getHeader bid is accepted, in milliseconds into the slot. A later cutoff can take a higher bid. Set late enough, the proposal misses the slot. That name is the MEV-Boost flag. On Commit-Boost, use the cutoff field in the config you already run.
+**Bid cutoff** is `timeout_get_header_ms`: the last moment a getHeader bid is accepted, in milliseconds into the slot. A later cutoff can take a higher bid. Set late enough, the proposal misses the slot.
 
-The late-in-slot deadline is `late_in_slot_time_ms`. The cutoff cannot sit on or past it. Console keeps the cutoff at least 1 ms earlier.
+**Late in slot** is `late_in_slot_time_ms`. A getHeader arriving after it skips all relays and builds the block locally. The cutoff must stay before it: the screen shows **Must stay after the bid cutoff. Gap now:** and the gap in milliseconds. Console keeps the cutoff at least 1 ms earlier, and moving late-in-slot down moves the cutoff with it.
 
-From the recommendation, **I am ready to adjust** opens **Record your change**. The line under the heading is **Set them on your own infrastructure, then tell us what you set.**
+## The Adjust step
 
-Type **Cutoff you have set** and **Late in slot you have set**, then **Confirm change**. That records what you deployed. It does not deploy it.
+From the recommendation, **I am ready to adjust** opens step 3, **Adjust**. **Review cutoff**, on the banner after a cutoff is recorded, opens the same editor.
 
-![Accelerate, Adjust. Cutoff you have set, Confirm change, and Download config are marked.](/console/09-accelerate-adjust.png)
+The top card says **Configuration matches the file you uploaded** until you move a value, then **Unsaved changes to the cutoff**, with **Export the new config and deploy it — nothing here reaches your infrastructure.**
 
-**Recap of the params on file** is the values currently recorded, not the recommendation. **Download config** saves that recorded file as `mev-boost-config.yaml`. The note under the recap says `late_in_slot_time_ms` is on file but is not a mev-boost flag, so it is not in the file. `--min-bid` and `--relay-check` are not stored, and they are unchanged.
+**Our recommendation** states the move in words, for example **Raise the bid cutoff by 40 ms, to 2,039 ms. Keep late-in-slot at 3,000 ms.** **Apply recommendation** sets both sliders to it. Any value in the green range is within the recommendation, and you can set your own.
 
-Deploy that file on MEV-Boost the way you already deploy config. On Commit-Boost, copy the cutoff into the config that sidecar already uses.
+![Accelerate, Adjust. Config for, Download YAML, and Our recommendation are marked.](/console/09-accelerate-adjust.png)
 
-**Review cutoff**, on the banner after a cutoff is recorded, opens the editor instead of the typed form. **I have adjusted my cutoff** records the sliders. **Back to results** leaves the editor. In that editor, **Configuration matches the file you uploaded** means you have not moved the cutoff since the upload. **Unsaved changes to the cutoff** means the editor and the file you uploaded differ. The editor says **Export the new config and deploy it — nothing here reaches your infrastructure.**
+The **Bid cutoff** slider opens zoomed on the values around your current cutoff, so a 20 ms step is visible. **Show full range** shows the whole slot. **Zoom to the recommendation** returns. Marks on the track name **Current** and **Recommended**.
 
-What changed after you deployed is under **MEV outcome** on this screen, not on the upload panel. See [Acceleration](/accelerate/where-results-show).
+Under **Pick a value — or drag the slider**, each chip leads with the value to put in your config, then the move and its meaning, for example **2,039 ms**, **+40 · Recommended**. The legend reads **Recommended range**, **Safer, less MEV**, and **Current**. **Late in slot** has its own slider and chips.
+
+Under the sliders, the lines to update in your config appear once a value differs from the file on record.
+
+## Download and record
+
+**Config for** picks the sidecar: **MEV-Boost**, **Commit-Boost**, or **Both**. The button names the file: **Download YAML**, **Download TOML**, or **Download both**, which saves the two files separately.
+
+Deploy the file the way you already deploy sidecar config. Then **I have adjusted my cutoff** records the slider values as what you deployed. Recording it does not deploy it. **Back to results** leaves the editor.
+
+What changed after you deployed is under **MEV outcome** on this screen. See [Acceleration](/accelerate/where-results-show).

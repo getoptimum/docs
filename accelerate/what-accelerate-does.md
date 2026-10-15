@@ -5,7 +5,7 @@ description: A bid cutoff for the MEV sidecar you already run, from slots you al
 
 # What Accelerate does
 
-The line under the **Accelerate** heading is **Bid optimization for the slots you propose.**
+The line under the **Accelerate** heading is **Deliver blocks faster for the slots you propose.**
 
 Accelerate recommends the bid cutoff for the MEV sidecar you already run, so a proposal can take a better bid without waiting so long that the block is late. The number comes from slots your validators already proposed. You upload the sidecar configuration you run, read the recommendation, and download a config to deploy yourself. Console never writes to your infrastructure. Nothing on this screen changes validator behaviour until you deploy that file.
 
@@ -21,7 +21,7 @@ If you registered as an entity and **Accelerate** is not in the sidebar, it is n
 
 1. **Start Accelerate** — prerequisites, including the disclaimer.
 2. **Recommendation** — your config, and the recommended bid cutoff once the window can support one.
-3. **Adjust** — you record the cutoff you will deploy, then download the config on file.
+3. **Adjust** — you set the cutoff on the sliders, download the config for MEV-Boost or Commit-Boost, and record what you deployed.
 
 Where you land on a return visit follows what is already stored. No acceptance sends you to step 1. Acceptance without a saved config sends you to the recommendation. A saved config sends you to adjust. If the terms change, the previous acceptance no longer counts and you start again.
 
@@ -29,7 +29,9 @@ When a measurement cycle finishes and you have not answered it, **Accelerate** i
 
 ## What it measures
 
-Every figure is measured on slots you already proposed. Console does not forecast an annual gain. The figures sit on this screen, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show).
+Every figure is measured on slots you already proposed. The figures sit on this screen, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show).
+
+Before you accept the terms, the top of the screen says **Accept the terms to see your modelled gain**. That gain is the annual figure a later bid cutoff could have captured on the slots you propose, from the simulation the terms describe. See [Readiness](/accelerate/readiness#modelled-annual-gain).
 
 ## Older names on some screens
 

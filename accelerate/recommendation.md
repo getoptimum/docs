@@ -11,13 +11,15 @@ The notice says the configuration information is a simulation from current netwo
 
 Read the text in the dialog. The copy on this page is a summary so you know what the step is. The dialog is the agreement.
 
-After you accept, **Bid cutoff** asks you to upload the MEV sidecar configuration you actually run, whether that sidecar is MEV-Boost or Commit-Boost. Console compares it with what your proposals show. It still does not change anything on your side.
+After you accept, **Your MEV-Boost setup** asks you to upload the config you run, with **Upload config** or by dropping the file on the box. Your cutoff, your `late_in_slot_time_ms`, and your relay set are read from it, so the recommendation is against what you actually run. Console compares it with what your proposals show. It still does not change anything on your side.
+
+The upload reads MEV-Boost YAML. If you run Commit-Boost, upload a MEV-Boost YAML with the same `timeout_get_header_ms`, `late_in_slot_time_ms`, and relay URLs. The Adjust step exports either format. See [MEV sidecar configuration](/accelerate/adjust-mev-boost).
+
+A file Console cannot read is refused with **That was not accepted** and the reason, named at the line.
 
 If the configuration is already on file and the terms are not yet acknowledged, the screen says **One thing before your recommendation**. **Read and acknowledge** opens the same dialog. The recommendation stays hidden until you accept.
 
-If you have no file yet, **Download a starter file**. The download is `mev-boost-config.yaml`, with the known mainnet relays and MEV-Boost’s default cutoff. That file is the MEV-Boost shape. It is a starting point, not a config Console has applied. If you run Commit-Boost, start from the config that sidecar already uses.
-
-Until a file is on record, the report has no cutoff to judge proposals by. The screen says **No configuration uploaded yet**.
+Until a file is on record, the report has no cutoff to judge proposals by, and step 2 shows the upload.
 
 The recommendation itself is withheld below 200 measured proposals. The callout is **Not enough proposals yet for a recommendation**. See [Readiness](/accelerate/readiness).
 

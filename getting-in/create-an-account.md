@@ -18,7 +18,7 @@ Open [Console](https://console.getoptimum.xyz/). The sign-in card has two tabs.
 
 <img class="console-card" src="/console/02-create-account.png" alt="Create account tab. Sign up with Google and Sign up with Microsoft are marked." />
 
-The rail, once registration starts, is **Account type**, then **Register org**. **Register org** includes **Do you run validators?** Registration ends when the account exists. Gateway setup, validator indices, and Accelerate are on the console after that, not on this rail.
+Registration is two screens. The first asks **How do you take part?** The second is **Your organisation**, or **Your details** for an individual, and includes **Do you run validators?** Registration ends when the account exists. Gateway setup, validator indices, and Accelerate are on the console after that.
 
 The last screen is **Your account is ready**. It lists the account type, the organisation or username, the contact, and whether you run validators, then **Go to the console**.
 

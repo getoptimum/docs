@@ -5,7 +5,7 @@ description: The production command Console shows, and how each consensus client
 
 # Connect your gateway
 
-This page covers **1b Start the gateway** and **1c Point your client at the gateway** on Signal, and the same commands in the signup step **Connect your first gateway**.
+This page covers **1b Start the gateway** and **1c Point your client at the gateway** on Signal, and the same commands in the onboarding step **Connect your first gateway**.
 
 ![Signal, Connect. 1a names the gateway. 1b starts it, 1c points the client at it, 1d verifies it.](/console/04-signal-connect.png)
 

@@ -5,7 +5,7 @@ description: How validator indices are submitted, and what Console does with the
 
 # Register keys
 
-The screen is **Validator indices to connect**. The signup rail calls the step **Register keys**.
+Self-serve accounts submit indices on **Activate validators** in the console sidebar. The page shows two counts, **Confirmed** and **Awaiting confirmation**, above the form **Validator indices to connect**. Signal's step 2 is called **Register keys**.
 
 Indices are how Console knows which slots you proposed. They are confirmed by Optimum before they appear in a report. Submitting them does not make them active.
 
@@ -21,12 +21,24 @@ Paste decimal validator indices, or upload a CSV (one per line, or comma separat
 | Were not submitted | This account has reached its limit for validator lookups. Contact support to register the rest. A retry does not raise the limit. |
 | Could not be checked just now | The beacon node did not answer. Nothing is wrong with those indices. Submit them again in a few minutes. |
 
-**Skip for now** writes nothing. You can return from the signup link.
+## What you submitted
 
-After a successful submit, the note on the screen is: submitted, and confirmed before they appear in any report.
+After a submit, **What you submitted** lists every index from that paste or file, each tagged with its outcome. Hover a tag for the reason.
 
-Signal's **Register keys** step does not take the paste. It shows how many indices are on record, and **Register indices** opens **Activate validators**. Signup is where the paste and the CSV upload sit.
+| Tag | Meaning |
+| --- | --- |
+| **submitted** | Waiting for Optimum to confirm it. |
+| **not found** | The beacon node does not know this index. Check it and submit again. |
+| **already claimed** | Another operator holds this index. Contact support if it is yours. |
+| **not checked** | The beacon node did not answer for this index. Submitting again may work. |
+| **no lookups left** | The account ran out of lookups before this index. The limit is for the life of the account, so a retry will not help. |
 
-To add more later, come back from the signup link, use **Activate validators**, or ask support. Invited operator accounts with a set that keeps changing use [Keysync](/keysync/). The bulk screens are on [Onboard in bulk](/signal/onboard-in-bulk). **Gateways & keys** holds gateway keys, not validator indices.
+The list covers your latest submit only. It is built from what you just sent, so Console still never reads your registered indices back to you.
+
+After a successful submit, the note on the screen is: submitted, and confirmed before they appear in any report. **Submit these too** sends another batch.
+
+Signal's **Register keys** step shows how many indices are on record, and **Register indices** opens **Activate validators**. That page is where the paste and the CSV upload sit.
+
+To add more later, use **Activate validators** again, or ask support. Invited operator accounts with a set that keeps changing use [Keysync](/keysync/). The bulk screens are on [Onboard in bulk](/signal/onboard-in-bulk). **Gateways & keys** holds gateway keys, not validator indices.
 
 Accelerate counts only indices that are active on chain. An index still in the activation queue is on record and proposes nothing yet. See [Readiness](/accelerate/readiness).

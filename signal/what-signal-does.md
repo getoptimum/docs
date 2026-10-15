@@ -15,7 +15,7 @@ The pill on that home is **Active** when a gateway was seen recently, **Idle** w
 
 ## Connect
 
-**Set up another gateway**, and the first gateway during signup, use the same three steps.
+**Set up another gateway** uses these steps. Invited accounts connect their first gateway in onboarding, under **Connect your first gateway**, with the same commands.
 
 | Step | On the screen | What you do |
 | --- | --- | --- |
@@ -25,7 +25,9 @@ The pill on that home is **Active** when a gateway was seen recently, **Idle** w
 
 **1a** asks for a **Gateway name**. It has to be unique in your organization. Console suggests one numbered after the gateways you already have. That name is what the command writes as `OPT_GATEWAY_ID`. A name already in use is refused on any other host. Use the existing name only on that gateway's own host, to update it. A gateway that has already enrolled keeps the name stored with its credential, under `$HOME/optimum-gateway/mump2p`.
 
-**1b** asks which mode. **Peer with my consensus client** is the gateway beside a beacon node. **Stream only** is the gateway with no consensus client. An account that does not run validators starts on **Stream only**. Copy the command for the mode you picked. The [stream-only command](/signal/connect-your-gateway#stream-only) is what **Stream only** generates.
+**1b** asks **Where does this gateway send data?** **My consensus client** is the gateway beside a beacon node. **A feed for my consumers** is the stream-only gateway, with no consensus client. An account that does not run validators starts on **A feed for my consumers**. Copy the command for the mode you picked. The [stream-only command](/signal/connect-your-gateway#stream-only) is what **A feed for my consumers** generates.
+
+A feed gateway measures no validators, so its steps are **1 Connect** and **2 Measure**. Its connect steps are **1a** Name the gateway, **1b** Start the gateway, and **1c** Verify the connection.
 
 The pill while you are on these steps is the check: **Not checked**, **Checking**, **Connected**, **Not connected**, **Unknown**, or **Check failed**.
 
@@ -48,7 +50,7 @@ Each key admits up to 1,000 gateways, and your organisation is capped at 1,000 l
 
 | Where you get it | Lasts | Use it for |
 | --- | --- | --- |
-| Signup, **Connect your first gateway** | 14 days | The first gateway, when the person signing up is not the person on the host. |
+| Onboarding, **Connect your first gateway** | 14 days | An invited account's first gateway, when the person onboarding is not the person on the host. |
 | Signal, **Create an enrollment key that lasts a day** | 1 day | A command you are about to paste. It goes straight into the command. |
 | **Gateways & keys** → **Enrollment keys**, **Generate enrollment key** | You choose in **Valid for (days)**, up to 365 | A rollout across many hosts or over several weeks. |
 

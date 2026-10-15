@@ -32,4 +32,4 @@ If you answer yes, Console also asks:
 
 There is no separate terms screen. On this screen, tick **I have read and agree to the terms**. The checkbox opens the agreement. **Accept the terms to continue** if you submit without it.
 
-Submitting this screen is what creates the organisation. Connect is next when enrolment is available for the account. Otherwise you go to validator indices, if you run validators, or straight to a ready account.
+Submitting this screen is what creates the organisation. The next screen is **Your account is ready**, then **Go to the console**. You connect a gateway on [Signal](/signal/what-signal-does), and submit validator indices on [Activate validators](/signal/register-keys), from the console.

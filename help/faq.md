@@ -27,7 +27,7 @@ It cannot be shown again. On Signal, create a one-day key into the command, or m
 
 ## Which enrollment key should I use?
 
-The one from signup lasts 14 days. The one from Signal lasts a day. For a fleet rolled out over weeks, mint one on **Enrollment keys** and set **Valid for (days)**. [Why enrollment keys](/signal/what-signal-does#why-enrollment-keys).
+The one from onboarding, **Connect your first gateway**, lasts 14 days. The one from Signal lasts a day. For a fleet rolled out over weeks, mint one on **Enrollment keys** and set **Valid for (days)**. [Why enrollment keys](/signal/what-signal-does#why-enrollment-keys).
 
 ## I do not see Accelerate
 
