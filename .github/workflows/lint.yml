@@ -36,3 +36,10 @@ jobs:
 
       - name: Lint markdown
         run: make lint-markdown
+
+      # vercel.json serves production and public/_redirects serves the
+      # Cloudflare preview; neither platform reads the other's file, so a rule
+      # added to one and not the other is a link that works where it was tested
+      # and 404s where it ships.
+      - name: Check redirect parity
+        run: make check-redirects

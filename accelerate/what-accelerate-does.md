@@ -1,0 +1,40 @@
+---
+title: What Accelerate does
+description: A bid cutoff for the MEV sidecar you already run, from slots you already proposed. Console does not apply it.
+---
+
+# What Accelerate does
+
+Under the **Accelerate** heading, the screen reads **Accepting bids closer to your deadline captures more MEV. Accelerate measures what that would have been worth on the blocks you propose, and recommends a cutoff from your own slots.**
+
+Accelerate recommends the bid cutoff for the MEV sidecar you already run, so a proposal can take a better bid without waiting so long that the block is late. The number comes from slots your validators already proposed. You upload the sidecar configuration you run, read the recommendation, and download a config to deploy yourself. Console never writes to your infrastructure. Nothing on this screen changes validator behaviour until you deploy that file.
+
+## Who can use it
+
+Accelerate is enabled per organisation, by Optimum. It is offered to **entity** accounts: a recommendation needs 200 measured proposals ([Readiness](/accelerate/readiness)), and an individual operator rarely proposes that many in a window short enough to act on. See [Account type](/getting-in/account-type).
+
+Your account type is not what opens it. Being an entity does not enable Accelerate on its own, and an **individual** account can be enabled if asking makes sense for you.
+
+If **Accelerate** is not in the sidebar, it is not enabled for your organisation. Ask [support](/help/support). There is no other URL to use.
+
+## The steps
+
+1. **Start Accelerate** — prerequisites, including the disclaimer.
+2. **Recommendation** — your config, and the recommended bid cutoff once the window can support one.
+3. **Adjust** — you set the cutoff on the sliders, download the config for MEV-Boost or Commit-Boost, and record what you deployed.
+
+Where you land on a return visit follows what is already stored. No acceptance sends you to step 1. Acceptance without a saved config sends you to the recommendation. A saved config sends you to adjust. If the terms change, the previous acceptance no longer counts and you start again.
+
+When a measurement cycle finishes and you have not answered it, **Accelerate** in the sidebar shows **1**, and the screen leads with **Your measurement cycle is complete**. **Review the recommendation** opens step 2. Dismissing hides that notice until the next cycle completes.
+
+## What it measures
+
+Every figure is measured on slots you already proposed. The figures sit on this screen, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show).
+
+Before you accept the terms, the top of the screen says **Accept the terms to see your modelled gain**. That gain is the annual figure a later bid cutoff could have captured on the slots you propose, from the simulation the terms describe. See [Readiness](/accelerate/readiness#modelled-annual-gain).
+
+## Older names on some screens
+
+The sidebar entry and the screen heading are **Accelerate**. Results are **MEV outcome** on that screen. There is no **MumBoost** item under **Performance**, and the title **MEV Cutoff Optimisation** is not on this screen.
+
+A direct link to the older report can still show two MumBoost messages: **Could not check the MumBoost terms**, and **This operator has not accepted the MumBoost terms**. Both mean the same check on Accelerate. See [Acceleration](/accelerate/where-results-show).
