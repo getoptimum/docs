@@ -9,7 +9,7 @@ You run one container, the Optimum gateway, on a host that can reach your beacon
 
 **Accelerate** is separate. It reads slots your validators already proposed and recommends a bid cutoff, so a proposal can take a better bid without waiting so long that the block is late. You apply that cutoff on the MEV sidecar you already run, MEV-Boost or Commit-Boost. Console does not change your infrastructure.
 
-Both live in [Console](https://console.getoptimum.xyz/). This site is the runbook. Install details, every setting, and metrics are in the [gateway manual](/operate/run-the-gateway).
+Both live in [Console](https://console.getoptimum.io/). This site is the runbook. Install details, every setting, and metrics are in the [gateway manual](/operate/run-the-gateway).
 
 ::: info
 There is no Optimum-hosted multiaddr to point a client at. The client peers the gateway you started beside it. The peer id comes from that gateway.

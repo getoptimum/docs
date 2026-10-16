@@ -7,6 +7,12 @@ description: Signal puts a gateway beside your beacon node so your validators re
 
 Signal is the gateway beside your beacon node. It receives blocks from the Optimum mesh and hands them to your consensus client, so your validators receive blocks sooner. That is what improves attestation performance.
 
+## When Signal is not on your sidebar
+
+Signal is enabled by Optimum, and it is not open to every organisation yet. If there is no **Signal** entry in the sidebar, it is not enabled for yours: the screens below are not reachable, `/dashboard/operators/<your-id>/signal` returns you to your organisation's home, and **Verify the connection** answers **This check is not available right now.**
+
+That is a switch on Optimum's side, not a fault on yours and not something a URL gets around. Ask [support](/help/support) whether Signal is open for your organisation. Everything on these pages describes the screens as they appear once it is.
+
 Once a gateway is enrolled, Signal opens on a home. The banner says whether Signal is active, how many gateways were seen in the last ten minutes, and how many indices are measured. Under it, four cards: blocks received earlier, attestation accuracy, gateways online, and indices measured. **Set up another gateway** starts the connect steps. **Gateways & keys** is where you mint enrollment keys and stream consumer tokens.
 
 ![Signal home. Signal is active, with the four cards, Set up another gateway, and Gateways & keys.](/console/03-signal-home.png)

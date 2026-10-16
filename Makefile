@@ -22,4 +22,8 @@ lint-markdown:
 	@echo "🧹  Linting markdown..."
 	@$(YARN) lint:md
 
-.PHONY: run-dev build preview lint lint-markdown
+check-redirects:
+	@echo "🧭  Checking redirect parity..."
+	@node scripts/check-redirects.mjs
+
+.PHONY: run-dev build preview lint lint-markdown check-redirects

@@ -5,17 +5,17 @@ description: A bid cutoff for the MEV sidecar you already run, from slots you al
 
 # What Accelerate does
 
-The line under the **Accelerate** heading is **Deliver blocks faster for the slots you propose.**
+Under the **Accelerate** heading, the screen reads **Accepting bids closer to your deadline captures more MEV. Accelerate measures what that would have been worth on the blocks you propose, and recommends a cutoff from your own slots.**
 
 Accelerate recommends the bid cutoff for the MEV sidecar you already run, so a proposal can take a better bid without waiting so long that the block is late. The number comes from slots your validators already proposed. You upload the sidecar configuration you run, read the recommendation, and download a config to deploy yourself. Console never writes to your infrastructure. Nothing on this screen changes validator behaviour until you deploy that file.
 
 ## Who can use it
 
-Accelerate is for **entity** accounts. An **individual** account has Signal only. See [Account type](/getting-in/account-type).
+Accelerate is enabled per organisation, by Optimum. It is offered to **entity** accounts: a recommendation needs 200 measured proposals ([Readiness](/accelerate/readiness)), and an individual operator rarely proposes that many in a window short enough to act on. See [Account type](/getting-in/account-type).
 
-A recommendation needs 200 measured proposals ([Readiness](/accelerate/readiness)). An individual operator rarely proposes that many in a window short enough to act on, so the flow is offered to entities.
+Your account type is not what opens it. Being an entity does not enable Accelerate on its own, and an **individual** account can be enabled if asking makes sense for you.
 
-If you registered as an entity and **Accelerate** is not in the sidebar, it is not enabled for your account yet. Ask [support](/help/support). There is no other URL to use.
+If **Accelerate** is not in the sidebar, it is not enabled for your organisation. Ask [support](/help/support). There is no other URL to use.
 
 ## The steps
 

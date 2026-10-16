@@ -13,6 +13,8 @@ Start with the failure you can see. For the four failures Console names under Ve
 
 **No operator account linked to your user.** Registration did not finish. Use **Finish setting up your account** if it is there, or ask [support](/help/support). [No organisation linked](/getting-in/create-an-account#no-organisation-linked).
 
+**No Signal entry in the sidebar.** Signal is enabled by Optimum and is not open to every organisation yet. The `/signal` path returns you to your organisation's home, and there is no URL that gets around it: ask [support](/help/support). [When Signal is not on your sidebar](/signal/what-signal-does#when-signal-is-not-on-your-sidebar).
+
 ## Starting the container
 
 **`Conflict. The container name "/optimum-gateway" is already in use`.** An earlier container still holds the name, running or stopped. Remove it and run the command again:
@@ -57,7 +59,7 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 ## Accelerate
 
-**No Accelerate entry.** Accelerate is for entity accounts. An individual account has Signal only. An entity account without the entry: ask [support](/help/support). [Who can use it](/accelerate/what-accelerate-does#who-can-use-it).
+**No Accelerate entry.** Accelerate is enabled per organisation, by Optimum, and is offered to entity accounts. The entry is missing until yours is enabled, whatever your account type: ask [support](/help/support). [Who can use it](/accelerate/what-accelerate-does#who-can-use-it).
 
 **Validator keys registered says Activating.** Your indices are on record and none is active on chain yet. Pending validators are not assigned proposals, so nothing is measured until they activate. [Readiness](/accelerate/readiness).
 
