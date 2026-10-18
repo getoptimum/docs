@@ -13,7 +13,7 @@ Optimum does not host gateways. Every path below is a container you run on your 
 
 The gateway runs beside the beacon node. You peer the consensus client, then register validator indices. Signal is the sidebar entry for that.
 
-Accelerate is a later step, offered to entity accounts and enabled per organisation by Optimum. It needs active validators and enough proposed slots to measure. It is not part of connecting the gateway. See [Account type](/getting-in/account-type).
+Accelerate is a later step, offered to entity accounts. The sidebar shows it once Optimum enables your organisation and you have at least 200 active validators on mainnet. It is not part of connecting the gateway. See [Account type](/getting-in/account-type).
 
 ## You do not run validators
 

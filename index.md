@@ -56,14 +56,14 @@ The gateway is a peer of your consensus client. It passes blocks to the client a
 | | What it does | Where you see it |
 | --- | --- | --- |
 | **Signal** | The gateway hands your beacon node blocks from the mesh, so your validators receive blocks sooner. That improves attestation performance. | The Signal home in Console, then **Network** under **Performance** |
-| **Accelerate** | Recommends a bid cutoff from slots your validators already proposed, so you can take a better bid without missing the slot. You download the config and deploy it on your own MEV sidecar. Offered to entity accounts, enabled per organisation. | Accelerate in Console, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show). |
+| **Accelerate** | Recommends a bid cutoff from slots your validators already proposed, so you can take a better bid without missing the slot. You download the config and deploy it on your own MEV sidecar. Offered to entity accounts. Shown when Optimum enables the organisation and it has at least 200 active validators on mainnet. | Accelerate in Console, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show). |
 
 Console never changes your infrastructure. Optimum does not host gateways. You run the gateway and apply any configuration yourself.
 
 ## Who it is for
 
 * **Staking providers and other entities.** Run a gateway beside each beacon node, register your validator indices so Console can measure the result, then use Accelerate on your proposals.
-* **Individuals who run validators.** Signal works the same way for you. Accelerate is offered to entity accounts, because the recommendation needs 200 measured proposals. [Account type](/getting-in/account-type).
+* **Individuals who run validators.** Signal works the same way for you. Accelerate is offered to entity accounts, and the sidebar shows it once Optimum enables the organisation and it has at least 200 active validators on mainnet. [Account type](/getting-in/account-type).
 * **Participants without validators.** Run a stream-only gateway to receive blocks from the mesh and serve them to your own consumers. This is a supported account.
 
 ## The path
@@ -73,7 +73,7 @@ Start here. This is the operator setup.
 1. **[What Optimum does](/start/what-optimum-does).** How the pieces fit, which path is yours, and what the host needs.
 2. **[Create an account](/getting-in/create-an-account).** Register your organisation in Console.
 3. **[Signal](/signal/what-signal-does).** Name the gateway, start it, peer your consensus client, verify it, and register your validator indices.
-4. **[Accelerate](/accelerate/what-accelerate-does).** Offered to entity accounts, enabled per organisation. Once enough of your proposals are measured, read the cutoff recommendation and set it on your MEV sidecar.
+4. **[Accelerate](/accelerate/what-accelerate-does).** Shown once Optimum enables your organisation and you have at least 200 active validators on mainnet. Then, once enough proposals are measured, read the cutoff recommendation and set it on your MEV sidecar.
 
 [Open Console](https://console.getoptimum.io/)
 

@@ -11,11 +11,11 @@ Accelerate recommends the bid cutoff for the MEV sidecar you already run, so a p
 
 ## Who can use it
 
-Accelerate is enabled per organisation, by Optimum. It is offered to **entity** accounts: a recommendation needs 200 measured proposals ([Readiness](/accelerate/readiness)), and an individual operator rarely proposes that many in a window short enough to act on. See [Account type](/getting-in/account-type).
+The sidebar shows **Accelerate** when Optimum has enabled it for your organisation and you have at least 200 active validators on mainnet. It is offered to **entity** accounts, which is who reaches that number. Registering as an entity does not enable it. An individual account with at least 200 active validators on mainnet can be enabled the same way. See [Account type](/getting-in/account-type).
 
-Your account type is not what opens it. Being an entity does not enable Accelerate on its own, and an **individual** account can be enabled if asking makes sense for you.
+A cutoff recommendation, once you are on the screen, still needs 200 measured proposals. [Readiness](/accelerate/readiness).
 
-If **Accelerate** is not in the sidebar, it is not enabled for your organisation. Ask [support](/help/support). There is no other URL to use.
+If **Accelerate** is not in the sidebar, your organisation is not enabled or it has fewer than 200 active validators on mainnet. Below that number the entry stays hidden. Otherwise ask [support](/help/support). There is no other URL to use.
 
 ## The steps
 

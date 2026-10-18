@@ -31,11 +31,11 @@ The one from onboarding, **Connect your first gateway**, lasts 14 days. The one 
 
 ## I do not see Signal
 
-Signal is enabled by Optimum and is not open to every organisation yet. If there is no **Signal** entry in the sidebar, the screens are not reachable and no URL gets around it — **Verify the connection** answers **This check is not available right now.** Ask [support](/help/support) whether Signal is open for your organisation. [When Signal is not on your sidebar](/signal/what-signal-does#when-signal-is-not-on-your-sidebar).
+Signal is switched on by Optimum. Until it is, the sidebar has no **Signal** entry, the screens are not reachable, and no URL gets around it. **Verify the connection** answers **This check is not available right now.** Ask [support](/help/support). [When Signal is not on your sidebar](/signal/what-signal-does#when-signal-is-not-on-your-sidebar).
 
 ## I do not see Accelerate
 
-Accelerate is enabled per organisation, by Optimum, and is offered to entity accounts. If the entry is missing, yours is not enabled yet — registering as an entity does not enable it on its own: ask [support](/help/support). [What Accelerate does](/accelerate/what-accelerate-does).
+The sidebar shows Accelerate when Optimum has enabled it for your organisation and you have at least 200 active validators on mainnet. Registering as an entity does not enable it. Below 200 active validators the entry stays hidden. Otherwise ask [support](/help/support). [What Accelerate does](/accelerate/what-accelerate-does).
 
 ## I do not see a performance report
 
