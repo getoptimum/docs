@@ -1,6 +1,7 @@
 {
   "scripts": {
     "docs:dev": "vitepress dev",
+    "build": "vitepress build",
     "docs:build": "vitepress build",
     "docs:preview": "vitepress preview",
     "lint": "eslint --fix",
@@ -23,7 +24,8 @@
     "typescript": "^5.2.2",
     "typescript-eslint": "^8.26.1",
     "vitepress": "^1.6.3",
-    "vue-eslint-parser": "^10.1.1"
+    "vue-eslint-parser": "^10.1.1",
+    "wrangler": "^4.144.0"
   },
   "dependencies": {
     "@fontsource-variable/geist": "^5.2.9",
