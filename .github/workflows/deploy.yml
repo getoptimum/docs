@@ -1,0 +1,86 @@
+name: Deploy Site
+
+# Deploys through GitHub Actions rather than Cloudflare Workers Builds, for one
+# reason: the hostname.
+#
+# wrangler.toml declares docs.getoptimum.xyz as a custom_domain route, and
+# attaching a custom domain is two operations -- create the Worker binding, and
+# publish a DNS record in the zone. A credential with Workers permission but no
+# zone DNS permission does only the first, leaving a binding that reports
+# enabled, with a certificate, and a hostname that resolves to nothing. That is
+# what Workers Builds produced on 2026-10-20, and the docs site was down until
+# it was rolled back.
+#
+# CLOUDFLARE_API_TOKEN must therefore carry BOTH:
+#   Account -> Workers Scripts -> Edit
+#   Zone    -> DNS             -> Edit   (on getoptimum.xyz)
+#
+# This mirrors how optimum-cross-functional-dashboard ships console.getoptimum.io
+# and dev-console.getoptimum.xyz, which use the same custom_domain declaration
+# and have never had this problem.
+
+on:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+# One deploy at a time, and never cancel one in flight: a half-applied deploy
+# can leave the route attached to a version that is no longer being shipped.
+concurrency:
+  group: deploy-production
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to Cloudflare Workers
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          # Matches build.yml, so a build that passes on a PR builds the same
+          # way when it merges.
+          node-version: 23
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      - name: Build
+        run: make build
+
+      # Fail here rather than shipping an empty site: wrangler publishes an
+      # assets directory happily whether or not the build put anything in it,
+      # and an empty dist deploys as a 404 on every path.
+      - name: Verify build output
+        run: |
+          test -f .vitepress/dist/index.html \
+            || { echo "::error::.vitepress/dist/index.html missing; build produced no site"; exit 1; }
+
+      - name: Deploy
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+        run: yarn wrangler deploy
+
+      # The deploy above is what attaches docs.getoptimum.xyz. It reports success
+      # on the Worker upload alone, so the hostname is checked separately --
+      # resolving is the thing that was actually broken, and the only signal that
+      # the DNS half of the custom domain landed.
+      - name: Verify the hostname serves this deploy
+        run: |
+          for i in $(seq 1 10); do
+            code=$(curl -s -o /dev/null -w '%{http_code}' --max-time 10 https://docs.getoptimum.xyz/ || true)
+            echo "attempt $i: HTTP $code"
+            [ "$code" = "200" ] && exit 0
+            sleep 15
+          done
+          echo "::error::docs.getoptimum.xyz did not serve a 200 after the deploy."
+          echo "::error::Check the Worker has a custom domain AND a DNS record; a binding without a record resolves to nothing."
+          exit 1
