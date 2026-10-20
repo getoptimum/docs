@@ -9,5 +9,18 @@
     "directory": "./.vitepress/dist",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
-  }
+  },
+  // The public hostname. `wrangler deploy` creates the DNS record and the
+  // certificate alongside the Worker binding; attaching the domain by hand
+  // leaves a binding with no record published, which resolves to nothing.
+  //
+  // This has to live in THIS file. wrangler resolves config as
+  // wrangler.json -> wrangler.jsonc -> wrangler.toml and stops at the first
+  // hit, so the same block in a wrangler.toml beside it is never read: the
+  // deploy succeeds, prints only the workers.dev URL, and the hostname stays
+  // down. That is what happened on 2026-10-20. There is now exactly one
+  // wrangler config in this repo, as in optimum-cross-functional-dashboard.
+  "routes": [
+    { "pattern": "docs.getoptimum.xyz", "custom_domain": true }
+  ]
 }
