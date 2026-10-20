@@ -3,13 +3,18 @@ name: Deploy Site
 # Deploys through GitHub Actions rather than Cloudflare Workers Builds, for one
 # reason: the hostname.
 #
-# wrangler.toml declares docs.getoptimum.xyz as a custom_domain route, and
+# wrangler.jsonc declares docs.getoptimum.xyz as a custom_domain route, and
 # attaching a custom domain is two operations -- create the Worker binding, and
 # publish a DNS record in the zone. A credential with Workers permission but no
 # zone DNS permission does only the first, leaving a binding that reports
 # enabled, with a certificate, and a hostname that resolves to nothing. That is
 # what Workers Builds produced on 2026-10-20, and the docs site was down until
 # it was rolled back.
+#
+# wrangler.jsonc, not wrangler.toml: wrangler resolves wrangler.json ->
+# wrangler.jsonc -> wrangler.toml and stops at the first hit. This repo briefly
+# had both, with the route in the TOML, so the deploy exited 0 while publishing
+# no hostname at all. There is now exactly one wrangler config; keep it that way.
 #
 # CLOUDFLARE_API_TOKEN must therefore carry BOTH:
 #   Account -> Workers Scripts -> Edit
