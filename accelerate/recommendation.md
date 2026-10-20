@@ -11,11 +11,13 @@ The notice says the configuration information is a simulation from current netwo
 
 Read the text in the dialog. The copy on this page is a summary so you know what the step is. The dialog is the agreement.
 
-After you accept, **Your MEV-Boost setup** asks you to upload the config you run, with **Upload config** or by dropping the file on the box. Your cutoff, your `late_in_slot_time_ms`, and your relay set are read from it, so the recommendation is against what you actually run. Console compares it with what your proposals show. It still does not change anything on your side.
+After you accept, **Your MEV sidecar setup** asks you to upload the config you run. Drop the file on the box, which says **Drop your MEV-Boost or Commit-Boost config**, or use **Upload config**. Your cutoff, your `late_in_slot_time_ms`, and your relay set are read from it, so the recommendation is against what you actually run. Console compares it with what your proposals show. It still does not change anything on your side.
 
-The upload reads MEV-Boost YAML. If you run Commit-Boost, upload a MEV-Boost YAML with the same `timeout_get_header_ms`, `late_in_slot_time_ms`, and relay URLs. The Adjust step exports either format. See [MEV sidecar configuration](/accelerate/adjust-mev-boost).
+**MEV-Boost or Commit-Boost.** Upload the file you already run: mev-boost `config.yaml`, or Commit-Boost `cb-config.toml`. From a Commit-Boost file it reads the `[pbs]` timings and each `[[relays]]` url. The rest of that file, such as chain, port, signer, and metrics, is left unread, because what Console exports back is a `[pbs]` block you merge into `cb-config.toml`, not a replacement for that file. See [MEV sidecar configuration](/accelerate/adjust-mev-boost).
 
-A file Console cannot read is refused with **That was not accepted** and the reason, named at the line.
+No config yet, or the file was refused? Download a starter for **MEV-Boost** or **Commit-Boost**. Neither file is a recommendation. The MEV-Boost file is a complete config. The Commit-Boost file is a `[pbs]` block to merge into the `cb-config.toml` you run. The starter is not offered once a config is on file.
+
+A file Console cannot read is refused with **That file was not accepted**. Every problem is listed, each with its line. When there are several, the title includes the count.
 
 If the configuration is already on file and the terms are not yet acknowledged, the screen says **One thing before your recommendation**. **Read and acknowledge** opens the same dialog. The recommendation stays hidden until you accept.
 
@@ -23,7 +25,7 @@ Until a file is on record, the report has no cutoff to judge proposals by, and s
 
 The recommendation itself is withheld below 200 measured proposals. The callout is **Not enough proposals yet for a recommendation**. See [Readiness](/accelerate/readiness).
 
-Once the window can support a number, the panel is **Recommended bid cutoff**, in milliseconds, with **I am ready to adjust**. The line under the number is the move from your current cutoff, and how much time that leaves before local block building. **Replace the config on file** uploads a different file.
+Once the window can support a number, the panel is **Recommended bid cutoff**, in milliseconds, with **I am ready to adjust — next step**. The line under the number is the move from your current cutoff, and how much time that leaves before local block building. **Replace the config on file** uploads a different file, under the heading **Replace your MEV sidecar config**.
 
 ![Accelerate, Recommendation. Recommended bid cutoff and I am ready to adjust are marked.](/console/11-accelerate-recommendation.png)
 

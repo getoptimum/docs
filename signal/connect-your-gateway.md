@@ -13,9 +13,9 @@ This page covers **1b Start the gateway** and **1c Point your client at the gate
 
 `OPT_GATEWAY_CLUSTER_ID` has no default. The process exits if it is empty. Console sets it to the cluster the key was minted for, and the block below shows the mainnet value so you can read the shape. Copy the value Console prints. A different value authenticates and then fails every mesh handshake.
 
-The image Console hands out for production is `v1.3.2`. `-config ""` is required. The flag defaults to `config/app_conf.yml`, which is not in the image, and the process exits before it reads any environment variable.
+The image Console hands out for production is `docker.io/getoptimum/gateway:latest`. That tag moves when a gateway release ships. `-config ""` is required. The flag defaults to `config/app_conf.yml`, which is not in the image, and the process exits before it reads any environment variable.
 
-Do not add `OPT_CHAIN_ID`. This release does not read it. The chain comes from the enrollment key.
+Do not add `OPT_CHAIN_ID`. Console does not put it in the command. The chain comes from the enrollment key.
 
 Auth and bootstrap are built in: `https://auth.getoptimum.io` and `https://bootstrap.getoptimum.io`. They are not in the command. Set `OPT_REMOTE_AUTH_URL` only when Optimum gives you another environment, and set `OPT_REMOTE_BOOTSTRAP_URL` to the bootstrap for that same environment. An auth URL pointed elsewhere, with the default bootstrap, enrols in one place and peers in another.
 
@@ -36,7 +36,7 @@ docker run -d --name optimum-gateway \
   -e OPT_REMOTE_PUSH_ENABLE=true \
   -v "$HOME/optimum-gateway/libp2p":/tmp/libp2p \
   -v "$HOME/optimum-gateway/mump2p":/tmp/mump2p \
-  docker.io/getoptimum/gateway:v1.3.2 -config ""
+  docker.io/getoptimum/gateway:latest -config ""
 ```
 
 On an SELinux host, add `:z` after each container path. That is what Console’s SELinux option does. `:z` is shared, so a second gateway on the same host can use its own subdirectory under the same parent.
@@ -68,7 +68,7 @@ docker run -d --name optimum-gateway \
   -e OPT_STREAM_GRPC_ADDR=0.0.0.0:9601 \
   -v "$HOME/optimum-gateway/libp2p":/tmp/libp2p \
   -v "$HOME/optimum-gateway/mump2p":/tmp/mump2p \
-  docker.io/getoptimum/gateway:v1.3.2 -config ""
+  docker.io/getoptimum/gateway:latest -config ""
 ```
 
 Changing any `-e` means replacing the container, not restarting it. A restart keeps the old environment. Re-running without removing it fails because the name is taken.

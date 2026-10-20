@@ -11,7 +11,7 @@ A cutoff recommendation needs 200 measured proposals, across all your validators
 
 ## Modelled annual gain
 
-The top of step 1 is about the modelled gain: what a later bid cutoff could have captured on blocks you already proposed, held at that rate for a year. It is read from the simulation the terms describe, so before you accept them the screen says **Accept the terms to see your modelled gain**.
+The top of step 1 is about the modelled gain: what a later bid cutoff could have captured on blocks you already proposed, held at that rate for a year. It is read from the simulation the terms describe, so before you accept them the screen says **Accept the terms to see your modelled gain**. After you accept, the annual figure shows in that place.
 
 The other answers in that place:
 

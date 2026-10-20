@@ -13,11 +13,13 @@ Signal is switched on by Optimum. Until it is, the sidebar has no **Signal** ent
 
 That switch covers every account. It is not a fault in yours, and no URL gets around it. Ask [support](/help/support). Everything on these pages describes the screens as they appear once Signal is on.
 
-Once a gateway is enrolled, Signal opens on a home. The banner says whether Signal is active, how many gateways were seen in the last ten minutes, and how many indices are measured. Under it, four cards: blocks received earlier, attestation accuracy, gateways online, and indices measured. **Set up another gateway** starts the connect steps. **Gateways & keys** is where you mint enrollment keys and stream consumer tokens.
+Once a gateway is enrolled, Signal opens on a home. The line under the heading is **Your validators receive blocks sooner, which improves attestation performance. A gateway you run joins Optimum's mesh, which often carries a block before public gossip reaches you.** The banner says **Signal is active** when a gateway was seen recently, and it counts gateways online and indices assigned. Under it, four cards: **Blocks received earlier**, **Attestation accuracy**, **Gateways online** (seen in the last ten minutes), and **Indices assigned**. **Set up another gateway** starts the connect steps. **Gateways & keys** is where you mint enrollment keys and consumer tokens.
 
 ![Signal home. Signal is active, with the four cards, Set up another gateway, and Gateways & keys.](/console/03-signal-home.png)
 
 The pill on that home is **Active** when a gateway was seen recently, **Idle** when none was, and **Unknown** when the status could not be read. **View gains** opens the attestation report once weekly reports are running.
+
+An account that does not run validators does not get those four cards. The banner counts gateways online, and the only card is **Gateways online**. Block timing and attestation accuracy are measured against that account's own validators, so they are not on this home.
 
 ## Connect
 

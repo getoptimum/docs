@@ -18,7 +18,7 @@ Optimum has no write access to either sidecar.
 
 ## The Adjust step
 
-From the recommendation, **I am ready to adjust** opens step 3, **Adjust**. **Review cutoff**, on the banner after a cutoff is recorded, opens the same editor.
+From the recommendation, **I am ready to adjust — next step** opens step 3, **Adjust**. **Review cutoff**, on the banner after a cutoff is recorded, opens the same editor.
 
 The top card says **Configuration matches the file you uploaded** until you move a value, then **Unsaved changes to the cutoff**, with **Export the new config and deploy it — nothing here reaches your infrastructure.**
 

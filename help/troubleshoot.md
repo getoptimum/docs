@@ -67,4 +67,4 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 ## Past the Console command
 
-Config keys, log lines, and metric names are in [Troubleshooting](https://getoptimum.github.io/optimum-gateway/versions/latest/troubleshoot) for gateway `v1.3.2`.
+Config keys, log lines, and metric names are in [Troubleshooting](https://getoptimum.github.io/optimum-gateway/versions/latest/troubleshoot).

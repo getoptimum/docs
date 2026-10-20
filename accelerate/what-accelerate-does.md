@@ -31,7 +31,7 @@ When a measurement cycle finishes and you have not answered it, **Accelerate** i
 
 Every figure is measured on slots you already proposed. The figures sit on this screen, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show).
 
-Before you accept the terms, the top of the screen says **Accept the terms to see your modelled gain**. That gain is the annual figure a later bid cutoff could have captured on the slots you propose, from the simulation the terms describe. See [Readiness](/accelerate/readiness#modelled-annual-gain).
+Before you accept the terms, the top of the screen says **Accept the terms to see your modelled gain**. After you accept, that place shows the annual figure: what a later bid cutoff could have captured on the slots you propose, from the simulation the terms describe. See [Readiness](/accelerate/readiness#modelled-annual-gain).
 
 ## Older names on some screens
 
