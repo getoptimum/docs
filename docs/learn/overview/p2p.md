@@ -1,3 +1,7 @@
+---
+description: "mump2p is the protocol under the peer-to-peer mesh. It uses Random Linear Network Coding on libp2p so a peer rebuilds a message from coded shards instead of waiting for a full copy."
+---
+
 # mump2p Protocol
 
 To run a gateway, start with [What Optimum does](/start/what-optimum-does). This page is the protocol underneath it.

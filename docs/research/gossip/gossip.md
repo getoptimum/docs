@@ -1,3 +1,7 @@
+---
+description: "Published work on network-coded gossip, the basis for how mump2p spreads a message across the mesh."
+---
+
 # Network Coding for Gossip
 
 ## [2015]

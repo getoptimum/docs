@@ -1,3 +1,7 @@
+---
+description: "Published work on network coding for transport, covering sliding-window recoding, QUIC and low-latency links."
+---
+
 # Network Coding for Transport
 
 ## [2024]
