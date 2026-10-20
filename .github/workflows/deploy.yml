@@ -67,6 +67,11 @@ jobs:
       - name: Deploy
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          # wrangler.toml declares no account_id, and without this wrangler has
+          # to resolve the account from the token. Not a secret: it is in every
+          # dashboard URL, and the same value is hardcoded in the infrastructure
+          # repo's worker configs.
+          CLOUDFLARE_ACCOUNT_ID: 989471e794851c448afa100bdc8768cc
         run: yarn wrangler deploy
 
       # The deploy above is what attaches docs.getoptimum.xyz. It reports success
