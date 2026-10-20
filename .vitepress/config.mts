@@ -4,6 +4,12 @@ const { BASE: base = "/" } = process.env;
 const gateway = "https://getoptimum.github.io/optimum-gateway/versions/latest"
 const withBase = (path: string) => `${base}${path.replace(/^\//, "")}`;
 
+// Absolute, not withBase(): a scraper fetching the page has no base to resolve
+// a relative og:image against, so a path-only value is silently dropped and the
+// unfurl renders an empty frame. Same host as og:url and the sitemap.
+const siteUrl = "https://docs.getoptimum.xyz";
+const ogImage = `${siteUrl}/og-image.png`;
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lang: "en-US",
@@ -58,25 +64,16 @@ export default defineConfig({
     ["meta", { name: "twitter:site", content: "@get_optimum" }],
     ["meta", { name: "twitter:site:domain", content: "docs.getoptimum.xyz" }],
     ["meta", { name: "twitter:url", content: "https://docs.getoptimum.xyz" }],
-    // [
-    //   "meta",
-    //   {
-    //     name: "twitter:image",
-    //     content: "",
-    //   },
-    // ],
+    ["meta", { name: "twitter:image", content: ogImage }],
     ["meta", { name: "twitter:image:alt", content: "Optimum Documentation" }],
 
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:site_name", content: "Optimum Docs" }],
     ["meta", { property: "og:url", content: "https://docs.getoptimum.xyz" }],
-    // [
-    //   "meta",
-    //   {
-    //     property: "og:image",
-    //     content: "",
-    //   },
-    // ],
+    ["meta", { property: "og:image", content: ogImage }],
+    // The three below describe that file; public/og-image.png is 1200x630 PNG.
+    // They were already declared while og:image itself was commented out, which
+    // is why the unfurl rendered a sized but empty frame.
     ["meta", { property: "og:image:width", content: "1200" }],
     ["meta", { property: "og:image:height", content: "630" }],
     ["meta", { property: "og:image:type", content: "image/png" }],
