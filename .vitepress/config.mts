@@ -1,12 +1,14 @@
 import { defineConfig } from 'vitepress'
 
 const { BASE: base = "/" } = process.env;
+const gateway = "https://getoptimum.github.io/optimum-gateway/versions/latest"
+const withBase = (path: string) => `${base}${path.replace(/^\//, "")}`;
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lang: "en-US",
   title: "Optimum Docs",
-  description: "The world's first high-performance memory infrastructure for any blockchain.",
+  description: "Run an Optimum gateway, connect your validators, and read Signal and Accelerate in Console.",
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: true,
@@ -23,14 +25,14 @@ export default defineConfig({
   head: [
     [
       "link",
-      { rel: "icon", href: "/favicons/favicon.svg", type: "image/svg+xml" },
+      { rel: "icon", href: withBase("/favicons/favicon.svg"), type: "image/svg+xml" },
     ],
-    ["link", { rel: "icon", href: "/favicons/favicon-96x96.png", type: "image/png" }],
+    ["link", { rel: "icon", href: withBase("/favicons/favicon-96x96.png"), type: "image/png" }],
     [
       "link",
       {
         rel: "shortcut icon",
-        href: "/favicons/favicon.ico",
+        href: withBase("/favicons/favicon.ico"),
         type: "image/x-icon",
       },
     ],
@@ -48,7 +50,7 @@ export default defineConfig({
       "meta",
       {
         property: "description",
-        content: "The world's first high-performance memory infrastructure for any blockchain.",
+        content: "Run an Optimum gateway, connect your validators, and read Signal and Accelerate in Console.",
       },
     ],
     ["meta", { httpEquiv: "Content-Language", content: "en" }],
@@ -80,41 +82,6 @@ export default defineConfig({
     ["meta", { property: "og:image:type", content: "image/png" }],
   ],
 
-  transformHead: (cfg) => {
-    const abcDiaBold = cfg.assets.find(() => /ABCDiatype-Bold\.\w+\.woff2/);
-    const abcDiaLight = cfg.assets.find(() => /ABCDiatype-Light\.\w+\.woff2/);
-
-    if (abcDiaBold) {
-      cfg.head.push(
-        [
-          'link',
-          {
-            rel: 'preload',
-            href: abcDiaBold,
-            as: 'font',
-            type: 'font/woff2',
-            crossorigin: ''
-          }
-        ]
-      );
-    }
-
-    if (abcDiaLight) {
-      cfg.head.push(
-        [
-          'link',
-          {
-            rel: 'preload',
-            href: abcDiaLight,
-            as: 'font',
-            type: 'font/woff2',
-            crossorigin: ''
-          }
-        ]
-      );
-    }
-  },
-
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: nav(),
@@ -145,7 +112,7 @@ export default defineConfig({
     socialLinks: [
       { icon: "github", link: "https://github.com/getoptimum/docs" },
       { icon: "x", link: "https://x.com/get_optimum" },
-      { icon: "discord", link: "https://discord.gg/7EwFpu79cZ" },
+      { icon: "discord", link: "https://discord.gg/getoptimum" },
       // { icon: "youtube", link: "" },
       // { icon: { svg: telegramSVG }, link: "" },
     ],
@@ -154,133 +121,109 @@ export default defineConfig({
 
 function nav() {
   return [
-    {
-      text: "Menu",
-      items: [
-        // { text: "Get Started", link: "/docs/how-to-guides/overview" },
-        { text: "Learn", link: "/docs/learn/overview/intro" },
-        {
-          text: "Resources",
-          items: [
-            // {
-            //   text: "Optimum Improvement Proposals (OIPs)",
-            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            // },
-            {
-              text: "Optimum ADRs",
-              link: "https://github.com/getoptimum/optimum/tree/main/docs/architecture#adr-table-of-contents",
-            },
-            // {
-            //   text: "Flexnode API Docs",
-            //   link: "https://docs.getoptimum.xyz/", // TODO: Update link once live.
-            // },
-          ],
-        },
-      ],
-    },
+    { text: "Start", link: "/start/what-optimum-does" },
+    { text: "Console", link: "https://console.getoptimum.xyz/" },
+    { text: "Gateway", link: `${gateway}/` },
   ];
 }
 
 function sidebarHome() {
   return [
     {
-      text: "Overview of Optimum",
+      text: "Operator setup",
       collapsed: false,
       items: [
         {
-          text: "Introduction",
-          link: "/docs/learn/overview/intro",
+          text: "Start here",
+          collapsed: false,
+          items: [
+            { text: "Introduction", link: "/" },
+            { text: "What Optimum does", link: "/start/what-optimum-does" },
+            { text: "Choose a path", link: "/start/choose-a-path" },
+            { text: "Before you begin", link: "/start/before-you-begin" },
+          ],
         },
         {
-          text: "mump2p Protocol",
-          link: "/docs/learn/overview/p2p.md",
+          text: "Getting in",
+          collapsed: false,
+          items: [
+            { text: "Create an account", link: "/getting-in/create-an-account" },
+            { text: "Account type", link: "/getting-in/account-type" },
+            { text: "Register", link: "/getting-in/register" },
+          ],
         },
         {
-          text: "Optimum DeRAM",
-          link: "/docs/learn/overview/deram.md",
-        },
-      ],
-    },
-    {
-      text: "Getting Started",
-      collapsed: false,
-      items: [
-        {
-          text: "Quick Start",
-          link: "/docs/guides/overview",
-        },
-        {
-          text: "Getting Started with CLI",
-          link: "/docs/guides/01-getting-started-cli",
+          text: "Signal",
+          collapsed: false,
+          items: [
+            { text: "What Signal does", link: "/signal/what-signal-does" },
+            { text: "Network", link: "/signal/network" },
+            { text: "Connect your gateway", link: "/signal/connect-your-gateway" },
+            { text: "When the check fails", link: "/signal/when-the-check-fails" },
+            { text: "Register keys", link: "/signal/register-keys" },
+            { text: "Onboard in bulk", link: "/signal/onboard-in-bulk" },
+            { text: "Your first report", link: "/signal/your-first-report" },
+          ],
         },
         {
-          text: "Getting Started with Docker",
-          link: "/docs/guides/02-getting-started-docker",
+          text: "Accelerate",
+          collapsed: false,
+          items: [
+            { text: "What Accelerate does", link: "/accelerate/what-accelerate-does" },
+            { text: "Readiness", link: "/accelerate/readiness" },
+            { text: "Recommendation", link: "/accelerate/recommendation" },
+            { text: "MEV sidecar configuration", link: "/accelerate/adjust-mev-boost" },
+            { text: "Acceleration", link: "/accelerate/where-results-show" },
+          ],
         },
         {
-          text: "Understanding Key Parameters",
-          link: "/docs/guides/03-parameters",
-        },
-        {
-          text: "Common Experiments",
-          link: "/docs/guides/04-experiments",
-        },
-        {
-          text: "FAQ",
-          link: "/docs/guides/05-faq-glossary",
-        },
-      ],
-    },
-    {
-      text: "Ethereum Integration",
-      collapsed: false,
-      items: [
-        {
-          text: "HOP Testing Suite",
-          link: "https://getoptimum.github.io/optimum-hop/",
-        },
-        {
-          text: "Optimum Gateway",
-          link: "https://getoptimum.github.io/optimum-gateway/versions/latest/",
-        },
-      ],
-    },
-    {
-      text: "Research",
-      collapsed: false,
-      items: [
-        {
-          text: "mump2p Protocol",
+          text: "Operate",
           collapsed: true,
           items: [
-            {
-              text: "Gossip",
-              link: "/docs/research/gossip/gossip",
-            },
-            {
-              text: "Transport",
-              link: "/docs/research/gossip/transport",
-            },
-            {
-              text: "Decentralized Access",
-              link: "/docs/research/gossip/decentralized-access",
-            }
-          ]
+            { text: "Run the gateway", link: "/operate/run-the-gateway" },
+            { text: "Kubernetes", link: "/operate/kubernetes" },
+            { text: "Block stream", link: "/operate/block-stream" },
+            { text: "Telemetry", link: "/operate/telemetry" },
+          ],
         },
         {
-          text: "Optimum DeRAM",
+          text: "Help",
           collapsed: true,
           items: [
-            {
-              text: "Atomicity and Consistency",
-              link: "/docs/research/deram/atomicity-consistency",
-            },
-            {
-              text: "Decentralized Data Storage",
-              link: "/docs/research/deram/decentralized-storage",
-            }
-          ]
-        }
+            { text: "Troubleshoot", link: "/help/troubleshoot" },
+            { text: "Support", link: "/help/support" },
+            { text: "FAQ", link: "/help/faq" },
+          ],
+        },
+      ],
+    },
+    {
+      text: "Keysync",
+      collapsed: false,
+      items: [
+        { text: "Sync validator keys", link: "/keysync/" },
+      ],
+    },
+    {
+      text: "General Optimum docs",
+      collapsed: true,
+      items: [
+        { text: "mump2p protocol", link: "/docs/learn/overview/p2p" },
+        { text: "Gossip", link: "/docs/research/gossip/gossip" },
+        { text: "Transport", link: "/docs/research/gossip/transport" },
+        { text: "Decentralized access", link: "/docs/research/gossip/decentralized-access" },
+      ],
+    },
+    {
+      text: "Gateway manual",
+      collapsed: true,
+      items: [
+        { text: "Overview", link: `${gateway}/` },
+        { text: "Quick start", link: `${gateway}/quick-start` },
+        { text: "Connecting your CL client", link: `${gateway}/cl-clients` },
+        { text: "Configuration", link: `${gateway}/configuration` },
+        { text: "Kubernetes (Helm)", link: `${gateway}/kubernetes` },
+        { text: "Troubleshooting", link: `${gateway}/troubleshoot` },
       ],
     },
   ]
