@@ -5,6 +5,13 @@
   "compatibility_date": "2026-09-30",
   // Version URLs are public. Vercel previews sit behind team login, so this is the link to share.
   "preview_urls": true,
+  // Stated rather than inherited. Declaring `routes` flips wrangler's default
+  // for this to false, so adding the custom domain below silently took
+  // docs.optimum-989.workers.dev from 200 to 404. That is the behaviour we want
+  // -- one canonical host, no second indexable copy of the docs -- but it should
+  // be a decision in the file, not a side effect of an unrelated key. Preview
+  // URLs are unaffected and remain the link to share on a PR.
+  "workers_dev": false,
   "assets": {
     "directory": "./.vitepress/dist",
     "html_handling": "auto-trailing-slash",

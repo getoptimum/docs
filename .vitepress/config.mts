@@ -10,6 +10,19 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, "")}`;
 const siteUrl = "https://docs.getoptimum.xyz";
 const ogImage = `${siteUrl}/og-image.png`;
 
+// The page's own absolute URL. og:url is the canonical identity of the thing
+// being shared, so a single site-wide value makes every subpage announce itself
+// as the home page and unfurl as it.
+//
+// The trailing slash is load-bearing and differs by page kind, because that is
+// what the Worker's auto-trailing-slash handling serves: a directory index
+// redirects /keysync -> /keysync/ (307), while a leaf redirects
+// /accelerate/adjust-mev-boost/ -> no slash. Dropping it on index pages points
+// the canonical at a URL that redirects. Stripping ".md" and a trailing "index"
+// lands on the served form for both, and matches the sitemap exactly.
+const pageUrl = (relativePath: string) =>
+  `${siteUrl}/${relativePath.replace(/\.md$/, "").replace(/(^|\/)index$/, "$1")}`;
+
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
   lang: "en-US",
@@ -26,7 +39,30 @@ export default defineConfig({
     "README.md"
   ],
   sitemap: {
-    hostname: "https://docs.getoptimum.xyz",
+    hostname: siteUrl,
+  },
+
+  // og:url, og:title and og:description are per page, so they cannot live in the
+  // static head above. Without them a shared subpage identifies itself as the
+  // home page, and the unfurl title carries the "| Optimum Docs" suffix that
+  // titleTemplate adds for the browser tab.
+  transformHead({ pageData, siteData }) {
+    // not_found_handling serves 404.html for every unknown path, so a canonical
+    // here would point each of them at /404 as if it were a real page.
+    if (pageData.relativePath === "404.md" || pageData.isNotFound) return [];
+    const url = pageUrl(pageData.relativePath);
+    const title = pageData.frontmatter.title || pageData.title || siteData.title;
+    const description =
+      pageData.frontmatter.description || pageData.description || siteData.description;
+    return [
+      ["link", { rel: "canonical", href: url }],
+      ["meta", { property: "og:url", content: url }],
+      ["meta", { property: "og:title", content: title }],
+      ["meta", { property: "og:description", content: description }],
+      ["meta", { name: "twitter:url", content: url }],
+      ["meta", { name: "twitter:title", content: title }],
+      ["meta", { name: "twitter:description", content: description }],
+    ];
   },
   head: [
     [
@@ -52,24 +88,20 @@ export default defineConfig({
           "width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no",
       },
     ],
-    [
-      "meta",
-      {
-        property: "description",
-        content: "Run an Optimum gateway, connect your validators, and read Signal and Accelerate in Console.",
-      },
-    ],
+    // No `property: "description"` here. `description` is a name meta, not an
+    // RDFa property, and VitePress already emits the per-page one from
+    // frontmatter -- so this added an invalid second description that contradicted
+    // it on all 33 pages.
     ["meta", { httpEquiv: "Content-Language", content: "en" }],
     ["meta", { name: "twitter:card", content: "summary_large_image" }],
     ["meta", { name: "twitter:site", content: "@get_optimum" }],
     ["meta", { name: "twitter:site:domain", content: "docs.getoptimum.xyz" }],
-    ["meta", { name: "twitter:url", content: "https://docs.getoptimum.xyz" }],
     ["meta", { name: "twitter:image", content: ogImage }],
     ["meta", { name: "twitter:image:alt", content: "Optimum Documentation" }],
 
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:site_name", content: "Optimum Docs" }],
-    ["meta", { property: "og:url", content: "https://docs.getoptimum.xyz" }],
+    // og:url is emitted per page by transformHead, not here.
     ["meta", { property: "og:image", content: ogImage }],
     // The three below describe that file; public/og-image.png is 1200x630 PNG.
     // They were already declared while og:image itself was commented out, which
