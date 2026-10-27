@@ -1,3 +1,7 @@
+---
+description: "Published work on network coding for decentralized access, covering coded storage, atomic consistency and content distribution."
+---
+
 # Network Coding for Decentralized Access
 
 ## [2023]

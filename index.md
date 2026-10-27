@@ -1,9 +1,9 @@
 ---
-title: Introduction to Optimum
+title: Introduction to Optimum Console
 description: Optimum is a gateway network that delivers Ethereum blocks to your beacon node sooner, and recommends a bid cutoff for the MEV sidecar you already run.
 ---
 
-# Introduction to Optimum
+# Introduction to Optimum Console
 
 Optimum is a network of gateways you run beside your beacon node. The gateway delivers Ethereum blocks sooner, so your validators can attest to the head that was actually proposed. Where Optimum enables it, it also recommends a bid cutoff for the MEV sidecar you already run, so a proposal can take a better bid without waiting so long that the block is late.
 

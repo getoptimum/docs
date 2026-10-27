@@ -5,9 +5,29 @@
   "compatibility_date": "2026-09-30",
   // Version URLs are public. Vercel previews sit behind team login, so this is the link to share.
   "preview_urls": true,
+  // Stated rather than inherited. Declaring `routes` flips wrangler's default
+  // for this to false, so adding the custom domain below silently took
+  // docs.optimum-989.workers.dev from 200 to 404. That is the behaviour we want
+  // -- one canonical host, no second indexable copy of the docs -- but it should
+  // be a decision in the file, not a side effect of an unrelated key. Preview
+  // URLs are unaffected and remain the link to share on a PR.
+  "workers_dev": false,
   "assets": {
     "directory": "./.vitepress/dist",
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
-  }
+  },
+  // The public hostname. `wrangler deploy` creates the DNS record and the
+  // certificate alongside the Worker binding; attaching the domain by hand
+  // leaves a binding with no record published, which resolves to nothing.
+  //
+  // This has to live in THIS file. wrangler resolves config as
+  // wrangler.json -> wrangler.jsonc -> wrangler.toml and stops at the first
+  // hit, so the same block in a wrangler.toml beside it is never read: the
+  // deploy succeeds, prints only the workers.dev URL, and the hostname stays
+  // down. That is what happened on 2026-10-20. There is now exactly one
+  // wrangler config in this repo, as in optimum-cross-functional-dashboard.
+  "routes": [
+    { "pattern": "docs.getoptimum.xyz", "custom_domain": true }
+  ]
 }

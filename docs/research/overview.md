@@ -2,6 +2,7 @@
 next:
   text: "Network Coding for Gossip"
   link: "/docs/research/gossip/gossip"
+description: "The research behind mump2p, spanning about fifteen years of network coding work on storing, accessing and propagating data, and holding up under faults and attacks."
 ---
 
 # Technical papers on Optimum
