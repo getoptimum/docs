@@ -15,7 +15,7 @@ This page covers **1b Start the gateway** and **1c Point your client at the gate
 
 The image Console hands out for production is `docker.io/getoptimum/gateway:latest`. That tag moves when a gateway release ships. `-config ""` is required. The flag defaults to `config/app_conf.yml`, which is not in the image, and the process exits before it reads any environment variable.
 
-Do not add `OPT_CHAIN_ID`. Console does not put it in the command. The chain comes from the enrollment key.
+Do not add `OPT_CHAIN_ID`. Console does not put it in the command. The chain is the **Network** selected in the header when the key was minted. The one-day key on Signal is for Ethereum. A Hoodi gateway needs its own key from **Gateways & keys** → **Enrollment keys**.
 
 Auth and bootstrap are built in: `https://auth.getoptimum.io` and `https://bootstrap.getoptimum.io`. They are not in the command. Set `OPT_REMOTE_AUTH_URL` only when Optimum gives you another environment, and set `OPT_REMOTE_BOOTSTRAP_URL` to the bootstrap for that same environment. An auth URL pointed elsewhere, with the default bootstrap, enrols in one place and peers in another.
 

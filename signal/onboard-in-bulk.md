@@ -7,9 +7,9 @@ description: Many gateways from one enrollment key, and many validators at once.
 
 ## Many gateways
 
-You do not need one key per host. One enrollment key enrols the whole fleet. See [Why enrollment keys](/signal/what-signal-does#why-enrollment-keys).
+You do not need one key per host. One enrollment key enrols every host on the network it was minted for. Set **Network** in the header first. Ethereum and Hoodi are two keys. See [Why enrollment keys](/signal/what-signal-does#why-enrollment-keys).
 
-1. Mint a key that outlasts the rollout: **Gateways & keys** → **Enrollment keys** → **Generate enrollment key**. Set **Valid for (days)** to cover the time until the last host is started. The secret is shown once. Store it where your deployment tooling reads secrets.
+1. Set **Network** in the header, then mint a key that outlasts the rollout: **Gateways & keys** → **Enrollment keys** → **Generate enrollment key**. Set **Valid for (days)** to cover the time until the last host is started. The secret is shown once. Store it where your deployment tooling reads secrets.
 2. On Signal, open **Set up another gateway**. In **1a**, set the name for this host, then copy the start command. It reads the key from `$OPT_JOIN_KEY` unless you had Console put a key in it. The name from **1a** is already in the command.
 3. On that host, export `OPT_JOIN_KEY` and run the command. For the next host, change the name in **1a** and copy the command again.
 4. Peer each gateway with the beacon node beside it. Every gateway has its own peer id. [Connect your gateway](/signal/connect-your-gateway).
