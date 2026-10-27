@@ -3,7 +3,7 @@
   // Must match the Worker connected to this repo. Workers Builds rejects a mismatch.
   "name": "docs",
   "compatibility_date": "2026-09-30",
-  // Version URLs are public. Vercel previews sit behind team login, so this is the link to share.
+  // Version URLs are public, so they are the preview link to share on a PR.
   "preview_urls": true,
   // Stated rather than inherited. Declaring `routes` flips wrangler's default
   // for this to false, so adding the custom domain below silently took
