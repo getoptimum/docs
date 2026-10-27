@@ -13,6 +13,8 @@ Signal is switched on by Optimum. Until it is, the sidebar has no **Signal** ent
 
 That switch covers every account. It is not a fault in yours, and no URL gets around it. Ask [support](/help/support). Everything on these pages describes the screens as they appear once Signal is on.
 
+Enrollment keys stay available either way. With Signal on, the tab is under **Gateways & keys**. With Signal off, the sidebar item is **Manage Gateways**, and **Enrollment keys** is a tab on it.
+
 Once a gateway is enrolled, Signal opens on a home. The line under the heading is **Your validators receive blocks sooner, which improves attestation performance. A gateway you run joins Optimum's mesh, which often carries a block before public gossip reaches you.** The banner says **Signal is active** when a gateway was seen recently, and it counts gateways online and indices assigned. Under it, four cards: **Blocks received earlier**, **Attestation accuracy**, **Gateways online** (seen in the last ten minutes), and **Indices assigned**. **Set up another gateway** starts the connect steps. **Gateways & keys** is where you mint enrollment keys and consumer tokens.
 
 ![Signal home. Signal is active, with the four cards, Set up another gateway, and Gateways & keys.](/console/03-signal-home.png)
@@ -50,7 +52,7 @@ That is what makes a fleet manageable:
 * **One key for many hosts.** Each host gets its own name in **1a**, and that name is in the command, so you change **1a** before you copy the command for the next host. A repeat of a name is refused with HTTP 409.
 * **Nothing to rotate on the hosts.** The key only lets new gateways in. When it expires or you revoke it, gateways that already enrolled keep running.
 * **A short window if it leaks.** The key's lifetime is how long a copied command can still add gateways to your organisation.
-* **The network and cluster come from the key.** A gateway cannot pick its own.
+* **The network and cluster come from the key.** Set **Network** in the header to **Ethereum** or **Hoodi** before you open **Generate enrollment key**. The dialog shows that network. A gateway cannot pick its own. The one-day key on Signal is for Ethereum. A Hoodi gateway needs its own key.
 
 Each key admits up to 1,000 gateways, and your organisation is capped at 1,000 live gateway credentials. A gateway that keeps its credential across restarts spends nothing. Losing the identity directory spends another enrollment.
 
@@ -58,8 +60,8 @@ Each key admits up to 1,000 gateways, and your organisation is capped at 1,000 l
 
 | Where you get it | Lasts | Use it for |
 | --- | --- | --- |
-| Onboarding, **Connect your first gateway** | 14 days | An invited account's first gateway, when the person onboarding is not the person on the host. |
-| Signal, **Create an enrollment key that lasts a day** | 1 day | A command you are about to paste. It goes straight into the command. |
+| Onboarding, **Connect your first gateway** | 14 days | An invited account's first gateway, for Ethereum, when the person onboarding is not the person on the host. |
+| Signal, **Create an enrollment key that lasts a day** | 1 day | A command you are about to paste, for Ethereum. It goes straight into the command. |
 | **Gateways & keys** → **Enrollment keys**, **Generate enrollment key** | You choose in **Valid for (days)**, up to 365 | A rollout across many hosts or over several weeks. |
 
 Every key is shown once. Export it as `OPT_JOIN_KEY` before running the command, unless Console already put it in. The key list shows **enrollments used** and the expiry date.
