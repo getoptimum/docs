@@ -11,9 +11,9 @@ Start with the failure you can see. For the four failures Console names under Ve
 
 **Signup shows a 404, or there is no Create account tab.** Self-serve signup is closed. [Create an account](/getting-in/create-an-account#when-signup-is-closed).
 
-**No operator account linked to your user.** Registration did not finish. Use **Finish setting up your account** if it is there, or ask [support](/help/support). [No organisation linked](/getting-in/create-an-account#no-organisation-linked).
+**No operator account linked to your user.** Registration did not finish. Use **Finish setting up your account** if it is there, or ask [support](/help/support). [No organization linked](/getting-in/create-an-account#no-organization-linked).
 
-**No Signal entry in the sidebar.** Signal is switched on by Optimum. Until it is, opening Signal returns you to your organisation's home, and there is no URL that gets around it. Ask [support](/help/support). [When Signal is not on your sidebar](/signal/what-signal-does#when-signal-is-not-on-your-sidebar).
+**No Signal entry in the sidebar.** Signal is switched on by Optimum. Until it is, opening Signal returns you to your organization's home, and there is no URL that gets around it. Ask [support](/help/support). [When Signal is not on your sidebar](/signal/what-signal-does#when-signal-is-not-on-your-sidebar).
 
 ## Starting the container
 
@@ -33,7 +33,7 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 **Enrollment fails with `401`.** The key is unknown, expired, used up, or revoked. Optimum returns the same `401` for all four on purpose, so it reads like a typo. Check the key on **Enrollment keys**: the card shows the expiry date and **enrollments used**, and a revoked key is no longer listed. A key from Signal lasts one day. During signup, the same case shows **This key can no longer be used**. Mint a new key and run the command again. [Which key lifetime](/signal/what-signal-does#which-key-lifetime).
 
-**A second host is refused with `409`.** Another gateway in your organisation already enrolled under that name. Give this gateway a new name in **1a**. [Onboard in bulk](/signal/onboard-in-bulk).
+**A second host is refused with `409`.** Another gateway in your organization already enrolled under that name. Give this gateway a new name in **1a**. [Onboard in bulk](/signal/onboard-in-bulk).
 
 **A rebuilt host is refused with `409`.** The host lost `$HOME/optimum-gateway`, so it generated a new identity, and the old credential under its name is still live. Restore the directory if you have it. Otherwise revoke the old gateway key under **Gateways & keys** → **Gateway** (self-serve accounts: ask [support](/help/support)), then start it again. The same name is the right one on that host once the old credential is gone.
 
@@ -47,7 +47,7 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 **`curl` to port `48123` is refused from another machine.** Telemetry is published on the gateway host's loopback only. Run it on that host.
 
-**Verify passes, and you are not sure it is the new gateway.** Verify checks every gateway in your organisation together. It shows counts, such as **Yes, 3** enrolled, not names. If another gateway is already healthy, the rows can pass before the new one reports. Confirm the new host with `curl http://localhost:48123/health` on that host. [When the check fails](/signal/when-the-check-fails#verify).
+**Verify passes, and you are not sure it is the new gateway.** Verify checks every gateway in your organization together. It shows counts, such as **Yes, 3** enrolled, not names. If another gateway is already healthy, the rows can pass before the new one reports. Confirm the new host with `curl http://localhost:48123/health` on that host. [When the check fails](/signal/when-the-check-fails#verify).
 
 **The peer id changed after a restart.** The identity directories were not mounted. [The peer id changed](/signal/when-the-check-fails#the-peer-id-changed).
 
@@ -59,7 +59,7 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 ## Accelerate
 
-**No Accelerate entry.** The sidebar shows it when Optimum has enabled it for your organisation and you have at least 200 active validators on mainnet. Registering as an entity does not add the entry. Below 200 active validators the entry stays hidden. Otherwise ask [support](/help/support). [Who can use it](/accelerate/what-accelerate-does#who-can-use-it).
+**No Accelerate entry.** The sidebar shows it when Optimum has enabled it for your organization and you have at least 200 active validators on mainnet. Registering as an entity does not add the entry. Below 200 active validators the entry stays hidden. Otherwise ask [support](/help/support). [Who can use it](/accelerate/what-accelerate-does#who-can-use-it).
 
 **Validator keys registered says Activating.** Your indices are on record and none is active on chain yet. Pending validators are not assigned proposals, so nothing is measured until they activate. [Readiness](/accelerate/readiness).
 

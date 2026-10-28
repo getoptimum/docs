@@ -9,7 +9,7 @@ description: What Verify reports, what it cannot see, and the four failures Cons
 
 **Verify the connection** on Signal runs by itself when you open the screen. It keeps checking while a gateway is enrolled but has not reported in. **Run check** runs it again.
 
-It reads three things from outside your host, across every gateway in your organisation. A row passes if any of them passes it. **Gateway enrolled** reads **Yes**, or **Yes, 3** for three gateways. **Blocks arriving** reads, for example, **4 of 5 slots**.
+It reads three things from outside your host, across every gateway in your organization. A row passes if any of them passes it. **Gateway enrolled** reads **Yes**, or **Yes, 3** for three gateways. **Blocks arriving** reads, for example, **4 of 5 slots**.
 
 While you are on **1d**, Console also looks up the name from **1a**. **Not enrolled yet** means nothing has started under that name. **Enrolled, and seen in the last ten minutes** means that gateway reported in. **Enrolled, but its credential is suspended** means the gateway key was revoked.
 

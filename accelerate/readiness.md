@@ -9,15 +9,15 @@ Before you accept anything, Console states what your history can support.
 
 A cutoff recommendation needs 200 measured proposals, across all your validators, not per key. Until the cycle holds that many, the Adjust step says **Not enough proposals yet for a recommendation**. You can still start Accelerate and upload a configuration. Measurement runs from the moment that configuration takes effect. The recommendation appears once the cycle holds enough.
 
-## Modelled annual gain
+## Modeled annual gain
 
-The top of step 1 is about the modelled gain: what a later bid cutoff could have captured on blocks you already proposed, held at that rate for a year. It is read from the simulation the terms describe, so before you accept them the screen says **Accept the terms to see your modelled gain**. After you accept, the annual figure shows in that place.
+The top of step 1 is about the modeled gain: what a later bid cutoff could have captured on blocks you already proposed, held at that rate for a year. It is read from the simulation the terms describe, so before you accept them the screen says **Accept the terms to see your modeled gain**. After you accept, the annual figure shows in that place.
 
 The other answers in that place:
 
 | On the screen | What it means |
 | --- | --- |
-| **Reading your modelled gain** | The window is still being read. |
+| **Reading your modeled gain** | The window is still being read. |
 | **Still gathering evidence** | The model needs 30 days of ingested history and 30 MEV blocks. The line says how far along you are. |
 | **No MEV blocks to model yet** | Nothing you proposed in the window took a relay bid, so there is no bid timing to model. |
 | **Nothing was left on the table** | No better bid arrived after the one you took, at any measured offset. |
@@ -39,4 +39,4 @@ If Console could not read which indices are active, the row stays **Needed** and
 
 If indices are on record and the recommendation says **Not enough proposals yet for a recommendation**, check this row first. **Activating** means you are waiting on activation, not on proposal luck.
 
-The report’s own charts measure per MEV block: accepted ETH on the bid that was taken, unrealised ETH on bids that arrived later. A per-proposal average is a different number and is labelled that way on the report.
+The report’s own charts measure per MEV block: accepted ETH on the bid that was taken, unrealized ETH on bids that arrived later. A per-proposal average is a different number and is labeled that way on the report.

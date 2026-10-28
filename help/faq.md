@@ -19,7 +19,7 @@ The identity directories were not mounted. [When the check fails](/signal/when-t
 
 ## The second gateway was refused
 
-`OPT_GATEWAY_ID` is the name from **1a**, and it is unique per organisation. [Before you begin](/start/before-you-begin).
+`OPT_GATEWAY_ID` is the name from **1a**, and it is unique per organization. [Before you begin](/start/before-you-begin).
 
 ## I lost the enrollment key
 
@@ -35,7 +35,7 @@ Signal is switched on by Optimum. Until it is, the sidebar has no **Signal** ent
 
 ## I do not see Accelerate
 
-The sidebar shows Accelerate when Optimum has enabled it for your organisation and you have at least 200 active validators on mainnet. Registering as an entity does not enable it. Below 200 active validators the entry stays hidden. Otherwise ask [support](/help/support). [What Accelerate does](/accelerate/what-accelerate-does).
+The sidebar shows Accelerate when Optimum has enabled it for your organization and you have at least 200 active validators on mainnet. Registering as an entity does not enable it. Below 200 active validators the entry stays hidden. Otherwise ask [support](/help/support). [What Accelerate does](/accelerate/what-accelerate-does).
 
 ## I do not see a performance report
 

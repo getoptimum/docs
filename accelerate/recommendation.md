@@ -31,8 +31,8 @@ Once the window can support a number, the panel is **Recommended bid cutoff**, i
 
 Beside it:
 
-* **Slots that could have improved** — the share of MEV blocks that had a better bid within a stated offset past the bid you took, over the modelling window.
-* **Slots modelled** — MEV blocks in that window.
+* **Slots that could have improved** — the share of MEV blocks that had a better bid within a stated offset past the bid you took, over the modeling window.
+* **Slots modeled** — MEV blocks in that window.
 * **Relays on file** — how many relays the uploaded config names. Upload your own file if you want this to be your set.
 
 The figure is uplift that was available at that offset, on blocks already proposed. It does not price the risk of waiting. **No cutoff change indicated** means the window does not support moving it.

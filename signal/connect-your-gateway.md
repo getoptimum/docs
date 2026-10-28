@@ -9,7 +9,7 @@ This page covers **1b Start the gateway** and **1c Point your client at the gate
 
 ![Signal, Connect. 1a names the gateway. 1b starts it, 1c points the client at it, 1d verifies it.](/console/04-signal-connect.png)
 
-**1a** is the name. Console writes it into the command as `OPT_GATEWAY_ID`. The blocks below use `fra-gateway-1` so you can see where that name sits. Copy the command from Console rather than retyping the name. Leaving the name unset uses the placeholder `dev-gateway`, which enrols with no label. If you just created the key, it is already in the command. Otherwise the command reads `$OPT_JOIN_KEY`, so export the key first.
+**1a** is the name. Console writes it into the command as `OPT_GATEWAY_ID`. The blocks below use `fra-gateway-1` so you can see where that name sits. Copy the command from Console rather than retyping the name. Leaving the name unset uses the placeholder `dev-gateway`, which enrolls with no label. If you just created the key, it is already in the command. Otherwise the command reads `$OPT_JOIN_KEY`, so export the key first.
 
 `OPT_GATEWAY_CLUSTER_ID` has no default. The process exits if it is empty. Console sets it to the cluster the key was minted for, and the block below shows the mainnet value so you can read the shape. Copy the value Console prints. A different value authenticates and then fails every mesh handshake.
 
@@ -17,7 +17,7 @@ The image Console hands out for production is `docker.io/getoptimum/gateway:late
 
 Do not add `OPT_CHAIN_ID`. Console does not put it in the command. The chain is the **Network** selected in the header when the key was minted. The one-day key on Signal is for Ethereum. A Hoodi gateway needs its own key from **Gateways & keys** → **Enrollment keys**.
 
-Auth and bootstrap are built in: `https://auth.getoptimum.io` and `https://bootstrap.getoptimum.io`. They are not in the command. Set `OPT_REMOTE_AUTH_URL` only when Optimum gives you another environment, and set `OPT_REMOTE_BOOTSTRAP_URL` to the bootstrap for that same environment. An auth URL pointed elsewhere, with the default bootstrap, enrols in one place and peers in another.
+Auth and bootstrap are built in: `https://auth.getoptimum.io` and `https://bootstrap.getoptimum.io`. They are not in the command. Set `OPT_REMOTE_AUTH_URL` only when Optimum gives you another environment, and set `OPT_REMOTE_BOOTSTRAP_URL` to the bootstrap for that same environment. An auth URL pointed elsewhere, with the default bootstrap, enrolls in one place and peers in another.
 
 Both telemetry variables are required. `OPT_ENABLE_TELEMETRY` without `OPT_REMOTE_PUSH_ENABLE` builds a local registry and does not push. `OPT_REMOTE_PUSH_ENABLE` without telemetry is refused at startup. `/health` answers either way, but two of its checks stay empty until telemetry is enabled.
 
@@ -154,4 +154,4 @@ For Lighthouse this variable is the connection, not only the restart case: nothi
 
 Lighthouse v8 needs extra PeerDAS flags. Those are in the [gateway quick start](https://getoptimum.github.io/optimum-gateway/versions/latest/quick-start), not on this page.
 
-`--libp2p-addresses` is deprecated in favour of `--boot-nodes`, and `--trusted-peers` takes a peer id. Console does not use that pair. Use `OPT_DIRECT_CL_PEERS` as above.
+`--libp2p-addresses` is deprecated in favor of `--boot-nodes`, and `--trusted-peers` takes a peer id. Console does not use that pair. Use `OPT_DIRECT_CL_PEERS` as above.

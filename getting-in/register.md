@@ -5,7 +5,7 @@ description: The fields Console asks for, and the terms checkbox on the same scr
 
 # Register
 
-The heading is **Your details** or **Your organisation**, depending on the account type.
+The heading is **Your details** or **Your organization**, depending on the account type.
 
 ## Entity
 
@@ -32,4 +32,4 @@ If you answer yes, Console also asks:
 
 There is no separate terms screen. On this screen, tick **I have read and agree to the terms**. The checkbox opens the agreement. **Accept the terms to continue** if you submit without it.
 
-Submitting this screen is what creates the organisation. The next screen is **Your account is ready**, then **Go to the console**. You connect a gateway on [Signal](/signal/what-signal-does), and submit validator indices on [Activate validators](/signal/register-keys), from the console.
+Submitting this screen is what creates the organization. The next screen is **Your account is ready**, then **Go to the console**. You connect a gateway on [Signal](/signal/what-signal-does), and submit validator indices on [Activate validators](/signal/register-keys), from the console.
