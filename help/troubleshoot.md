@@ -45,7 +45,7 @@ This is safe. The peer id and the enrollment credential live in `$HOME/optimum-g
 
 **A stream-only gateway stays `degraded` with `cl_peers` failing.** It was started with the **My consensus client** command. On **1b**, choose **A feed for my consumers** and run that command. [Stream-only](/signal/connect-your-gateway#stream-only).
 
-**No Stream consumers tab, or Signal says the account “cannot mint yet”.** Optimum has consumer tokens switched off. The gateway still runs healthy without a consumer. Ask [support](/help/support). [Block stream](/operate/block-stream).
+**No Stream consumers tab.** Consumer tokens are switched off for every account. The gateway still runs healthy without a consumer, and there is no token to mint. Nothing on one organization turns the tab on. [Block stream](/operate/block-stream).
 
 **`curl` to port `48123` is refused from another machine.** Telemetry is published on the gateway host's loopback only. Run it on that host.
 
