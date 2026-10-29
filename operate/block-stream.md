@@ -7,7 +7,7 @@ description: The consumer feed, and where its reference lives.
 
 A stream-only gateway serves blocks to your consumers. It is the path for an account that does not run validators. See [Choose a path](/start/choose-a-path).
 
-On the gateway host the feed is `ws://127.0.0.1:9600` and gRPC `127.0.0.1:9601`. Mint a consumer token under **Gateways & keys** → **Stream consumers**. The tab is hidden while Optimum has consumer tokens switched off. Signal then says reading the feed needs a consumer token, “which this account cannot mint yet”. Ask [support](/help/support).
+On the gateway host the feed is `ws://127.0.0.1:9600` and gRPC `127.0.0.1:9601`. A consumer token is minted under **Gateways & keys** → **Stream consumers** once Optimum switches consumer tokens on. That switch covers every account. While it is off, the tab is hidden, the gateway runs healthy without a consumer, and there is no token to mint. Nothing on one organization turns it on.
 
 Protocol, authentication, and client usage: [Consumer block stream](https://getoptimum.github.io/optimum-gateway/versions/latest/block-stream).
 
