@@ -22,4 +22,8 @@ lint-markdown:
 	@echo "🧹  Linting markdown..."
 	@$(YARN) lint:md
 
-.PHONY: run-dev build preview lint lint-markdown
+lint-spelling:
+	@echo "🧹  Checking for British spelling..."
+	@$(YARN) lint:spelling
+
+.PHONY: run-dev build preview lint lint-markdown lint-spelling

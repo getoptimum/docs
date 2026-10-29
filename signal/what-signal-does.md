@@ -9,7 +9,7 @@ Signal is the gateway beside your beacon node. It receives blocks from the Optim
 
 ## When Signal is not on your sidebar
 
-Signal is switched on by Optimum. Until it is, the sidebar has no **Signal** entry: the screens below are not reachable, `/dashboard/operators/<your-id>/signal` returns you to your organisation's home, and **Verify the connection** answers **This check is not available right now.**
+Signal is switched on by Optimum. Until it is, the sidebar has no **Signal** entry: the screens below are not reachable, `/dashboard/operators/<your-id>/signal` returns you to your organization's home, and **Verify the connection** answers **This check is not available right now.**
 
 That switch covers every account. It is not a fault in yours, and no URL gets around it. Ask [support](/help/support). Everything on these pages describes the screens as they appear once Signal is on.
 
@@ -45,16 +45,16 @@ The pill while you are on these steps is the check: **Not checked**, **Checking*
 
 ## Why enrollment keys
 
-A gateway does not need a secret of its own handed to it. You give every host the same enrollment key (`OPT_JOIN_KEY`, `ojk_…`). On first start, each gateway creates its own keypair, enrols with Optimum, and keeps the credential it gets back in `$HOME/optimum-gateway/mump2p`. From then on it uses that credential, not the enrollment key.
+A gateway does not need a secret of its own handed to it. You give every host the same enrollment key (`OPT_JOIN_KEY`, `ojk_…`). On first start, each gateway creates its own keypair, enrolls with Optimum, and keeps the credential it gets back in `$HOME/optimum-gateway/mump2p`. From then on it uses that credential, not the enrollment key.
 
 That is what makes a fleet manageable:
 
 * **One key for many hosts.** Each host gets its own name in **1a**, and that name is in the command, so you change **1a** before you copy the command for the next host. A repeat of a name is refused with HTTP 409.
 * **Nothing to rotate on the hosts.** The key only lets new gateways in. When it expires or you revoke it, gateways that already enrolled keep running.
-* **A short window if it leaks.** The key's lifetime is how long a copied command can still add gateways to your organisation.
+* **A short window if it leaks.** The key's lifetime is how long a copied command can still add gateways to your organization.
 * **The network and cluster come from the key.** Set **Network** in the header to **Ethereum** or **Hoodi** before you open **Generate enrollment key**. The dialog shows that network. A gateway cannot pick its own. The one-day key on Signal is for Ethereum. A Hoodi gateway needs its own key.
 
-Each key admits up to 1,000 gateways, and your organisation is capped at 1,000 live gateway credentials. A gateway that keeps its credential across restarts spends nothing. Losing the identity directory spends another enrollment.
+Each key admits up to 1,000 gateways, and your organization is capped at 1,000 live gateway credentials. A gateway that keeps its credential across restarts spends nothing. Losing the identity directory spends another enrollment.
 
 ## Which key lifetime
 

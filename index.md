@@ -7,7 +7,7 @@ description: Optimum is a gateway network that delivers Ethereum blocks to your 
 
 Optimum is a network of gateways you run beside your beacon node. The gateway delivers Ethereum blocks sooner, so your validators can attest to the head that was actually proposed. Where Optimum enables it, it also recommends a bid cutoff for the MEV sidecar you already run, so a proposal can take a better bid without waiting so long that the block is late.
 
-These pages are the runbook for that setup. They are for staking providers and for people who run their own validators. [Start here](/start/what-optimum-does) if you want the path before the detail. [Open Console](https://console.getoptimum.xyz/) when you are ready to enrol a gateway.
+These pages are the runbook for that setup. They are for staking providers and for people who run their own validators. [Start here](/start/what-optimum-does) if you want the path before the detail. [Open Console](https://console.getoptimum.xyz/) when you are ready to enroll a gateway.
 
 Your validators can only attest to a block after it reaches your beacon node. When the block arrives late, attestations miss or vote on the wrong head. When you propose, the bid cutoff sets how long the sidecar waits for a better bid. If you wait too long, your block is late. If you cut off too early, you leave value behind.
 
@@ -56,14 +56,14 @@ The gateway is a peer of your consensus client. It passes blocks to the client a
 | | What it does | Where you see it |
 | --- | --- | --- |
 | **Signal** | The gateway hands your beacon node blocks from the mesh, so your validators receive blocks sooner. That improves attestation performance. | The Signal home in Console, then **Network** under **Performance** |
-| **Accelerate** | Recommends a bid cutoff from slots your validators already proposed, so you can take a better bid without missing the slot. You download the config and deploy it on your own MEV sidecar. Offered to entity accounts. Shown when Optimum enables the organisation and it has at least 200 active validators on mainnet. | Accelerate in Console, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show). |
+| **Accelerate** | Recommends a bid cutoff from slots your validators already proposed, so you can take a better bid without missing the slot. You download the config and deploy it on your own MEV sidecar. Offered to entity accounts. Shown when Optimum enables the organization and it has at least 200 active validators on mainnet. | Accelerate in Console, under **MEV outcome**. See [Acceleration](/accelerate/where-results-show). |
 
 Console never changes your infrastructure. Optimum does not host gateways. You run the gateway and apply any configuration yourself.
 
 ## Who it is for
 
 * **Staking providers and other entities.** Run a gateway beside each beacon node, register your validator indices so Console can measure the result, then use Accelerate on your proposals.
-* **Individuals who run validators.** Signal works the same way for you. Accelerate is offered to entity accounts, and the sidebar shows it once Optimum enables the organisation and it has at least 200 active validators on mainnet. [Account type](/getting-in/account-type).
+* **Individuals who run validators.** Signal works the same way for you. Accelerate is offered to entity accounts, and the sidebar shows it once Optimum enables the organization and it has at least 200 active validators on mainnet. [Account type](/getting-in/account-type).
 * **Participants without validators.** Run a stream-only gateway to receive blocks from the mesh and serve them to your own consumers. This is a supported account.
 
 ## The path
@@ -71,9 +71,9 @@ Console never changes your infrastructure. Optimum does not host gateways. You r
 Start here. This is the operator setup.
 
 1. **[What Optimum does](/start/what-optimum-does).** How the pieces fit, which path is yours, and what the host needs.
-2. **[Create an account](/getting-in/create-an-account).** Register your organisation in Console.
+2. **[Create an account](/getting-in/create-an-account).** Register your organization in Console.
 3. **[Signal](/signal/what-signal-does).** Name the gateway, start it, peer your consensus client, verify it, and register your validator indices.
-4. **[Accelerate](/accelerate/what-accelerate-does).** Shown once Optimum enables your organisation and you have at least 200 active validators on mainnet. Then, once enough proposals are measured, read the cutoff recommendation and set it on your MEV sidecar.
+4. **[Accelerate](/accelerate/what-accelerate-does).** Shown once Optimum enables your organization and you have at least 200 active validators on mainnet. Then, once enough proposals are measured, read the cutoff recommendation and set it on your MEV sidecar.
 
 [Open Console](https://console.getoptimum.xyz/)
 

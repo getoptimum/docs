@@ -14,7 +14,7 @@ Open **Accelerate** in the sidebar. The proposal figures are on that screen. The
 After a cutoff is on file, the screen can show two sections:
 
 * **Proposal CL results since last adjustment** — proposals since the day after you recorded the cutoff, split into MEV, vanilla, and missed, and the average head-vote accuracy on the proposed blocks. Missed includes orphaned blocks. The data does not separate those two.
-* **MEV outcome** — total accepted ETH, the average accepted bid per proposed slot, and average unrealised MEV still on the table. **Bid value by slot** stacks the accepted bid with the unrealised remainder of the best bid seen. **Selected bid timing** plots when each accepted bid arrived at the relay.
+* **MEV outcome** — total accepted ETH, the average accepted bid per proposed slot, and average unrealized MEV still on the table. **Bid value by slot** stacks the accepted bid with the unrealized remainder of the best bid seen. **Selected bid timing** plots when each accepted bid arrived at the relay.
 
 **MEV outcome** is collapsed until you open it.
 

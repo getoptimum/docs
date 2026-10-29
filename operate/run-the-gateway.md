@@ -1,6 +1,6 @@
 ---
 title: Run the gateway
-description: Where the install, enrolment, and configuration references live.
+description: Where the install, enrollment, and configuration references live.
 ---
 
 # Run the gateway
