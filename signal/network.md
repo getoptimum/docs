@@ -15,7 +15,7 @@ Console publishes three ports. The full host requirements, including outbound ac
 
 `/health` from any machine other than the gateway host is refused. That is the bind, not a failed gateway.
 
-Stream-only also publishes the consumer feed to loopback on the gateway host: WebSocket `9600` and gRPC `9601`. Inside the container those listeners bind `0.0.0.0` so the published ports can reach them. They are not published on the host’s other interfaces. A consumer token is required; `stream_require_auth` defaults on.
+Stream-only also publishes the consumer feed to loopback on the gateway host: WebSocket `9600` and gRPC `9601`. Inside the container those listeners bind `0.0.0.0` so the published ports can reach them. They are not published on the host’s other interfaces. Reading the feed needs a consumer token once Optimum switches consumer tokens on; `stream_require_auth` defaults on. While that switch is off, the gateway runs healthy without a consumer and there is no token to mint.
 
 Outbound, the gateway needs to reach Console’s auth and bootstrap endpoints (`auth.getoptimum.io` and `bootstrap.getoptimum.io` on the production command) and the mesh peers. Use the gateway network page for the firewall list rather than opening ports this page does not name.
 
