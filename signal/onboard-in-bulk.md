@@ -19,7 +19,7 @@ Names must differ. The command sets `OPT_GATEWAY_ID` to the name from **1a**, an
 
 Keep each host's `$HOME/optimum-gateway` directories. A gateway that keeps them re-uses its credential and spends nothing on restart. One that loses them enrolls again, spends another of the key's enrollments, and is refused under the same name until the old credential is revoked.
 
-On Kubernetes, store the key in a Secret, inject it as `OPT_JOIN_KEY`, and give each pod a unique `OPT_GATEWAY_ID`, such as the pod name. Keep the identity PVC: an `emptyDir` is lost whenever the pod is replaced, and every replacement enrolls again. The chart's own values still describe the older API key path. See [Fleet enrollment (join key)](https://getoptimum.github.io/optimum-gateway/versions/latest/kubernetes#fleet-enrollment-join-key) in the gateway Helm guide.
+On Kubernetes, store the key in a Secret, inject it as `OPT_JOIN_KEY`, and give each pod a unique `OPT_GATEWAY_ID`, such as the pod name. Keep the identity PVC: an `emptyDir` is lost whenever the pod is replaced, and every replacement enrolls again. With the gateway Helm chart 0.5.0 or later, its `joinKey` block does this for you. See [Fleet enrollment (join key)](https://getoptimum.github.io/optimum-gateway/versions/latest/kubernetes#fleet-enrollment-join-key) in the gateway Helm guide.
 
 ## Many validators
 
