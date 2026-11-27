@@ -8,7 +8,10 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, "")}`;
 // a relative og:image against, so a path-only value is silently dropped and the
 // unfurl renders an empty frame. Same host as og:url and the sitemap.
 const siteUrl = "https://docs.getoptimum.xyz";
-const ogImage = `${siteUrl}/og-image.png`;
+// Gateway docs wordmark (public/og.png there). A preview unfurl fetches
+// og:image as an absolute URL, so pointing this at siteUrl would keep showing
+// production's old art until merge. GitHub Pages already hosts this file.
+const ogImage = "https://getoptimum.github.io/optimum-gateway/og.png";
 
 // The page's own absolute URL. og:url is the canonical identity of the thing
 // being shared, so a single site-wide value makes every subpage announce itself
@@ -27,7 +30,7 @@ const pageUrl = (relativePath: string) =>
 export default defineConfig({
   lang: "en-US",
   title: "Optimum Docs",
-  description: "Run an Optimum gateway, connect your validators, and read Signal and Accelerate in Console.",
+  description: "Run an Optimum gateway for Ethereum validators, or subscribe to low-latency Hyperliquid and Robinhood Chain feeds in Optimum for Traders.",
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: true,
@@ -97,15 +100,14 @@ export default defineConfig({
     ["meta", { name: "twitter:site", content: "@get_optimum" }],
     ["meta", { name: "twitter:site:domain", content: "docs.getoptimum.xyz" }],
     ["meta", { name: "twitter:image", content: ogImage }],
-    ["meta", { name: "twitter:image:alt", content: "Optimum Documentation" }],
+    ["meta", { name: "twitter:image:alt", content: "Optimum" }],
 
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:site_name", content: "Optimum Docs" }],
     // og:url is emitted per page by transformHead, not here.
     ["meta", { property: "og:image", content: ogImage }],
-    // The three below describe that file; public/og-image.png is 1200x630 PNG.
-    // They were already declared while og:image itself was commented out, which
-    // is why the unfurl rendered a sized but empty frame.
+    ["meta", { property: "og:image:alt", content: "Optimum" }],
+    // public/og-image.png is the same 1200x630 wordmark as gateway docs.
     ["meta", { property: "og:image:width", content: "1200" }],
     ["meta", { property: "og:image:height", content: "630" }],
     ["meta", { property: "og:image:type", content: "image/png" }],
@@ -116,6 +118,7 @@ export default defineConfig({
     nav: nav(),
 
     sidebar: {
+      "/traders/": sidebarTraders(),
       "/": sidebarHome(),
     },
 
@@ -150,9 +153,51 @@ export default defineConfig({
 
 function nav() {
   return [
-    { text: "Start", link: "/start/what-optimum-does" },
+    { text: "Validators", link: "/start/what-optimum-does" },
+    { text: "Traders", link: "/traders/" },
     { text: "Console", link: "https://console.getoptimum.xyz/" },
     { text: "Gateway", link: `${gateway}/` },
+  ];
+}
+
+function sidebarTraders() {
+  return [
+    {
+      text: "Optimum for Traders",
+      collapsed: false,
+      items: [
+        { text: "Overview", link: "/traders/" },
+        { text: "Authentication", link: "/traders/authentication" },
+        { text: "Endpoints", link: "/traders/endpoints" },
+      ],
+    },
+    {
+      text: "Hyperliquid",
+      collapsed: false,
+      items: [
+        { text: "The feeds", link: "/traders/hyperliquid/" },
+        { text: "Quick start", link: "/traders/hyperliquid/quick-start" },
+        { text: "Client library", link: "/traders/hyperliquid/client-library" },
+        { text: "Multicast receiver", link: "/traders/hyperliquid/multicast-receiver" },
+        { text: "Wire format", link: "/traders/hyperliquid/wire-format" },
+      ],
+    },
+    {
+      text: "Robinhood Chain",
+      collapsed: false,
+      items: [
+        { text: "Overview", link: "/traders/robinhood-chain/" },
+        { text: "Quick start", link: "/traders/robinhood-chain/quick-start" },
+        { text: "Messages", link: "/traders/robinhood-chain/messages" },
+      ],
+    },
+    {
+      text: "Help",
+      collapsed: false,
+      items: [
+        { text: "Troubleshoot", link: "/traders/help/troubleshoot" },
+      ],
+    },
   ];
 }
 

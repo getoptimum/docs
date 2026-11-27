@@ -5,6 +5,10 @@ description: Optimum is a gateway network that delivers Ethereum blocks to your 
 
 # Introduction to Optimum Console
 
+::: tip Optimum for Traders
+Looking for Hyperliquid market data or the Robinhood Chain sequencer feed? Go to [Optimum for Traders](/traders/).
+:::
+
 Optimum is a network of gateways you run beside your beacon node. The gateway delivers Ethereum blocks sooner, so your validators can attest to the head that was actually proposed. Where Optimum enables it, it also recommends a bid cutoff for the MEV sidecar you already run, so a proposal can take a better bid without waiting so long that the block is late.
 
 These pages are the runbook for that setup. They are for staking providers and for people who run their own validators. [Start here](/start/what-optimum-does) if you want the path before the detail. [Open Console](https://console.getoptimum.xyz/) when you are ready to enroll a gateway.
