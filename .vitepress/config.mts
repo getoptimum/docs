@@ -27,7 +27,7 @@ const pageUrl = (relativePath: string) =>
 export default defineConfig({
   lang: "en-US",
   title: "Optimum Docs",
-  description: "Run an Optimum gateway, connect your validators, and read Signal and Accelerate in Console.",
+  description: "Run an Optimum gateway for Ethereum validators, or subscribe to low-latency Hyperliquid and Robinhood Chain feeds in Optimum for Traders.",
   lastUpdated: true,
   cleanUrls: true,
   ignoreDeadLinks: true,
@@ -116,6 +116,7 @@ export default defineConfig({
     nav: nav(),
 
     sidebar: {
+      "/traders/": sidebarTraders(),
       "/": sidebarHome(),
     },
 
@@ -150,9 +151,51 @@ export default defineConfig({
 
 function nav() {
   return [
-    { text: "Start", link: "/start/what-optimum-does" },
+    { text: "Validators", link: "/start/what-optimum-does" },
+    { text: "Traders", link: "/traders/" },
     { text: "Console", link: "https://console.getoptimum.xyz/" },
     { text: "Gateway", link: `${gateway}/` },
+  ];
+}
+
+function sidebarTraders() {
+  return [
+    {
+      text: "Optimum for Traders",
+      collapsed: false,
+      items: [
+        { text: "Overview", link: "/traders/" },
+        { text: "Authentication", link: "/traders/authentication" },
+        { text: "Endpoints", link: "/traders/endpoints" },
+      ],
+    },
+    {
+      text: "Hyperliquid",
+      collapsed: false,
+      items: [
+        { text: "The feeds", link: "/traders/hyperliquid/" },
+        { text: "Quick start", link: "/traders/hyperliquid/quick-start" },
+        { text: "Client library", link: "/traders/hyperliquid/client-library" },
+        { text: "Multicast receiver", link: "/traders/hyperliquid/multicast-receiver" },
+        { text: "Wire format", link: "/traders/hyperliquid/wire-format" },
+      ],
+    },
+    {
+      text: "Robinhood Chain",
+      collapsed: false,
+      items: [
+        { text: "Overview", link: "/traders/robinhood-chain/" },
+        { text: "Quick start", link: "/traders/robinhood-chain/quick-start" },
+        { text: "Messages", link: "/traders/robinhood-chain/messages" },
+      ],
+    },
+    {
+      text: "Help",
+      collapsed: false,
+      items: [
+        { text: "Troubleshoot", link: "/traders/help/troubleshoot" },
+      ],
+    },
   ];
 }
 
