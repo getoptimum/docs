@@ -8,7 +8,10 @@ const withBase = (path: string) => `${base}${path.replace(/^\//, "")}`;
 // a relative og:image against, so a path-only value is silently dropped and the
 // unfurl renders an empty frame. Same host as og:url and the sitemap.
 const siteUrl = "https://docs.getoptimum.xyz";
-const ogImage = `${siteUrl}/og-image.png`;
+// Gateway docs wordmark (public/og.png there). A preview unfurl fetches
+// og:image as an absolute URL, so pointing this at siteUrl would keep showing
+// production's old art until merge. GitHub Pages already hosts this file.
+const ogImage = "https://getoptimum.github.io/optimum-gateway/og.png";
 
 // The page's own absolute URL. og:url is the canonical identity of the thing
 // being shared, so a single site-wide value makes every subpage announce itself
@@ -97,15 +100,14 @@ export default defineConfig({
     ["meta", { name: "twitter:site", content: "@get_optimum" }],
     ["meta", { name: "twitter:site:domain", content: "docs.getoptimum.xyz" }],
     ["meta", { name: "twitter:image", content: ogImage }],
-    ["meta", { name: "twitter:image:alt", content: "Optimum Documentation" }],
+    ["meta", { name: "twitter:image:alt", content: "Optimum" }],
 
     ["meta", { property: "og:type", content: "website" }],
     ["meta", { property: "og:site_name", content: "Optimum Docs" }],
     // og:url is emitted per page by transformHead, not here.
     ["meta", { property: "og:image", content: ogImage }],
-    // The three below describe that file; public/og-image.png is 1200x630 PNG.
-    // They were already declared while og:image itself was commented out, which
-    // is why the unfurl rendered a sized but empty frame.
+    ["meta", { property: "og:image:alt", content: "Optimum" }],
+    // public/og-image.png is the same 1200x630 wordmark as gateway docs.
     ["meta", { property: "og:image:width", content: "1200" }],
     ["meta", { property: "og:image:height", content: "630" }],
     ["meta", { property: "og:image:type", content: "image/png" }],
